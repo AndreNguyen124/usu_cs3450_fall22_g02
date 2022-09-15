@@ -5,6 +5,8 @@
 - ### Karl Poulson
 - ### Maris Hurst
 
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fwww.google.com&count_bg=%230F2439&title_bg=%23A2AAAD&icon=buymeacoffee.svg&icon_color=%23FFFFFF&title=Coffee&edge_flat=false)](https://hits.seeyoufarm.com)
+
 Dan's Frappuccino Paradise is a web app powered by Django and Python
 - Create and Manage Orders
 - Modify Existing Menu Items
