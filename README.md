@@ -47,3 +47,9 @@ Dan's Frappuccino Paradise is a web app powered by Django and Python
  - To run system tests, the developer of the feature or code will also be responsible for drafting some test steps for the tester to run. The test steps will be linked through Jira where Andre will be responsible for failing or passing the test. 
  
 ## Other development notes, as needed
+### Milestone 2:
+- Use case diagram: docs/Requirements.docx (Situation 9)
+- UML Class diagram: docs/Class Diagram/UML.png
+- Activity Diagrams: docs/Activities
+- Lo-Fi/Hi-Fi prototypes: docs/Prototypes
+![](docs/Images/Phase-2_jira_board.png)
