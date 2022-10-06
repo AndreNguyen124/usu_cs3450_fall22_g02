@@ -46,10 +46,11 @@ Dan's Frappuccino Paradise is a web app powered by Django and Python
  - At the moment, Andre is assigned as our system tester. After a feature is accepted and merged into the development branch, Andre will manually test the feature and the entire application to ensure that the new merge did not create any bugs. If the system test passes, Andre will merge the development branch into the main branch. 
  - To run system tests, the developer of the feature or code will also be responsible for drafting some test steps for the tester to run. The test steps will be linked through Jira where Andre will be responsible for failing or passing the test. 
  
-## Other development notes, as needed
-### Milestone 2:
+## Milestone 2:
 - Use case diagram: docs/Requirements.docx (Situation 9)
 - UML Class diagram: docs/Class Diagram/UML.png
 - Activity Diagrams: docs/Activities
 - Lo-Fi/Hi-Fi prototypes: docs/Prototypes
 ![](docs/Images/Phase-2_jira_board.png)
+
+## Other development notes, as needed
