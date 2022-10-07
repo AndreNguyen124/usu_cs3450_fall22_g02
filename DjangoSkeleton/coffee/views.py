@@ -7,6 +7,9 @@ from django.urls import reverse
 
 def index(request):
 	return render(request, 'coffee/index.html')
+
+def login(request):
+	return render(request, 'coffee/login.html')
 	
 	
 	

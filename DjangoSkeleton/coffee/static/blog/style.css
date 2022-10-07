@@ -18,6 +18,12 @@ h1 {
     margin: 0;
 }
 
+.full-height-grow {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+}
+
 
 .navbar {
     display: flex;
