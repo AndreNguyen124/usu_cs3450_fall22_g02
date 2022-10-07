@@ -1,0 +1,25 @@
+
+.login-container {
+    margin-top:auto;
+    margin-bottom: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    background-color: white;
+    border: 2px solid gray;
+}
+
+.sign-in-h1 {
+    padding: .5rem;
+}
+
+input {
+    border: 1px solid #a4a4a4;
+    padding: 15px 20px;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #f8f8ff;
+}
+  

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+      <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
+      <script src="script.js" defer></script>
+      <title>Welcome User</title>
+    </head>
+
+    <body>
+      <nav id = "navbar_ID" class="navbar">
+        <div class="navbar-links">
+          <ul>
+            
+            <li><img src="{% static 'blog/media/coffeeCup.jpg' %}"><a href="#"></a></li>
+            <li><a href="#">Menu</a></li>
+            <li><a href="#">Info</a></li>
+            <li><a href="#">Account</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <section class="main-order-section">
+        <div class="heading">
+            
+        </div>
+
+        <div class="order-container">
+            <div class="order"></div>
+            <div class="order"></div>
+        </div>
+      </section>
+
+      <footer class="main-footer">
+        
+      </footer>
+
+    </body>
+</html>
