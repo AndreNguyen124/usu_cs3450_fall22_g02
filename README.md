@@ -52,4 +52,7 @@ Dan's Frappuccino Paradise is a web app powered by Django and Python
 - UML Class diagram: docs/Class Diagram/UML.png
 - Activity Diagrams: docs/Activities
 - Lo-Fi/Hi-Fi prototypes: docs/Prototypes
+- Hi-Fi prototype instructions: within the cloned directory, run $python manage.py runserver
+    Then go to http://127.0.0.1:8000/playground/register in the browser and create a user (any username and password).
+    This should redirect to /login where you can input your username and password once more, if successful it will take you to a HelloWorld landing page
 ![](docs/Images/Phase-2_jira_board.png)
