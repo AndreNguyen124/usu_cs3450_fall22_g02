@@ -28,16 +28,18 @@ def inventory(request):
 def update_inventory(request, pk):
     item = Inventory_Item.objects.get(id=pk)
     if request.method=='POST':
-        form = InventoryForm(request.POST, instance=item)
+        form = InventoryForm(request.POST, initial={'quantity': 1})
         if form.is_valid():
             howMuch  = form.cleaned_data['quantity']
-            print(howMuch)
+            form.save(commit=False)
+
             item.quantity += howMuch
-            form.save()
+            item.save()
+
             return redirect('coffee:inventory')
 
     else:
-        form = InventoryForm(instance=item)
+        form = InventoryForm(initial = {'quantity': 1})
         
     context = {
             'form' : form,

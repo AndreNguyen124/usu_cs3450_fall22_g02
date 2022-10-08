@@ -14,8 +14,8 @@
             <thead>
                 <tr>
                     <th scope="col">Ingredient</th>
-                    <th scope="col">Quantity</th>
                     <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -23,10 +23,10 @@
                 {% for item in inventory_list %}
                 <tr>
                     <th scope="row">{{ item.name }}</th>
-                    <td>{{ item.quantity }}</td>
                     <td>{{ item.price }}</td>
+                    <td>{{ item.quantity }}</td>
                     <td>
-                        <a class="btn btn-info" href="{% url 'coffee:update-inventory' item.id %}">Edit</a>
+                        <a class="btn btn-info" href="{% url 'coffee:update-inventory' item.id %}">+</a>
                     </td>
 
                 </tr>
