@@ -30,6 +30,9 @@ def update_inventory(request, pk):
     if request.method=='POST':
         form = InventoryForm(request.POST, instance=item)
         if form.is_valid():
+            howMuch  = form.cleaned_data['quantity']
+            print(howMuch)
+            item.quantity += howMuch
             form.save()
             return redirect('coffee:inventory')
 

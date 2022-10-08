@@ -7,5 +7,5 @@ class NameForm(forms.Form):
 class InventoryForm(forms.ModelForm):
     class Meta:
         model = Inventory_Item
-        fields = ['name', 'quantity', 'price']
+        fields = ['quantity']
 
