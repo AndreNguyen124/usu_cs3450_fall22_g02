@@ -7,4 +7,5 @@ app_name = 'coffee'
 urlpatterns = [
 	path('index', views.index, name='index'),
 	path('login', views.login, name='login'),
+    path('inventory', views.manage_inventory, name='manage_inventory'),
 ]
