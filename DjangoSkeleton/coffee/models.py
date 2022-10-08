@@ -14,4 +14,4 @@ class Inventory_Item(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
-        return f"id: {self.id}  |  Name: {self.name}"
+        return f"\n\tid: {self.id} \n\tName: {self.name} \n\tQuantity: {self.quantity} \n\tPrice: {self.price}"
