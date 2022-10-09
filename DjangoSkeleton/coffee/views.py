@@ -33,8 +33,7 @@ def update_inventory(request, pk):
             howMuch  = form.cleaned_data['quantity']
             form.save(commit=False)
 
-            item.quantity += howMuch
-            item.save()
+            item.gainInventory(howMuch)
 
             return redirect('coffee:inventory')
 
