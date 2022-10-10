@@ -13,6 +13,9 @@ def index(request):
 
 def login(request):
 	return render(request, 'coffee/login.html')
+
+def userView(request):
+    return render(request, 'coffee/userView.html');
 	
 	
 def inventory(request):
