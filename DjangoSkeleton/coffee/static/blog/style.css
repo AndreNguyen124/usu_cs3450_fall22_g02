@@ -1,8 +1,12 @@
 /*
 https://palettes.shecodes.io/palettes/507
 */
-
-
+/*
+blue: 0e2431
+red: fc3a52
+yellow: f9b248
+tan: e8d5b7
+*/
 * {
     box-sizing: border-box;
 }
@@ -11,7 +15,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Helvetica;
-    background-color: burlywood;
+    font-size: 1.2rem;
 }
 
 h1 {
@@ -20,17 +24,23 @@ h1 {
 
 .full-height-grow {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     justify-content: center;
+    flex-direction: column;
+    background-color: #E5D1B3;
 }
 
 
 .navbar {
     display: flex;
     position: relative;
+    justify-content: space-between;
     align-items: center;
-    background-color: #fdc57b; /*#d77b52;*/
-    max-height: 100px;
+    background-color: #f9b248; /*#d77b52;*/
+    min-height: 200px;
+    width: 100%;
+    border-bottom: 1px solid #0066b2;
+    box-shadow: 0px 5px 5px #fc3a52;
 }
 
 .navbar-links {
@@ -66,30 +76,21 @@ h1 {
     padding: 0;
 }
 
-
-/* BEGINNING OF TEXTBOX STYLING */
-.content-box {
-    background-color: rgb(211, 156, 84);
+/* main-content styling */
+.main-section {
     display: flex;
-    flex-wrap: wrap;
-    height: fit-content;
-    max-height: 20rem;
-    font-size: 1rem;
-    border: 5px solid black;
-    margin-top: 5rem;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-grow: 1;
 }
 
-.content-box img {
-    height: 200px;
+.main-footer {
+    display: flex;
+    background-color: #0066b2;
+    justify-content: center;
 }
 
-.content-box * {
-    padding: 1rem;
-    text-align: center;
-    color: #ffffff;
-    text-shadow: 1px 1px black;
-}
-
-.textBox h1 {
-    font-size: 10rem;
+.main-footer p {
+    color:#f9b248;
 }
