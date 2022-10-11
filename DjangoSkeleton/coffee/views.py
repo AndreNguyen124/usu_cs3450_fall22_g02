@@ -16,6 +16,9 @@ def login(request):
 
 def userView(request):
     return render(request, 'coffee/userView.html');
+
+def managerView(request):
+    return render(request, 'coffee/managerView.html');
 	
 	
 def inventory(request):
