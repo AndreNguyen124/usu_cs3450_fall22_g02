@@ -3,7 +3,7 @@
 <html>
     <head>
       <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'blog/managerStyle.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'blog/managerStyling.css' %}">
       <script src="script.js" defer></script>
       <title>Manager View</title>
     </head>
@@ -13,21 +13,22 @@
         <div class="heading">
           <h1>Welcome Manager!</h1>
         </div>
+        
+        <ul class="navbar-links">
+          <li><a href="#">Customers</a></li>
+          <li><a href="#">Employees</a></li>
+          <li><a href="#">Manage Store</a></li>
+        </ul>
         <button type="button" class="logout-btn" onclick="alert('Log out!')">Log Out</button>
       </nav>
 
       <section class="main-section">
+
         <div class="column-container">
-          <h1 class="order-heading">Start New Order</h1>
-
-            <div class="order">
-              <div class="image">
-                <img src="{% static 'blog/media/aFrap.jpeg' %}">
-            </div>
-
-
-
+          <h1 class="column-heading">Search for Customers</h1>
+          <input type="search" class="search-customers" placeholder="Customer Lookup"/>  
         </div>
+
       </section>
 
       <footer class="main-footer">
