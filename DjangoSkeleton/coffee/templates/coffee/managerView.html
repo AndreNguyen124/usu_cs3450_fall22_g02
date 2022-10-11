@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+      <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'blog/managerStyle.css' %}">
+      <script src="script.js" defer></script>
+      <title>Manager View</title>
+    </head>
+
+    <body class="full-height-grow">
+      <nav class="navbar">
+        <div class="heading">
+          <h1>Welcome Manager!</h1>
+        </div>
+        <button type="button" class="logout-btn" onclick="alert('Log out!')">Log Out</button>
+      </nav>
+
+      <section class="main-section">
+        <div class="column-container">
+          <h1 class="order-heading">Start New Order</h1>
+
+            <div class="order">
+              <div class="image">
+                <img src="{% static 'blog/media/aFrap.jpeg' %}">
+            </div>
+
+
+
+        </div>
+      </section>
+
+      <footer class="main-footer">
+        <p>All rights reserved to Dan's Cool Beans</p>
+      </footer>
+
+    </body>
+</html>
