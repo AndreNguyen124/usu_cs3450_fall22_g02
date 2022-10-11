@@ -1,16 +1,3 @@
-
-.order-heading {
-    font-size: 2rem;
-    color: #fc3a52;
-    text-shadow: 1px 1px #0e2431;
-}
-
-.column-container {
-    display: flex;
-    flex-direction: column;
-    margin: 2em;
-}
-
 .order {
     display: flex;
     margin: 2em;
@@ -36,7 +23,8 @@
 }
 
 .order-description h2 {
-    border-bottom: 4px dashed red;
+    border-bottom: 4px dashed #fc3a52;
+    width: fit-content;
 }
 
 .price-of-order {
