@@ -5,11 +5,6 @@ from django.urls import reverse
 from .models import Inventory_Item
 from .forms import InventoryForm
 
-# from .models import custom_function
-
-
-def index(request):
-	return render(request, 'coffee/index.html')
 
 def login(request):
 	return render(request, 'coffee/login.html')
@@ -19,6 +14,9 @@ def userView(request):
 
 def managerView(request):
     return render(request, 'coffee/managerView.html');
+
+def manageEmployees(request):
+    return render(request, 'coffee/manageEmployees.html');
 	
 	
 def inventory(request):

@@ -11,11 +11,12 @@
     padding: 2rem;
     background-color: white;
     border: 2px solid gray;
-    max-width: 30rem;
+    max-width: 40rem;
+    font-size: 1.2rem;
 }
 
 .sign-in-h1 {
-    padding: 2rem;
+    padding: 1rem;
     margin: auto;
 }
 
@@ -26,5 +27,6 @@ input {
     width: 100%;
     margin-bottom: 10px;
     background-color: #f8f8ff;
+    font-size: 1.2rem;
 }
   
