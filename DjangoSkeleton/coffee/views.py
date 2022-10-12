@@ -27,12 +27,12 @@ def registerPage(request):
 
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
+        
         if form.is_valid():
             form.save()
             messages.success(request, 'Account was created successfully')
 
             return redirect('coffee:login')
-
 
     context = {'form': form}
     return render(request, 'coffee/register.html', context)
