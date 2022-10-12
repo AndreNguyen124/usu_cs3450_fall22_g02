@@ -1,9 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 from .models import Inventory_Item
-from .forms import InventoryForm
+from .forms import InventoryForm, CreateUserForm
 
 # from .models import custom_function
 
@@ -11,14 +13,40 @@ from .forms import InventoryForm
 def index(request):
 	return render(request, 'coffee/index.html')
 
-def login(request):
-	return render(request, 'coffee/login.html')
+def loginPage(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('coffee:userView')
+
+    context = {}
+    return render(request, 'coffee/login.html', context)
+
+def registerPage(request):
+    form = CreateUserForm()
+
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Account was created successfully')
+
+            return redirect('login')
+
+
+    context = {'form': form}
+    return render(request, 'register.html', context)
 
 def userView(request):
-    return render(request, 'coffee/userView.html');
+    return render(request, 'coffee/userView.html')
 
 def managerView(request):
-    return render(request, 'coffee/managerView.html');
+    return render(request, 'coffee/managerView.html')
 	
 	
 def inventory(request):
