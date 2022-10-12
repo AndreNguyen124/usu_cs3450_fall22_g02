@@ -5,7 +5,8 @@ from . import views
 
 app_name = 'coffee'
 urlpatterns = [
-	path('login', views.login, name='login'),
+	path('login', views.loginPage, name='login'),
+    path('register', views.registerPage, name='register'),
     path('userView', views.userView, name='userView'),
     path('managerView', views.managerView, name='managerView'),
     path('manageEmployees', views.manageEmployees, name='manageEmployees'),
