@@ -104,8 +104,18 @@ def update_inventory(request, pk):
 def editMenu(request):
     return render(request, 'coffee/editMenu.html')
 
+
 def addDrinkItem(request):
     return render(request, 'coffee/addDrinkItem.html')
+
+
+def index(request):
+    Drinks = Inventory_Item.objects.all().values()
+    context = {
+        'mymembers': Drinks,
+    }
+    return render(context, request)
+
 
 # TODO: Work with Emily
 def add(request):
@@ -113,13 +123,14 @@ def add(request):
 
 
 # TODO: Work With Emily
-def addrecord():
-    return None
+def addrecord(request):
+    x = request.POST['DrinkName']
+    Drink = Inventory_Item(DrinkName=x)
+    Drink.save()
+    return HttpResponseRedirect(reverse('index'))
 
 
 def delete(request, id):
     drink = Inventory_Item.objects.get(id=id)
     drink.delete()
     return HttpResponseRedirect(reverse('index'))
-
-
