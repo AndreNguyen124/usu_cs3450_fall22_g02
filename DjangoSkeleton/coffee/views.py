@@ -18,9 +18,16 @@ def loginPage(request):
         if user is not None:
             login(request, user)
             return redirect('coffee:userView')
+        else:
+            messages.info(request, 'Username or password is incorrect')
+            
 
     context = {}
     return render(request, 'coffee/login.html', context)
+
+def logoutUser(request):
+    logout(request)
+    return redirect('coffee:login')
 
 def registerPage(request):
     form = CreateUserForm()

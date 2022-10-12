@@ -6,6 +6,7 @@ from . import views
 app_name = 'coffee'
 urlpatterns = [
 	path('login/', views.loginPage, name='login'),
+    path('logout/', views.logoutUser, name='logout'),
     path('register/', views.registerPage, name='register'),
     path('userView/', views.userView, name='userView'),
     path('managerView/', views.managerView, name='managerView'),
