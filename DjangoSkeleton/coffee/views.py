@@ -21,7 +21,14 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            return redirect('coffee:userView')
+            if request.user.groups.exists():
+                group = request.user.groups.all()[0].name
+                if group == 'Customer':
+                    return redirect('coffee:userView')
+                elif group == 'Employee':
+                    return redirect('coffee:employeeView')
+                else:
+                    return redirect('coffee:managerView')
         else:
             messages.info(request, 'Username or password is incorrect')
             
@@ -56,14 +63,19 @@ def userView(request):
     return render(request, 'coffee/userView.html')
 
 @login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Employee'])
+def employeeView(request):
+    return render(request, 'coffee/employeeView.html')
+
+@login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def managerView(request):
-    return render(request, 'coffee/managerView.html');
+    return render(request, 'coffee/managerView.html')
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def manageEmployees(request):
-    return render(request, 'coffee/manageEmployees.html');
+    return render(request, 'coffee/manageEmployees.html')
 	
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])	
