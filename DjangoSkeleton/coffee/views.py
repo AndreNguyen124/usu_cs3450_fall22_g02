@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -39,9 +40,11 @@ def registerPage(request):
         form = CreateUserForm(request.POST)
         
         if form.is_valid():
-            form.save()
+            user = form.save()
+            group = Group.objects.get(name='Customer')
+            user.groups.add(group)
+            
             messages.success(request, 'Account was created successfully')
-
             return redirect('coffee:login')
 
     context = {'form': form}
