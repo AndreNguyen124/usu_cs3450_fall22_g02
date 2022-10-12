@@ -3,7 +3,8 @@
 <html>
     <head>
       <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'blog/managerStyling.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'blog/managerStyle.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'blog/userStyle.css' %}">
       <script src="script.js" defer></script>
       <title>Manager View</title>
     </head>
@@ -23,12 +24,50 @@
       </nav>
 
       <section class="main-section">
-
         <div class="column-container">
-          <h1 class="column-heading">Search for Customers</h1>
-          <input type="search" class="search-customers" placeholder="Customer Lookup"/>  
-        </div>
 
+        <h1 class="column-heading">Start New Order</h1>
+
+          <div class="order">
+            <div class="image">
+              <img src="{% static 'blog/media/aFrap.jpeg' %}">
+            </div>
+            <div class="order-description">
+              <h2>Fancy Frap 1</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+                dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+            </div>
+          </div>
+
+            <div class="order">
+              <div class="image">
+                <img src="{% static 'blog/media/aFrap.jpeg' %}">
+              </div>
+              <div class="order-description">
+                <h2>Fancy Frap 1</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+                  dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+              </div>
+            </div>
+
+              <div class="order">
+                <div class="image">
+                  <img src="{% static 'blog/media/aFrap.jpeg' %}">
+                </div>
+                <div class="order-description">
+                  <h2>Fancy Frap 1</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+                    dolor in reprehenderit in voluptate velit esse cillum dolore
+                  </p>
+                </div>
+              </div>
+          </div>
       </section>
 
       <footer class="main-footer">
