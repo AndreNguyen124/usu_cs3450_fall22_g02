@@ -11,9 +11,12 @@
     <body class="full-height-grow">
       <nav class="navbar">
         <div class="heading">
-          <h1>Welcome User!</h1>
+          <h1>Welcome {{request.user}}!</h1>
         </div>
-        <button type="button" class="logout-btn" onclick="alert('Log out!')">Log Out</button>
+        <form action="/logout">
+          <input type="submit" value="Logout" class="logout-btn">
+          
+        </form>
       </nav>
 
       <section class="main-section">
