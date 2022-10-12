@@ -4,7 +4,8 @@ from django.shortcuts import redirect
 def unauthenticated_user(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('coffee:userView')
+            return redirect('coffee:userView') #this might cause a problem logically later, test to see
+            # (like a manager trying to access /login or /register and being sent to the userView)
         else:
             return view_func(request, *args, **kwargs)
     return wrapper_func
