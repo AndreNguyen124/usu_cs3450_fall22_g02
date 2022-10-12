@@ -35,7 +35,7 @@ def registerPage(request):
 
 
     context = {'form': form}
-    return render(request, 'register.html', context)
+    return render(request, 'coffee/register.html', context)
 
 def userView(request):
     return render(request, 'coffee/userView.html')
