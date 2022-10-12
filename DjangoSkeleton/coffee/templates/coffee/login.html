@@ -22,8 +22,10 @@
           <input type="password" id="lname" name="password" class="form-control" ><br><br>
           <input type="submit" value="Login">
         </form> 
-        
-    </section>
+        <div>
+          Don't have an account yet? <a href="{% url 'coffee:register' %}" >Register</a>
+        </div>
+      </section>
     {% for message in messages %}
         <p> {{message}} </p>
     {% endfor %}
