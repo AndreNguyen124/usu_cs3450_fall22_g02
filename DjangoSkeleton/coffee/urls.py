@@ -12,5 +12,7 @@ urlpatterns = [
     path('managerView/', views.managerView, name='managerView'),
     path('manageEmployees/', views.manageEmployees, name='manageEmployees'),
     path('inventory/', views.inventory, name='inventory'),
-    path('inventory/update/<int:pk>/', views.update_inventory, name="update-inventory")
+    path('inventory/update/<int:pk>/', views.update_inventory, name="update-inventory"),
+    path('editMenu/', views.editMenu, name="editMenu"),
+    path('addDrinkItem/', views.addDrinkItem, name="addDrinkItem")
 ]

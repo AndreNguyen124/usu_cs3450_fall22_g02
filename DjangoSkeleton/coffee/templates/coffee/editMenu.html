@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Menu</title>
+</head>
+<body>
+<h1>Drinks</h1>
+
+<table border="1">
+    <tr>
+        <td>Drink Name 1</td>
+        <td>Quantity 1</td>
+        <td>Price 1</td>
+        <td><a href="delete/{{ x.id }}">delete</a></td>
+    </tr>
+
+    <tr>
+        <td>Drink Name 2</td>
+        <td>Quantity 2</td>
+        <td>Price 2</td>
+        <td><a href="delete/{{ x.id }}">delete</a></td>
+    </tr>
+
+    <tr>
+        <td>Drink Name 3</td>
+        <td>Quantity 3</td>
+        <td>Price 3</td>
+        <td><a href="delete/{{ x.id }}">delete</a></td>
+    </tr>
+    {% for item in inventory_list %}
+    <tr>
+        <td>{{ item.field1 }}</td>
+        ...
+        <td>{{ item.fieldN }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<p>
+    <a href="coffee/addDrinkItem.html">Add member</a>
+</p>
+</body>
+</html>

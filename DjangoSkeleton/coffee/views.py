@@ -24,14 +24,15 @@ def loginPage(request):
                 return redirect('coffee:userView')
             else:
                 messages.info(request, 'Username or password is incorrect')
-                
 
         context = {}
         return render(request, 'coffee/login.html', context)
 
+
 def logoutUser(request):
     logout(request)
     return redirect('coffee:login')
+
 
 def registerPage(request):
     if request.user.is_authenticated:
@@ -40,7 +41,7 @@ def registerPage(request):
         form = CreateUserForm()
         if request.method == 'POST':
             form = CreateUserForm(request.POST)
-            
+
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Account was created successfully')
@@ -50,35 +51,40 @@ def registerPage(request):
         context = {'form': form}
         return render(request, 'coffee/register.html', context)
 
+
 @login_required(login_url='coffee:login')
 def userView(request):
     return render(request, 'coffee/userView.html')
+
 
 @login_required(login_url='coffee:login')
 def managerView(request):
     return render(request, 'coffee/managerView.html');
 
+
 @login_required(login_url='coffee:login')
 def manageEmployees(request):
     return render(request, 'coffee/manageEmployees.html');
-	
-@login_required(login_url='coffee:login')	
+
+
+@login_required(login_url='coffee:login')
 def inventory(request):
     inventory_list = Inventory_Item.objects.order_by('name')
     context = {
-            'inventory_list' : inventory_list
+        'inventory_list': inventory_list
 
-            }
+    }
 
     return render(request, 'coffee/inventory.html', context)
+
 
 @login_required(login_url='coffee:login')
 def update_inventory(request, pk):
     item = Inventory_Item.objects.get(id=pk)
-    if request.method=='POST':
+    if request.method == 'POST':
         form = InventoryForm(request.POST, initial={'quantity': 1})
         if form.is_valid():
-            howMuch  = form.cleaned_data['quantity']
+            howMuch = form.cleaned_data['quantity']
             form.save(commit=False)
 
             item.gainInventory(howMuch)
@@ -86,11 +92,34 @@ def update_inventory(request, pk):
             return redirect('coffee:inventory')
 
     else:
-        form = InventoryForm(initial = {'quantity': 1})
-        
+        form = InventoryForm(initial={'quantity': 1})
+
     context = {
-            'form' : form,
-            }
+        'form': form,
+    }
     return render(request, 'coffee/update_inventory.html', context)
-	
-	
+
+
+# @login_required(login_url='coffee:login')
+def editMenu(request):
+    return render(request, 'coffee/editMenu.html')
+
+def addDrinkItem(request):
+    return render(request, 'coffee/addDrinkItem.html')
+
+# TODO: Work with Emily
+def add(request):
+    return None
+
+
+# TODO: Work With Emily
+def addrecord():
+    return None
+
+
+def delete(request, id):
+    drink = Inventory_Item.objects.get(id=id)
+    drink.delete()
+    return HttpResponseRedirect(reverse('index'))
+
+
