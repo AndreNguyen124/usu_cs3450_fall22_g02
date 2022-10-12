@@ -7,6 +7,7 @@ app_name = 'coffee'
 urlpatterns = [
 	path('index/', views.index, name='index'),
 	path('login/', views.loginPage, name='login'),
+    path('register/', views.registerPage, name='register'),
     path('userView/', views.userView, name='userView'),
     path('managerView/', views.managerView, name='managerView'),
     path('inventory/', views.inventory, name='inventory'),

@@ -22,11 +22,13 @@
           <input type="password" id="lname" name="password" class="form-control" ><br><br>
           <input class="btn login_btn" type="submit" value="Login">
         </form> 
-
+        
     </section>
-
+    {% for message in messages %}
+        <p> {{message}} </p>
+    {% endfor %}
 </body>
 </html>
-<!-- "/action_page.php"--> 
+
  
 
