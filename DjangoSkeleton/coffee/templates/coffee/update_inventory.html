@@ -1,29 +1,21 @@
-{% load static %}
+{% extends './partials/base.html' %}
 
-<!DOCTYPE html>
-<html lang = "en">
-    <head>
-        <meta charset="utf-8"/>
-        <title>Edit Inventory Item</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    </head>
-    <div class="container">
-        <h1>Edit inventory</h1>
-        <div class="row mt-5">
-            <div class="col-md-6 offset-md-3">
-                <div class="border bg-white p-3">
-                    <h3>How much would you like to add?</h3>
-                    <hr>
-                    <form method="POST">
-                        {% csrf_token %}
-                        {{ form }}
-                        <a class="btn btn-secondary" href="{% url 'coffee:inventory' %}">Cancel</a>
-                        <input class="btn btn-info" type="submit" value="Update">
-                    </form>
-                </div>
+{% block title %} Purchase Inventory {% endblock %}
+{% block page_heading %} Purchase Inventory {% endblock %}
+
+{% block content %}
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <div class="border bg-white p-3">
+                <h3>How much would you like to buy?</h3>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form }}
+                    <a class="btn btn-secondary" href="{% url 'coffee:inventory' %}">Cancel</a>
+                    <input class="btn btn-info" type="submit" value="Update">
+                </form>
             </div>
         </div>
-
     </div>
-</html>
-
+{% endblock %}
