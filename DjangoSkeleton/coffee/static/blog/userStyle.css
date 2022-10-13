@@ -4,22 +4,25 @@
     border-left: 5px solid #fc3a52;
     border-bottom: 5px solid #f9b248;
     border-top: 5px solid #0066b2;
-    background-color: #e8d5b7;
+    background-color: #f1ddbd;
     border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.image {
+    display: flex;
+    justify-content: center;
+    
 }
 
 .image img {
-    max-width: 150px;
-    padding: 1rem;
-    display: block;
-    margin-top: auto;
-    margin-bottom: auto;
-    border-radius: 2rem;
+    max-width: 200px;
+    align-self: center;
 }
 
 .order-description {
-    padding: 1rem;
-    max-width: 50em;
+    padding: 2rem;
+    max-width: 40em;
 }
 
 .order-description h2 {
@@ -29,6 +32,20 @@
 
 .price-of-order {
     margin:auto;
+    padding: 2rem;
+}
+
+/* change order items to fit on rows */
+@media screen and (max-width: 800px) {
+    .order {
+        flex-direction: column;
+    }
+
+    .image {
+        margin: auto;
+        padding: 2rem;
+    }
+    
 }
 
 
