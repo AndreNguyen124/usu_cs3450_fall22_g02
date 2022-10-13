@@ -2,7 +2,6 @@
 {% extends './partials/base.html' %}
 
 {% block title %} Manage Inventory {% endblock %}
-
 {% block page_heading %} Manage Inventory {% endblock %}
 
 {% block content %}
@@ -21,11 +20,16 @@
                 <tr>
                     <th scope="row">{{ item.name }}</th>
                     <td>{{ item.price }}</td>
-                    <td>{{ item.quantity }}</td>
                     <td>
-                        <a class="btn btn-info" href="{% url 'coffee:update-inventory' item.id %}">+</a>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ item.quantity }}
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-info" href="{% url 'coffee:update-inventory' item.id %}">+</a>
+                            </div>
+                        </div>
                     </td>
-
                 </tr>
                 {% endfor %}
             </tbody>
