@@ -10,16 +10,18 @@
     flex-direction: column  ;
     justify-content: center;
     padding: 2rem;
-    background-color: white;
-    border: 2px solid gray;
+    background-color: #f9b248;
+    border: 3px solid #0066b2;
     max-width: 40rem;
     font-size: 1.2rem;
 }
 
 .sign-in-h1 {
-    padding: 1rem;
+    padding: 0rem 1rem;
     margin: auto;
+    margin-bottom: 2rem;
     min-width: fit-content;
+    border-bottom: 3px solid #fc3a52;
 }
 
 .register_link {

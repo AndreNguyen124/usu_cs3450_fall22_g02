@@ -1,5 +1,5 @@
 /*
-blue: 0e2431
+blue: 0066b2
 red: fc3a52
 yellow: f9b248
 tan: e8d5b7
@@ -25,6 +25,7 @@ h1 h2 {
     min-height: 100vh;
     justify-content: center;
     flex-direction: column;
+    background-image: url("media/coffee-background.png");
     background-color: #E5D1B3;
 }
 
@@ -98,9 +99,9 @@ h1 h2 {
 .column-heading {
     font-size: 2rem;
     color: #fc3a52;
+    background-color: #E5D1B3;
     text-shadow: 1px 1px #0e2431;
-    width: fit-content;
-    padding: 0rem 2rem;
+    padding: 1rem 2rem;
 }
 
 .column-container {

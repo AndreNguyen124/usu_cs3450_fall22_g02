@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #f9b248;
+    border: 3px solid #0066b2;
+    max-width: fit-content;
+    margin: auto;
 }
 
 .field-container {
@@ -14,4 +18,8 @@
     padding: 1.2rem;
     font-size: 1.2rem;
     margin: 1.2rem;
+}
+
+.register-here-text {
+    padding: 2rem;
 }
