@@ -83,7 +83,6 @@ def inventory(request):
     inventory_list = Inventory_Item.objects.order_by('name')
     context = {
             'inventory_list' : inventory_list
-
             }
 
     return render(request, 'coffee/inventory.html', context)
