@@ -3,9 +3,9 @@
 
 {% block title %} Manage Inventory {% endblock %}
 
+{% block page_heading %} Manage Inventory {% endblock %}
+
 {% block content %}
-    <div class="container">
-        <h1>Manage Inventory Here</h1>
         {% if inventory_list %}
         <table class="table">
             <thead>
@@ -33,7 +33,6 @@
         {% else %}
             <h5>No inventory items in database</h5>
         {% endif %}
-    </div>
 {% endblock %}
 
 
