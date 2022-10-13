@@ -23,3 +23,4 @@ class Inventory_Item(models.Model):
 
     def __str__(self):
         return f"\n\tid: {self.id} \n\tName: {self.name} \n\tQuantity: {self.quantity} \n\tPrice: {self.price}"
+

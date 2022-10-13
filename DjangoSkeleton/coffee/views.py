@@ -2,77 +2,93 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
+from .decorators import unauthenticated_user, allowed_users
 
 from .models import Inventory_Item
 from .forms import InventoryForm, CreateUserForm
 
-
+@unauthenticated_user
 def loginPage(request):
-    if request.user.is_authenticated:
-        return redirect('coffee:userView')
-    else:
-        if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-            user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=username, password=password)
 
-            if user is not None:
-                login(request, user)
-                return redirect('coffee:userView')
-            else:
-                messages.info(request, 'Username or password is incorrect')
-                
+        if user is not None:
+            login(request, user)
+            if request.user.groups.exists():
+                group = request.user.groups.all()[0].name
+                if group == 'Customer':
+                    return redirect('coffee:userView')
+                elif group == 'Employee':
+                    return redirect('coffee:employeeView')
+                else:
+                    return redirect('coffee:managerView')
+        else:
+            messages.info(request, 'Username or password is incorrect')
+            
 
-        context = {}
-        return render(request, 'coffee/login.html', context)
+    context = {}
+    return render(request, 'coffee/login.html', context)
 
 def logoutUser(request):
     logout(request)
     return redirect('coffee:login')
 
+@unauthenticated_user
 def registerPage(request):
-    if request.user.is_authenticated:
-        return redirect('coffee:userView')
-    else:
-        form = CreateUserForm()
-        if request.method == 'POST':
-            form = CreateUserForm(request.POST)
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        
+        if form.is_valid():
+            user = form.save()
+            group = Group.objects.get(name='Customer')
+            user.groups.add(group)
             
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Account was created successfully')
+            messages.success(request, 'Account was created successfully')
+            return redirect('coffee:login')
 
-                return redirect('coffee:login')
-
-        context = {'form': form}
-        return render(request, 'coffee/register.html', context)
+    context = {'form': form}
+    return render(request, 'coffee/register.html', context)
 
 @login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def userView(request):
     return render(request, 'coffee/userView.html')
 
 @login_required(login_url='coffee:login')
-def managerView(request):
-    return render(request, 'coffee/managerView.html');
+@allowed_users(allowed_roles=['Manager', 'Employee'])
+def employeeView(request):
+    return render(request, 'coffee/employeeView.html')
 
 @login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
+def managerView(request):
+    return render(request, 'coffee/managerView.html')
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def manageEmployees(request):
-    return render(request, 'coffee/manageEmployees.html');
+    return render(request, 'coffee/manageEmployees.html')
 	
-@login_required(login_url='coffee:login')	
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])	
 def inventory(request):
     inventory_list = Inventory_Item.objects.order_by('name')
     context = {
             'inventory_list' : inventory_list
-
             }
 
     return render(request, 'coffee/inventory.html', context)
 
 @login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def update_inventory(request, pk):
     item = Inventory_Item.objects.get(id=pk)
     if request.method=='POST':
