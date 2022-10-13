@@ -4,6 +4,12 @@
     font-size: 1.2rem;
 }
 
+.main-section {
+    justify-content: left;
+}
 
+.column-container {
+    margin: 2rem;
+}
 
 

@@ -69,11 +69,6 @@ h1 h2 {
     background-color: #fbf2d5; 
 }
 
-.navbar img {
-    height: 100px;
-    padding: 0;
-}
-
 /* Heading - Navbar ish */
 .logout-btn {
     padding: 20px;
@@ -95,7 +90,7 @@ h1 h2 {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: space-between;
+    justify-content: center;
     flex-grow: 1;
 }
 
@@ -105,13 +100,17 @@ h1 h2 {
     color: #fc3a52;
     text-shadow: 1px 1px #0e2431;
     width: fit-content;
+    padding: 0rem 2rem;
 }
 
 .column-container {
     display: flex;
     flex-direction: column;
-    margin: 2em;
+    margin: auto;
+    max-width: 100rem;
 }  
+
+
 
 /* footer styling */
 .main-footer {
