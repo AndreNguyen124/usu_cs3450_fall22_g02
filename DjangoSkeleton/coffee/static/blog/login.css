@@ -7,6 +7,7 @@
     margin-top:auto;
     margin-bottom: auto;
     display: flex;
+    flex-direction: column  ;
     justify-content: center;
     padding: 2rem;
     background-color: white;
@@ -18,6 +19,15 @@
 .sign-in-h1 {
     padding: 1rem;
     margin: auto;
+    min-width: fit-content;
+}
+
+.register_link {
+    margin: auto;
+}
+
+.register_link a {
+    text-decoration: none;
 }
 
 input {

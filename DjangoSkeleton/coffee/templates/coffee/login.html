@@ -22,13 +22,24 @@
           <input type="password" id="lname" name="password" class="form-control" ><br><br>
           <input type="submit" value="Login">
         </form> 
-        <div>
+        <div class="register_link">
           Don't have an account yet? <a href="{% url 'coffee:register' %}" >Register</a>
         </div>
       </section>
+
+      <script>
+        function alertMessage(message) {
+          alert(message);
+        }
+      </script>
+
+
     {% for message in messages %}
-        <p> {{message}} </p>
+        <script>alertMessage('{{message}}')</script>
     {% endfor %}
+
+
+
 </body>
 </html>
 

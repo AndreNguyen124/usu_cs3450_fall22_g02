@@ -15,8 +15,9 @@ body {
     font-size: 1.2rem;
 }
 
-h1 {
+h1 h2 {
     margin: 0;
+    min-width: fit-content;
 }
 
 .full-height-grow {

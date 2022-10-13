@@ -5,40 +5,43 @@
     <head>
         <meta charset="utf-8" />
         <title>Inventory Management</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     </head>
-    <div class="container">
-        <h1>Manage Inventory Here</h1>
-        {% if inventory_list %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Ingredient</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in inventory_list %}
-                <tr>
-                    <th scope="row">{{ item.name }}</th>
-                    <td>{{ item.price }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>
-                        <a class="btn btn-info" href="{% url 'coffee:update-inventory' item.id %}">+</a>
-                    </td>
+    <body class="full-height-grow">
+        <section class="main-container">
+            <h1>Manage Inventory Here</h1>
+            {% if inventory_list %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Ingredient</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in inventory_list %}
+                    <tr>
+                        <th scope="row">{{ item.name }}</th>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>
+                            <a class="btn btn-info" href="{% url 'coffee:update-inventory' item.id %}">+</a>
+                        </td>
 
-                </tr>
-                {% endfor %}
+                    </tr>
+                    {% endfor %}
 
 
-            </tbody>
-        </table>
-        {% else %}
-            <h5>No inventory items in database</h5>
-        {% endif %}
+                </tbody>
+            </table>
+            {% else %}
+                <h5>No inventory items in database</h5>
+            {% endif %}
 
-    </div>
+        </section>
+    </body>
 </html>
 
