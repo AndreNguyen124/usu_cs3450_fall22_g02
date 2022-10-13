@@ -12,8 +12,10 @@
     </head>
     <body class="full-height-grow">
         {% include './header.html' %}
-        {% block content %}
-        {% endblock %}
+        <section class="main-section">
+            {% block content %}
+            {% endblock %}
+        </section>
         {% include './footer.html' %}
     </body>
 </html>
