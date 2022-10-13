@@ -1,41 +1,11 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-    <head>
-      <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'blog/managerStyle.css' %}">
-      <script src="script.js" defer></script>
-      <title>Manage Employees</title>
-    </head>
+{% extends './partials/base.html' %}
 
-    <body class="full-height-grow">
-      <nav class="navbar">
-        <div class="heading">
-          <h1>Employee Management</h1>
-        </div>
-        
-        <ul class="navbar-links">
-          <li><a href="/managerView">Customers</a></li>
-          <li><a href="/manageEmployees">Employees</a></li>
-          <li><a href="/inventory">Manage Store</a></li>
-        </ul>
-        <form action="/logout">
-          <input type="submit" value="Logout" class="logout-btn">
-        </form>
-      </nav>
+{% block title %} Manage Employees {% endblock %}
+{% block page_heading %} Search for Employee {% endblock %}
 
-      <section class="main-section">
+{% block content %}
+    <div class="column-container">
+        <input type="search" class="search-customers" placeholder="Employee Lookup"/>  
+    </div>
+{% endblock %}
 
-        <div class="column-container">
-          <h1 class="column-heading">Search for Employee</h1>
-          <input type="search" class="search-customers" placeholder="Employee Lookup"/>  
-        </div>
-
-      </section>
-
-      <footer class="main-footer">
-        <p>All rights reserved to Dan's Cool Beans</p>
-      </footer>
-
-    </body>
-</html>
