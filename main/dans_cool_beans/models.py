@@ -9,3 +9,6 @@ class Inventory_Item(models.Model):
 
     def __str__(self):
         return f"id: {self.id}  |  Name: {self.name}"
+
+
+
