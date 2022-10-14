@@ -4,9 +4,11 @@
     </div>
     
     <ul class="navbar-links">
+        {% if request.user.groups.all()[0].name = "Manager"}
         <li><a href="/managerView">Customers</a></li>
         <li><a href="/manageEmployees">Employees</a></li>
         <li><a href="/inventory">Manage Store</a></li>
+        {% endif %}
     </ul>
     <form action="/logout">
         <input type="submit" value="Logout" class="logout-btn">
