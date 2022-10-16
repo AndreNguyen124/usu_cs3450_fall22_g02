@@ -57,6 +57,8 @@ h1 h2 {
     font-size: 1.5rem;
     max-height: 100px;
     flex-grow: 1;
+    width: fit-content;
+    white-space: nowrap ;
 }
 
 .navbar-links li a {
@@ -101,17 +103,21 @@ h1 h2 {
     color: #fc3a52;
     background-color: #E5D1B3;
     text-shadow: 1px 1px #0e2431;
+    margin: 1rem;
     padding: 1rem 2rem;
+    border-radius: 5px;
 }
 
 .column-container {
     display: flex;
     flex-direction: column;
     margin: auto;
-    max-width: 100rem;
 }  
 
-
+/* add box shadow to any elements that gives it a pop :) */
+.boxShadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
 /* footer styling */
 .main-footer {
@@ -122,4 +128,47 @@ h1 h2 {
 
 .main-footer p {
     color:#f9b248;
+}
+
+
+/* Table Styling */
+.table {
+    background-color: #e8d5b7;
+    border-radius: 5px;
+}
+
+.table th, td {
+    width: fit-content;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.col-md-6 {
+    margin: auto;
+}
+
+.btn {
+    background-color: #0066b2;
+    color: white;
+}
+
+#id_quantity {
+    margin: auto;
+}
+
+.bg-white {
+    width: fit-content;
+    margin-bottom: 25rem;
+}
+
+.offset-md-3 {
+    width: fit-content;
+}
+
+.table th {
+    padding: 1.5rem;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
