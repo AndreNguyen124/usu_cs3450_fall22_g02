@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 
 from .models import Inventory_Item, Drink_Item
-from .forms import InventoryForm, CreateUserForm
+from .forms import InventoryForm, CreateUserForm, DrinkForm
 
 
 @unauthenticated_user
@@ -118,10 +118,6 @@ def update_inventory(request, pk):
     return render(request, 'coffee/update_inventory.html', context)
 
 
-# def product_delete(request, pk):
-#     item = Drink_Item.objects.get(id=pk)
-#     return render(request, )
-
 def drink(request):
     return render(request, 'coffee/drink.html')
 
@@ -133,3 +129,47 @@ def drinkProduct(request):
     }
 
     return render(request, 'coffee/drink.html', context)
+
+
+def addDrinkProduct(request, pk):
+    item = Drink_Item.objects.get(id=pk)
+    if request.method == 'POST':
+        form = DrinkForm(request.POST)
+        if form.is_valid():
+            item.save()
+            form.save()
+            return redirect('coffee:drink')
+    else:
+        form = DrinkForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'coffee/drink_add.html', context)
+
+
+def product_delete(request, pk):
+    item = Drink_Item.objects.get(id=pk)
+
+    if request.method == 'POST':
+        item.delete()
+        return redirect('coffee:drink')
+    return render(request, 'coffee/drink_delete.html')
+
+
+def product_update(request, pk):
+    item = Drink_Item.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form = DrinkForm(request.POST, instance=item)
+
+        if form.is_valid():
+            form.save()
+            return redirect('coffee:drink')
+    else:
+        form = DrinkForm(instance=item)
+    context = {
+        'form': form
+
+    }
+    return render(request, 'coffee/drink_update.html', context)
