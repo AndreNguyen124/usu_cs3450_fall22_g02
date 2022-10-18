@@ -1,81 +1,55 @@
-<!DOCTYPE html>
+{% extends './partials/base.html' %}
 {% load static %}
-<html>
-    <head>
-      <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'blog/userStyle.css' %}">
-      <script src="script.js" defer></script>
-      <title>Welcome User</title>
-    </head>
 
-    <body class="full-height-grow">
-      <nav class="navbar">
-        <div class="heading">
-          <h1>Welcome {{request.user}}!</h1>
-        </div>
-        <form action="/logout">
-          <input type="submit" value="Logout" class="logout-btn">
-        </form>
-      </nav>
+{% block title %} Welcome User {% endblock %}
+{% block page_heading %} Start New Order {% endblock %}
 
-      <section class="main-section">
-        <div class="column-container">
-          <h1 class="column-heading">Start New Order</h1>
+{% block content %}
+<div class="order">
+    <div class="image">
+        <img src="{% static 'blog/media/aFrap.jpeg' %}">
+    </div>
+    <div class="order-description">
+        <h2>Fancy Frap 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+          dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+    </div>
+    <div class="price-of-order">
+        <h1>$6.50</h1>
+    </div>
+</div>
 
-            <div class="order">
-              <div class="image">
-                <img src="{% static 'blog/media/aFrap.jpeg' %}">
-              </div>
-              <div class="order-description">
-                <h2>Fancy Frap 1</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-                  dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-              </div>
-              <div class="price-of-order">
-                <h1>$6.50</h1>
-              </div>
-            </div>
+<div class="order">
+    <div class="image">
+        <img src="{% static 'blog/media/aFrap.jpeg' %}">
+    </div>
+    <div class="order-description">
+        <h2>Fancy Frap 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+          dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+    </div>
+    <div class="price-of-order">
+        <h1>$6.50</h1>
+    </div>
+</div>
 
-            <div class="order">
-              <div class="image">
-                <img src="{% static 'blog/media/aFrap.jpeg' %}">
-              </div>
-              <div class="order-description">
-                <h2>Fancy Frap 1</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-                  dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-              </div>
-              <div class="price-of-order">
-                <h1>$6.50</h1>
-              </div>
-            </div>
-
-            <div class="order">
-              <div class="image">
-                <img src="{% static 'blog/media/aFrap.jpeg' %}">
-              </div>
-              <div class="order-description">
-                <h2>Fancy Frap 1</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-                  dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-              </div>
-              <div class="price-of-order">
-                <h1>$6.50</h1>
-              </div>
-            </div>
-
-        </div>
-      </section>
-
-      <footer class="main-footer">
-        <p>All rights reserved to Dan's Cool Beans</p>
-      </footer>
-
-    </body>
-</html>
+<div class="order">
+    <div class="image">
+        <img src="{% static 'blog/media/aFrap.jpeg' %}">
+    </div>
+    <div class="order-description">
+        <h2>Fancy Frap 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+          dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+    </div>
+    <div class="price-of-order">
+        <h1>$6.50</h1>
+    </div>
+</div>
+{% endblock %}
