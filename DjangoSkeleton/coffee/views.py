@@ -117,6 +117,13 @@ def update_inventory(request, pk):
     }
     return render(request, 'coffee/update_inventory.html', context)
 
+def product_delete(request, pk):
+    item = Drink_Item.objects.get(id=pk)
+
+    if request.method == 'POST':
+        item.delete()
+        return redirect('coffee:drink')
+    return render(request, 'coffee/drink_delete.html')
 
 def drink(request):
     return render(request, 'coffee/drink.html')

@@ -13,8 +13,8 @@
     <body class="full-height-grow">
         {% include './header.html' %}
         <section class="main-section">
-            <div class="container">
-                <h1>{% block page_heading %}{% endblock %}</h1>
+            <div class="column-container">
+                <h1 class="column-heading boxShadow" >{% block page_heading %}{% endblock %}</h1>
 
                 {% block content %}
                 {% endblock %}
