@@ -118,9 +118,10 @@ def update_inventory(request, pk):
     return render(request, 'coffee/update_inventory.html', context)
 
 
-# def product_delete(request, pk):
+def product_delete(request, pk):
 #     item = Drink_Item.objects.get(id=pk)
 #     return render(request, )
+    pass
 
 def drink(request):
     return render(request, 'coffee/drink.html')
