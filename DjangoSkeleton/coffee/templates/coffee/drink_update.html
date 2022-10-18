@@ -1,23 +1,21 @@
 {% extends './partials/base.html' %}
 
-{% block title %} Drinks {% endblock %}
-{% block page_heading %} Delete Drink? {% endblock %}
+{% block title %} Update Drink {% endblock %}
+{% block page_heading %} Update Drink {% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-6 offset-md-3">
             <div class="border bg-white p-3">
-                <h3>Delete Item</h3>
+                <h3>Edit Item</h3>
                 <hr>
-                <div class="alert alert=danger">
-                    <h4> Are you sure you want to delete</h4>
-                </div>
+
                 <form method ="POST">
                     {% csrf_token %}
                     {{ form }}
                     <a class="btn btn-secondary" href="{% url 'coffee:drink' %}">Cancel</a>
-                    <input class ="btn btn-danger" type ="submit" value="Confirm">
+                    <input class ="btn btn-info" type ="submit" value="Update">
                 </form>
             </div>
         </div>

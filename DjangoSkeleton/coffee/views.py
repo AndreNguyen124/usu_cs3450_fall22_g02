@@ -61,31 +61,31 @@ def registerPage(request):
 
 
 @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
+@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def userView(request):
     return render(request, 'coffee/userView.html')
 
 
 @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager', 'Employee'])
+@allowed_users(allowed_roles=['Manager', 'Employee'])
 def employeeView(request):
     return render(request, 'coffee/employeeView.html')
 
 
 @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager'])
+@allowed_users(allowed_roles=['Manager'])
 def managerView(request):
     return render(request, 'coffee/managerView.html')
 
 
 @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager'])
+@allowed_users(allowed_roles=['Manager'])
 def manageEmployees(request):
     return render(request, 'coffee/manageEmployees.html')
 
 
 @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager'])
+@allowed_users(allowed_roles=['Manager'])
 def inventory(request):
     inventory_list = Inventory_Item.objects.order_by('name')
     context = {
@@ -96,7 +96,7 @@ def inventory(request):
 
 
 @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager'])
+@allowed_users(allowed_roles=['Manager'])
 def update_inventory(request, pk):
     item = Inventory_Item.objects.get(id=pk)
     if request.method == 'POST':
@@ -121,7 +121,8 @@ def update_inventory(request, pk):
 def drink(request):
     return render(request, 'coffee/drink.html')
 
-
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def drinkProduct(request):
     drink_list = Drink_Item.objects.order_by('name')
     context = {
@@ -130,7 +131,8 @@ def drinkProduct(request):
 
     return render(request, 'coffee/drink.html', context)
 
-
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def addDrinkProduct(request, pk):
     item = Drink_Item.objects.get(id=pk)
     if request.method == 'POST':
@@ -147,7 +149,8 @@ def addDrinkProduct(request, pk):
     }
     return render(request, 'coffee/drink_add.html', context)
 
-
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def product_delete(request, pk):
     item = Drink_Item.objects.get(id=pk)
 
@@ -156,7 +159,8 @@ def product_delete(request, pk):
         return redirect('coffee:drink')
     return render(request, 'coffee/drink_delete.html')
 
-
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def product_update(request, pk):
     item = Drink_Item.objects.get(id=pk)
 
