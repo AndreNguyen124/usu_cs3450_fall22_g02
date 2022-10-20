@@ -1,14 +1,7 @@
-<!DOCTYPE html>
+{% extends './partials/base.html' %}
 {% load static %}
-<html>
-    <head>
-      <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'blog/managerStyle.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'blog/userStyle.css' %}">
-      <script src="script.js" defer></script>
-      <title>Manager View</title>
-    </head>
 
+<<<<<<< HEAD
     <body class="full-height-grow">
       <nav class="navbar">
         <div class="heading">
@@ -48,3 +41,49 @@
 
     </body>
 </html>
+=======
+{% block title %} Manager View {% endblock %}
+{% block page_heading %} Start New Order {% endblock %}
+
+{% block content %}
+<div class="order">
+    <div class="image">
+        <img src="{% static 'blog/media/aFrap.jpeg' %}">
+    </div>
+    <div class="order-description">
+        <h2>Fancy Frap 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+           incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+           exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+           dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+    </div>
+</div>
+
+<div class="order">
+    <div class="image">
+        <img src="{% static 'blog/media/aFrap.jpeg' %}">
+    </div>
+    <div class="order-description">
+    <h2>Fancy Frap 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+          dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+    </div>
+</div>
+
+<div class="order">
+    <div class="image">
+        <img src="{% static 'blog/media/aFrap.jpeg' %}">
+    </div>
+    <div class="order-description">
+        <h2>Fancy Frap 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+           incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+           exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+           dolor in reprehenderit in voluptate velit esse cillum dolore
+        </p>
+    </div>
+</div>
+{% endblock %}
+>>>>>>> 446784421078033473aa95e508a90204b1cd271a
