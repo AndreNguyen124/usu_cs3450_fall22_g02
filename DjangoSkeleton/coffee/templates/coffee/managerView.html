@@ -1,47 +1,20 @@
 {% extends './partials/base.html' %}
-{% load static %}
 
 {% block title %} Manager View {% endblock %}
 {% block page_heading %} Start New Order {% endblock %}
 
 {% block content %}
-<div class="order">
-    <div class="image">
-        <img src="{% static 'blog/media/aFrap.jpeg' %}">
-    </div>
-    <div class="order-description">
-        <h2>Fancy Frap 1</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-           incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-           exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-           dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-    </div>
-</div>
+<div class="row-container">
 
-<div class="order">
-    <div class="image">
-        <img src="{% static 'blog/media/aFrap.jpeg' %}">
-    </div>
-    <div class="order-description">
-    <h2>Fancy Frap 1</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-          dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-    </div>
-</div>
+  <div class="manage-edit">
+    <a class="boxShadow" href="#">Manage Inventory</a>
+    <a class="boxShadow" href="#">Edit Menu</a>
+  </div>
 
-<div class="order">
-    <div class="image">
-        <img src="{% static 'blog/media/aFrap.jpeg' %}">
-    </div>
-    <div class="order-description">
-        <h2>Fancy Frap 1</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-           incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-           exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-           dolor in reprehenderit in voluptate velit esse cillum dolore
-        </p>
-    </div>
+  <div class="manage-employees">
+    <a class="boxShadow" href="#">Add New Employee</a>
+    <a class="boxShadow" href="#">Pay Employees</a>
+  </div>
+  
 </div>
 {% endblock %}
