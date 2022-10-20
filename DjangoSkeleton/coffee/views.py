@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 
 from .models import Inventory_Item, Drink_Item
-from .forms import InventoryForm, CreateUserForm
+from .forms import InventoryForm, CreateUserForm, DrinkForm
 
 
 @unauthenticated_user
@@ -117,16 +117,19 @@ def update_inventory(request, pk):
     }
     return render(request, 'coffee/update_inventory.html', context)
 
-
 def product_delete(request, pk):
-#     item = Drink_Item.objects.get(id=pk)
-#     return render(request, )
-    pass
+    item = Drink_Item.objects.get(id=pk)
+
+    if request.method == 'POST':
+        item.delete()
+        return redirect('coffee:drink')
+    return render(request, 'coffee/drink_delete.html')
 
 def drink(request):
     return render(request, 'coffee/drink.html')
 
-
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def drinkProduct(request):
     drink_list = Drink_Item.objects.order_by('name')
     context = {
@@ -134,3 +137,50 @@ def drinkProduct(request):
     }
 
     return render(request, 'coffee/drink.html', context)
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
+def addDrinkProduct(request, pk):
+    item = Drink_Item.objects.get(id=pk)
+    if request.method == 'POST':
+        form = DrinkForm(request.POST)
+        if form.is_valid():
+            item.save()
+            form.save()
+            return redirect('coffee:drink')
+    else:
+        form = DrinkForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'coffee/drink_add.html', context)
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
+def product_delete(request, pk):
+    item = Drink_Item.objects.get(id=pk)
+
+    if request.method == 'POST':
+        item.delete()
+        return redirect('coffee:drink')
+    return render(request, 'coffee/drink_delete.html')
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
+def product_update(request, pk):
+    item = Drink_Item.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form = DrinkForm(request.POST, instance=item)
+
+        if form.is_valid():
+            form.save()
+            return redirect('coffee:drink')
+    else:
+        form = DrinkForm(instance=item)
+    context = {
+        'form': form
+
+    }
+    return render(request, 'coffee/drink_update.html', context)
