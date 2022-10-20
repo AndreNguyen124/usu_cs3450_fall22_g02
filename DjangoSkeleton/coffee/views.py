@@ -61,31 +61,31 @@ def registerPage(request):
 
 
 @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
+@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def userView(request):
     return render(request, 'coffee/userView.html')
 
 
 @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager', 'Employee'])
+@allowed_users(allowed_roles=['Manager', 'Employee'])
 def employeeView(request):
     return render(request, 'coffee/employeeView.html')
 
 
 @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager'])
+@allowed_users(allowed_roles=['Manager'])
 def managerView(request):
     return render(request, 'coffee/managerView.html')
 
 
 @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager'])
+@allowed_users(allowed_roles=['Manager'])
 def manageEmployees(request):
     return render(request, 'coffee/manageEmployees.html')
 
 
 @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager'])
+@allowed_users(allowed_roles=['Manager'])
 def inventory(request):
     inventory_list = Inventory_Item.objects.order_by('name')
     context = {
@@ -96,7 +96,7 @@ def inventory(request):
 
 
 @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager'])
+@allowed_users(allowed_roles=['Manager'])
 def update_inventory(request, pk):
     item = Inventory_Item.objects.get(id=pk)
     if request.method == 'POST':
