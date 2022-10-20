@@ -35,3 +35,6 @@ class Drink_Item(models.Model):
 
     def __str__(self):
         return f"\n\tid: {self.id} \n\tName: {self.name} \n\tQuantity: {self.Ingredients} \n\tPrice: {self.price}"
+
+
+# order_item: composed of many drinks
