@@ -10,7 +10,7 @@ def get_absolute_url(self):
 
 
 class Price_Markup(models.Model):
-    markup = models.DecimalField(max_digits=5, decimal_places=2)
+    markup = models.IntegerField(default=0)
 
     def setPriceMarkup(self, newValue):
         self.markup = newValue

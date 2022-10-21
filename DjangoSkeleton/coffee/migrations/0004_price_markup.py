@@ -6,7 +6,7 @@ def populate_db(apps, schema_editor):
     Price_Markup = apps.get_model('coffee', 'Price_Markup')
     Price_Markup.objects.all().delete()
 
-    markup = Price_Markup(markup=0.43)
+    markup = Price_Markup(markup=43)
     markup.save()
 
 class Migration(migrations.Migration):
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             name='Price_Markup',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('markup', models.DecimalField(decimal_places=2, max_digits=5)),
+                ('markup', models.IntegerField(default=0)),
             ],
         ),
         migrations.RunPython(populate_db),
