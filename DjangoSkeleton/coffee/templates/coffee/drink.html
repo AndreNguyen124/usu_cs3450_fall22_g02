@@ -5,8 +5,7 @@
 
 {% block content %}
 <div>
-    <p>Price markup (%)</p>
-    <p>{{ markup.markup }}</p>
+    <p>Price markup: {{ markup.markup }}%</p>
     <a href="{% url 'coffee:update-markup' %}">Edit</a>
 </div>
         {% if drink_list %}
