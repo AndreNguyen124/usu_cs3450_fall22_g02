@@ -9,6 +9,17 @@ def get_absolute_url(self):
     return reverse('my_app:my_app', kwargs={'slug': self.slug})
 
 
+class Price_Markup(models.Model):
+    markup = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def setPriceMarkup(self, newValue):
+        self.markup = newValue
+        self.save()
+
+    def __str__(self):
+        return f"\n\tid: {self.id} \n\tMarkup: {self.markup}"
+
+
 class Inventory_Item(models.Model):
     name = models.CharField(max_length=200)
     quantity = models.IntegerField(default=0)

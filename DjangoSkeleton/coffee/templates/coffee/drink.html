@@ -4,6 +4,11 @@
 {% block page_heading %} Manage Drinks {% endblock %}
 
 {% block content %}
+<div>
+    <p>Price markup (%)</p>
+    <p>{{ markup.markup }}</p>
+    <a href="{% url 'coffee:update-markup' %}">Edit</a>
+</div>
         {% if drink_list %}
         <table class="table" style="border-color:#ccb593;">
 
