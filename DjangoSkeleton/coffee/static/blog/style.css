@@ -4,6 +4,8 @@ red: fc3a52
 yellow: f9b248
 tan: e8d5b7
 */
+
+/* Universal Styling */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -18,6 +20,15 @@ body {
 h1 h2 {
     margin: 0;
     min-width: fit-content;
+}
+
+a {
+    text-decoration: none;
+    color: #192124
+}
+
+a:hover {
+    background-color: #fbf2d5; 
 }
 
 .full-height-grow {
@@ -67,7 +78,6 @@ h1 h2 {
 .navbar-links li a {
     display: block;
     text-decoration: none;
-    color: #394a51;
     padding: 2.5rem;
 }
 
@@ -156,6 +166,8 @@ h1 h2 {
 .btn {
     background-color: #0066b2;
     color: white;
+    padding: 1rem;
+    border-radius: 5px;
 }
 
 #id_quantity {
@@ -177,4 +189,8 @@ h1 h2 {
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+
+.row {
+    display: flex;
 }
