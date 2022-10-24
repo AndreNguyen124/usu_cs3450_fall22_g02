@@ -8,8 +8,8 @@ from django.contrib.auth.decorators import login_required
 
 from .decorators import unauthenticated_user, allowed_users
 
-from .models import Inventory_Item, Drink_Item
-from .forms import InventoryForm, CreateUserForm, DrinkForm
+from .models import Inventory_Item, Drink_Item, Price_Markup
+from .forms import InventoryForm, CreateUserForm, DrinkForm, PriceMarkupForm
 
 
 @unauthenticated_user
@@ -151,12 +151,35 @@ def drink(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def drinkProduct(request):
+    markup = Price_Markup.objects.first()
+
     drink_list = Drink_Item.objects.order_by('name')
     context = {
-        'drink_list': drink_list
+        'drink_list': drink_list,
+            'markup': markup
     }
 
     return render(request, 'coffee/drink.html', context)
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
+def update_markup(request):
+    markupObj = Price_Markup.objects.first()
+    if request.method == 'POST':
+        form = PriceMarkupForm(request.POST, initial={'markup': markupObj.markup})
+        if form.is_valid():
+            form.save(commit=False)
+            markupObj.setPriceMarkup(form.cleaned_data['markup'])
+
+            return redirect('coffee:drink')
+
+    else:
+        form = PriceMarkupForm(initial={'markup': markupObj.markup})
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'coffee/update_markup.html', context)
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])

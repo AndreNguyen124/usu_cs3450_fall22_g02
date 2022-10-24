@@ -54,6 +54,11 @@ def populate_db(apps, schema_editor):
     customer.save()
     customer.groups.add(customer_group)
 
+    #Price_Markup = apps.get_model('coffee', 'Price_Markup')
+    #Price_Markup.objects.all().delete()
+    #markup = Price_Markup(markup=0.91)
+    #markup.save()
+
 
 class Migration(migrations.Migration):
 
