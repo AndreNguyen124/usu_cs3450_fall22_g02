@@ -86,6 +86,26 @@ def userView(request):
 
 
 @login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
+def customizeDrink(request):
+    #return render(request, 'coffee/customizeDrink.html')
+    form = DrinkForm()
+    if request.method == 'POST':
+        form = DrinkForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            group = Group.objects.get(name='Customer')
+            user.groups.add(group)
+
+            messages.success(request, 'Account was created successfully')
+            return redirect('coffee:login')
+
+    context = {'form': form}
+    return render(request, 'coffee/customizeDrink.html', context)
+    
+
+@login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Employee'])
 def employeeView(request):
     return render(request, 'coffee/employeeView.html')
