@@ -59,6 +59,23 @@ def registerPage(request):
     context = {'form': form}
     return render(request, 'coffee/register.html', context)
 
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
+def createEmployee(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            group = Group.objects.get(name='Employee')
+            user.groups.add(group)
+
+            messages.success(request, 'Employee account was created successfully')
+            return redirect('coffee:managerView')
+
+    context = {'form': form}
+    return render(request, 'coffee/createEmployee.html', context)
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])

@@ -12,6 +12,7 @@ urlpatterns = [
     path('employeeView/', views.employeeView, name='employeeView'),
     path('managerView/', views.managerView, name='managerView'),
     path('manageEmployees/', views.manageEmployees, name='manageEmployees'),
+    path('createEmployee/', views.createEmployee, name='createEmployee'),
     path('inventory/', views.inventory, name='inventory'),
     path('inventory/update/<int:pk>/', views.update_inventory, name="update-inventory"),
     path('drink', views.drinkProduct, name="drink"),

@@ -7,12 +7,12 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'blog/registerStyle.css' %}">
-  <title>Register</title>
+  <title>Create Employee</title>
 </head>
 
 <body class="full-height-grow">
     <section class="register-container">
-        <h3>Register</h3>
+        <h3>Create New Employee Account</h3>
 
         <form method="POST" action="" class="field-container">
             {% csrf_token %}
@@ -25,11 +25,9 @@
             {{form.password2}}
 
 
-            <input type="submit" name="Create User">
+            <input type="submit" name="Create Employee">
         </form>
-        <div class="register-here-text">
-            Already have an account? <a href="{% url 'coffee:login' %}" >Login</a>
-        </div>
+        
     </section>  
 </body>
 </html>
