@@ -25,11 +25,7 @@ class Profile(models.Model):
         newUser = instance
         if created:
             Profile.objects.create(user=newUser)
-            # group = newUser.groups.all()[0].name
-            # if group == "Employee":
-            #     Profile.objects.create(user=newUser, hours_worked=0.0)
-            # else:
-            #     Profile.objects.create(user=newUser)
+            
 
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
