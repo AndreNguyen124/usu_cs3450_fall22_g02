@@ -2,6 +2,22 @@
 
 from django.db import migrations, models
 
+def populate_db(apps, schema_editor):
+    Drink_Item = apps.get_model('coffee', 'Drink_Item')
+    Drink_Item.objects.all().delete()
+
+    i1 = Drink_Item(name='Frappuccino', Ingredients='1 Ice, 2 Espresso Shots, 2 Milk, 1 Sweetener', price=6.99)
+    i1.save()
+
+    i2 = Drink_Item(name='Latte', Ingredients='2 Espresso Shots, 1 Milk, 1 Sugar', price=5.99)
+    i2.save()
+
+    i3 = Drink_Item(name='Pink Drink', Ingredients='1 Milk, 3 Sugar, 2 Strawberry', price=4.99)
+    i3.save()
+
+    i4 = Drink_Item(name='Pumpkin Spice', Ingredients='1 Milk, 1 Pumpkin, 2 Cinnamon, 2 Espresso Shots', price=10.99)
+    i4.save()
+
 
 class Migration(migrations.Migration):
 
@@ -19,4 +35,7 @@ class Migration(migrations.Migration):
                 ('price', models.DecimalField(decimal_places=2, max_digits=5)),
             ],
         ),
+
+        migrations.RunPython(populate_db)
+
     ]
