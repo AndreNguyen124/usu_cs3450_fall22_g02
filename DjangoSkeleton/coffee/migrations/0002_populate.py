@@ -38,22 +38,6 @@ def populate_db(apps, schema_editor):
     i10 = Inventory_Item(name='Cup', quantity=50, price=0.60)
     i10.save()
 
-    manager_group, createdm = Group.objects.get_or_create(name='Manager')
-    customer_group, createdc = Group.objects.get_or_create(name='Customer')
-    employee_group, createde = Group.objects.get_or_create(name='Employee')
-
-    manager = User.objects.create_user(username='managerDan', password='imtheboss')
-    manager.save()
-    manager.groups.add(manager_group)
-
-    employee = User.objects.create_user(username='workerJill', password='ilovetowork')
-    employee.save()
-    employee.groups.add(employee_group)
-    
-    customer = User.objects.create_user(username='personJoe', password='goodpassword')
-    customer.save()
-    customer.groups.add(customer_group)
-
     #Price_Markup = apps.get_model('coffee', 'Price_Markup')
     #Price_Markup.objects.all().delete()
     #markup = Price_Markup(markup=0.91)

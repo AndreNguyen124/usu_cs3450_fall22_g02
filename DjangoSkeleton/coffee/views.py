@@ -70,6 +70,8 @@ def createEmployee(request):
             user = form.save()
             group = Group.objects.get(name='Employee')
             user.groups.add(group)
+            user.profile.hours_worked = 0
+            user.save()
 
             messages.success(request, 'Employee account was created successfully')
             return redirect('coffee:managerView')
