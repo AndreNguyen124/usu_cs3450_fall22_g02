@@ -1,5 +1,5 @@
 from django import forms
-from .models import Inventory_Item, Drink_Item, Price_Markup
+from .models import Inventory_Item, Drink_Item, Price_Markup, Profile
 
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -30,6 +30,16 @@ class DrinkForm(forms.ModelForm):
         model = Drink_Item
         fields = ['name', 'Ingredients', 'price']
 
+
 #class OrderForm(forms.ModelForm):
 #    class Meta:
 #        model =
+
+
+class AccountBalanceForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['account_balance']
+        widgets = {
+                'account_balance': forms.NumberInput(attrs={'step': 1.00}),
+                }
