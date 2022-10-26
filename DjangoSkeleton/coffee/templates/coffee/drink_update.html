@@ -4,7 +4,7 @@
 {% block page_heading %} Update Drink {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="table">
     <div class="row mt-5">
         <div class="col-md-6 offset-md-3">
             <div class="border bg-white p-3">
@@ -13,7 +13,7 @@
 
                 <form method ="POST">
                     {% csrf_token %}
-                    {{ form }}
+                    <div class="inputStyling main-section">{{ form }}</div>
                     <a class="btn btn-secondary" href="{% url 'coffee:drink' %}">Cancel</a>
                     <input class ="btn btn-info" type ="submit" value="Update">
                 </form>

@@ -30,3 +30,6 @@ class DrinkForm(forms.ModelForm):
         model = Drink_Item
         fields = ['name', 'Ingredients', 'price']
 
+#class OrderForm(forms.ModelForm):
+#    class Meta:
+#        model =

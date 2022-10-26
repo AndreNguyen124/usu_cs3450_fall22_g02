@@ -133,6 +133,9 @@ a:hover {
 .boxShadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
+    background-color: #E5D1B3;
+    padding: 2rem;
+    margin: 2rem;
 }
 
 /* footer styling */
@@ -160,7 +163,7 @@ a:hover {
 }
 
 .col-md-6 {
-    margin: auto;
+    margin: 2rem;
 }
 
 .btn {
@@ -193,4 +196,19 @@ tr:nth-child(even) {
 
 .row {
     display: flex;
+    justify-content: space-between;
+}
+
+/* Forum Styling */
+.labelStyling {
+    margin: 0;
+    font-size: 1.6rem;
+    width: fit-content;
+    border-bottom: 4px dashed #fc3a52;
+}
+
+.inputStyling *{
+    font-size: 1.2rem;
+    padding: 1.2rem;
+    margin: 1.2rem;
 }

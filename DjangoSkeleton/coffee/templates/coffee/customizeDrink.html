@@ -8,10 +8,10 @@
 
 <div class="displayDrinkContainer">
     <div class="larger-image">
-        <img src="{% static 'blog/media/aFrap.jpeg' %}">
+        <img class="boxShadow" src="{% static 'blog/media/aFrap.jpeg' %}">
     </div>
     <div class="drinkOptionsConatiner boxShadow">
-        <h2>Fancy Frap 1</h2>
+        <h2>{{ drink.name }}</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
         incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
         exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
@@ -20,14 +20,14 @@
         <form method="POST" action="" class="customizeDrink-InputForum">
             {% csrf_token %}
             
-            {{form.name.label}}
-            {{form.name}}
-            {{form.Ingredients.label}}
-            {{form.Ingredients}}
-            {{form.price.label}}
-            {{form.price}}
+            <div class="labelStyling">{{form.name.label}}</div>
+            <div class="inputStyling">{{form.name}}</div>
+            <div class="labelStyling">{{form.Ingredients.label}}</div>
+            <div class="inputStyling">{{form.Ingredients}}</div>
+            <div class="labelStyling">{{form.price.label}}</div>
+            <div class="inputStyling">{{form.price}}</div>
 
-            <input type="submit" name="Create User">
+            <div class="inputStyling"><input type="Submit Order" name="Create User"></div>
         </form>
 
     </div>
