@@ -10,7 +10,15 @@
     </ul>
     
     <div class="heading">
-        <h1>Welcome {{ request.user }}!</h1>
+        <h1>Welcome {{ request.user.username }}!</h1>
+    </div>
+    <div class="row-container">
+        <div class="column-container">
+            <p>Account Balance: ${{ baseUser.account_balance }}</p>
+        </div>
+        <div class="column-container">
+            <a href="{% url 'coffee:update-balance' %}">+</a>
+        </div>
     </div>
 
 </nav>

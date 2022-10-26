@@ -31,6 +31,16 @@ class Profile(models.Model):
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
 
+    
+    def increaseBalance(self, amount):
+        self.account_balance += amount
+        self.save()
+
+    def decreaseBalance(self, amount):
+        self.account_balance -= amount
+        self.save()
+
+
     def __str__(self):
         return f"\n\tUser: {self.user}"
 

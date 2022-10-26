@@ -8,8 +8,8 @@ from django.contrib.auth.decorators import login_required
 
 from .decorators import unauthenticated_user, allowed_users
 
-from .models import Inventory_Item, Drink_Item, Price_Markup
-from .forms import InventoryForm, CreateUserForm, DrinkForm, PriceMarkupForm
+from .models import Inventory_Item, Drink_Item, Price_Markup, Profile
+from .forms import InventoryForm, CreateUserForm, DrinkForm, PriceMarkupForm, AccountBalanceForm
 
 
 @unauthenticated_user
@@ -78,6 +78,28 @@ def createEmployee(request):
 
     context = {'form': form}
     return render(request, 'coffee/createEmployee.html', context)
+
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
+def update_account_balance(request):
+    user = Profile.objects.get(id=request.user.id)
+    if request.method == 'POST':
+        form = AccountBalanceForm(request.POST, initial={'account_balance': 1})
+        if form.is_valid():
+            form.save(commit=False) 
+            user.increaseBalance(form.cleaned_data['account_balance'])
+
+            return redirect('coffee:login')
+
+    else:
+        form = AccountBalanceForm(initial={'account_balance': 1})
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'coffee/update_account_balance.html', context)
+
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
