@@ -87,15 +87,13 @@ def update_account_balance(request):
     if request.method == 'POST':
         form = AccountBalanceForm(request.POST, initial={'account_balance': 1})
         if form.is_valid():
-            amount = form.cleaned_data['account_balance']
             form.save(commit=False) 
-
-            user.increaseBalance(amount)
+            user.increaseBalance(form.cleaned_data['account_balance'])
 
             return redirect('coffee:login')
 
     else:
-        form = InventoryForm(initial={'account_balance': 1})
+        form = AccountBalanceForm(initial={'account_balance': 1})
 
     context = {
         'form': form,
