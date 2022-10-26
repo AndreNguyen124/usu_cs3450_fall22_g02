@@ -104,26 +104,20 @@ def update_account_balance(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def userView(request):
-    return render(request, 'coffee/userView.html')
+    drink_list = Drink_Item.objects.order_by('name')
+    context = { 'drink_list': drink_list }
+
+    return render(request, 'coffee/userView.html', context)
 
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
-def customizeDrink(request):
-    #return render(request, 'coffee/customizeDrink.html')
-    form = DrinkForm()
+def customizeDrink(request, pk):
+    item = Drink_Item.objects.get(id=pk)
     if request.method == 'POST':
-        form = DrinkForm(request.POST)
+        form = DrinkForm(request.POST, instance=item)
 
-        if form.is_valid():
-            user = form.save()
-            group = Group.objects.get(name='Customer')
-            user.groups.add(group)
-
-            messages.success(request, 'Account was created successfully')
-            return redirect('coffee:login')
-
-    context = {'form': form}
+    context = {'drink': item}
     return render(request, 'coffee/customizeDrink.html', context)
     
 

@@ -84,4 +84,7 @@ class Drink_Item(models.Model):
         return f"\n\tid: {self.id} \n\tName: {self.name} \n\tQuantity: {self.Ingredients} \n\tPrice: {self.price}"
 
 
-# order_item: composed of many drinks
+#class Order_Item:(models.Model):
+#    customerName = models.CharField(max_length=200)
+
+

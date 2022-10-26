@@ -4,7 +4,7 @@
 {% block page_heading %} Manage Drinks {% endblock %}
 
 {% block content %}
-<div>
+<div class="column-heading">
     <p>Price markup: {{ markup.markup }}%</p>
     <a href="{% url 'coffee:update-markup' %}">Edit</a>
 </div>

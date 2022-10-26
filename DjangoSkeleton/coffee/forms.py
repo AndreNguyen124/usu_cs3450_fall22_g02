@@ -30,6 +30,12 @@ class DrinkForm(forms.ModelForm):
         model = Drink_Item
         fields = ['name', 'Ingredients', 'price']
 
+
+#class OrderForm(forms.ModelForm):
+#    class Meta:
+#        model =
+
+
 class AccountBalanceForm(forms.ModelForm):
     class Meta:
         model = Profile
@@ -37,4 +43,3 @@ class AccountBalanceForm(forms.ModelForm):
         widgets = {
                 'account_balance': forms.NumberInput(attrs={'step': 1.00}),
                 }
-
