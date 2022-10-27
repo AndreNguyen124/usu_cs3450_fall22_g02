@@ -43,3 +43,13 @@ class AccountBalanceForm(forms.ModelForm):
         widgets = {
                 'account_balance': forms.NumberInput(attrs={'min': 0}),
                 }
+
+
+class LogHoursForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['hours_worked']
+        widgets = {
+                'hours_worked': forms.NumberInput(attrs={'min': 0}),
+                }
+

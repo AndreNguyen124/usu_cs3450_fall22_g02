@@ -17,7 +17,15 @@
             <p>Account Balance: ${{ baseUser.account_balance }}</p>
         </div>
         <div class="column-container">
-            <a href="{% url 'coffee:update-balance' %}">+</a>
+            <a class="btn" href="{% url 'coffee:update-balance' %}">+</a>
+        </div>
+    </div>
+    <div class="row-container">
+        <div class="column-container">
+            <p>Hours Worked: {{ baseUser.hours_worked }} hrs</p>
+        </div>
+        <div class="column-container">
+            <a class="btn" href="{% url 'coffee:update-hours' %}">+</a>
         </div>
     </div>
 

@@ -40,6 +40,14 @@ class Profile(models.Model):
         self.account_balance -= amount
         self.save()
 
+    def logHours(self, amount):
+        self.hours_worked += amount
+        self.save()
+
+    def clearHours(self):
+        self.hours_worked = 0
+        self.save()
+
 
     def __str__(self):
         return f"\n\tUser: {self.user}"
