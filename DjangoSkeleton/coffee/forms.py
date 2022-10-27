@@ -41,5 +41,5 @@ class AccountBalanceForm(forms.ModelForm):
         model = Profile
         fields = ['account_balance']
         widgets = {
-                'account_balance': forms.NumberInput(attrs={'step': 1.00}),
+                'account_balance': forms.NumberInput(attrs={'min': 0}),
                 }
