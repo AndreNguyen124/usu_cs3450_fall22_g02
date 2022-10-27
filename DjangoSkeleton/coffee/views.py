@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 
 from .models import Inventory_Item, Drink_Item, Price_Markup, Profile
-from .forms import InventoryForm, CreateUserForm, DrinkForm, PriceMarkupForm, AccountBalanceForm
+from .forms import InventoryForm, CreateUserForm, DrinkForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm
 
 
 @unauthenticated_user
@@ -100,6 +100,26 @@ def update_account_balance(request):
     }
     return render(request, 'coffee/update_account_balance.html', context)
 
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Employee'])
+def update_hours(request):
+    user = Profile.objects.get(id=request.user.id)
+    if request.method == 'POST':
+        form = LogHoursForm(request.POST, initial={'hours_worked': 1})
+        if form.is_valid():
+            form.save(commit=False) 
+            user.logHours(form.cleaned_data['hours_worked'])
+
+            return redirect('coffee:login')
+
+    else:
+        form = LogHoursForm(initial={'hours_worked': 1})
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'coffee/update_hours.html', context)
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
