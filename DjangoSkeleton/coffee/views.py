@@ -1,4 +1,5 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -156,6 +157,10 @@ def payEmployees(request):
         payAllEmployees()
         clearAllHours()
         manager.decreaseBalance(totalOwed)
+
+    else:
+        messages.info(request, 'Error: Insufficient funds')
+        return HttpResponseRedirect('/managerView')
         
     return redirect('coffee:managerView')
 
@@ -226,6 +231,9 @@ def update_inventory(request, pk):
             if manager.account_balance >= totalOwed:
                 item.gainInventory(howMuch)
                 manager.decreaseBalance(totalOwed)
+            else:
+                messages.info(request, 'Error: Insufficient funds')
+                return HttpResponseRedirect('/inventory')
 
 
             form.save(commit=False)
