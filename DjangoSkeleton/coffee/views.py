@@ -158,7 +158,6 @@ def payEmployees(request):
         manager.decreaseBalance(totalOwed)
         
     return redirect('coffee:managerView')
-    #return render(request, 'coffee/managerView.html')
 
 
 
@@ -214,14 +213,22 @@ def inventory(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def update_inventory(request, pk):
+    manager = Profile.objects.first()
     item = Inventory_Item.objects.get(id=pk)
     if request.method == 'POST':
         form = InventoryForm(request.POST, initial={'quantity': 1})
         if form.is_valid():
+            manager = Profile.objects.first()
+            
             howMuch = form.cleaned_data['quantity']
-            form.save(commit=False)
+            totalOwed = item.price * howMuch
 
-            item.gainInventory(howMuch)
+            if manager.account_balance >= totalOwed:
+                item.gainInventory(howMuch)
+                manager.decreaseBalance(totalOwed)
+
+
+            form.save(commit=False)
 
             return redirect('coffee:inventory')
 
