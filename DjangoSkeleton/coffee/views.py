@@ -121,6 +121,47 @@ def update_hours(request):
     }
     return render(request, 'coffee/update_hours.html', context)
 
+
+def getTotalHoursWorked():
+    total = 0
+    employees = Group.objects.get(id=3).user_set.all()
+    for i in employees:
+        user = Profile.objects.get(id=i.id)
+        total += user.hours_worked
+
+    return total
+
+
+def clearAllHours():
+    employees = Group.objects.get(id=3).user_set.all()
+    for i in employees:
+        user = Profile.objects.get(id=i.id)
+        user.clearHours()
+
+
+def payAllEmployees():
+    employees = Group.objects.get(id=3).user_set.all()
+    for i in employees:
+        user = Profile.objects.get(id=i.id)
+        user.increaseBalance(15 * user.hours_worked)
+
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
+def payEmployees(request):
+    manager = Profile.objects.first()
+    totalOwed = 15 * getTotalHoursWorked()
+
+    if manager.account_balance >= totalOwed:
+        payAllEmployees()
+        clearAllHours()
+        manager.decreaseBalance(totalOwed)
+        
+    return redirect('coffee:managerView')
+    #return render(request, 'coffee/managerView.html')
+
+
+
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def userView(request):
