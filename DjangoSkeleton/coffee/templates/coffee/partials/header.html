@@ -8,17 +8,13 @@
             <input type="submit" value="Logout" class="logout-btn">
         </form>
     </ul>
-    
+
     <div class="heading">
         <h1>Welcome {{ request.user.username }}!</h1>
     </div>
-    <div class="row-container">
-        <div class="column-container">
-            <p>Account Balance: ${{ baseUser.account_balance }}</p>
-        </div>
-        <div class="column-container">
-            <a href="{% url 'coffee:update-balance' %}">+</a>
-        </div>
+    <div class="accountBalanceContainer">
+        <p>Account Balance: ${{ baseUser.account_balance }}</p>
+        <a href="{% url 'coffee:update-balance' %}">+</a>
     </div>
 
 </nav>

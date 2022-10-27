@@ -57,6 +57,7 @@ a:hover {
     display: flex;
     height: 100%;
     margin-left: auto;
+    margin-right: 2rem;
 }
 
 .navbar-links ul {
@@ -83,6 +84,17 @@ a:hover {
 
 .navbar-links li:hover {
     background-color: #fbf2d5; 
+}
+
+.accountBalanceContainer {
+    display: flex;
+    margin-right: auto;
+    margin-left: 2rem;
+}
+
+.accountBalanceContainer * {
+    font-size: 2rem;
+    padding: 1.2rem;
 }
 
 /* Heading - Navbar ish */
@@ -200,6 +212,11 @@ tr:nth-child(even) {
 }
 
 /* Forum Styling */
+.formHeader {
+    font-size: 2rem;
+}
+
+
 .labelStyling {
     margin: 0;
     font-size: 1.6rem;
@@ -211,4 +228,36 @@ tr:nth-child(even) {
     font-size: 1.2rem;
     padding: 1.2rem;
     margin: 1.2rem;
+}
+
+
+/* data Entry Form Styling (login, register, etc) */
+.data-entry-form {
+    margin: auto;
+    display: flex;
+    flex-direction: column  ;
+    justify-content: center;
+    padding: 2rem;
+    background-color: #f9b248;
+    border: 3px solid #0066b2;
+    max-width: 30rem;
+    font-size: 1.2rem;
+}
+
+.entry-heading {
+    padding: 0rem 1rem;
+    margin: auto;
+    margin-bottom: 2rem;
+    min-width: fit-content;
+    border-bottom: 3px solid #fc3a52;
+}
+
+input {
+    border: 1px solid #a4a4a4;
+    padding: 1.2rem 20px;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #f8f8ff;
+    font-size: 1.2rem;
 }
