@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 from .decorators import unauthenticated_user, allowed_users
 
-from .models import Inventory_Item, Drink_Item
+from .models import Inventory_Item, Drink_Item, Menu_Item
 from .forms import InventoryForm, CreateUserForm, DrinkForm
 
 
@@ -121,6 +121,7 @@ def update_inventory(request, pk):
 def drink(request):
     return render(request, 'coffee/drink.html')
 
+
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def drinkProduct(request):
@@ -130,6 +131,7 @@ def drinkProduct(request):
     }
 
     return render(request, 'coffee/drink.html', context)
+
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
@@ -149,6 +151,7 @@ def addDrinkProduct(request, pk):
     }
     return render(request, 'coffee/drink_add.html', context)
 
+
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def product_delete(request, pk):
@@ -158,6 +161,7 @@ def product_delete(request, pk):
         item.delete()
         return redirect('coffee:drink')
     return render(request, 'coffee/drink_delete.html')
+
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
@@ -177,3 +181,12 @@ def product_update(request, pk):
 
     }
     return render(request, 'coffee/drink_update.html', context)
+
+
+# TODO: Implement Add/Remove/Edit Menu Item
+def menuItem(request):
+    menu_list = Menu_Item.objects.all()
+    context = {
+        'menu_list': menu_list
+    }
+    return render(request, 'coffee/menuItem.html', context)
