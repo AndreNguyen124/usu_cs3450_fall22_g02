@@ -14,19 +14,31 @@
     </div>
     <div class="row-container">
         <div class="column-container">
-            <p>Account Balance: ${{ baseUser.account_balance }}</p>
+            <div class="row-container">
+                <div class="column-container">
+                    <p>Account Balance: ${{ baseUser.account_balance }}</p>
+                </div>
+                <div class="column-container">
+                    <a class="btn" href="{% url 'coffee:update-balance' %}">+</a>
+                </div>
+            </div>
         </div>
         <div class="column-container">
-            <a class="btn" href="{% url 'coffee:update-balance' %}">+</a>
+            <div class="row-container">
+                <div class="column-container">
+                    <p>Hours Worked: {{ baseUser.hours_worked }} hrs</p>
+                </div>
+                <div class="column-container">
+                    <a class="btn" href="{% url 'coffee:update-hours' %}">+</a>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row-container">
-        <div class="column-container">
-            <p>Hours Worked: {{ baseUser.hours_worked }} hrs</p>
-        </div>
-        <div class="column-container">
-            <a class="btn" href="{% url 'coffee:update-hours' %}">+</a>
-        </div>
+    <div class="row=container messages">
+        {% if messages %}
+            {% for message in messages %}
+            <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
     </div>
-
 </nav>

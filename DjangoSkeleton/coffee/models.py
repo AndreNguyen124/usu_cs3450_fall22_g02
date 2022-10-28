@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -50,6 +50,28 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"\n\tUser: {self.user}"
+
+
+def getTotalHoursWorked(self):
+    total = 0
+    employees = Group.objects.get(id=3).user_set.all()
+    for i in employees:
+        user = Profile.objects.get(id=i.id)
+        total += user.hours_worked
+
+    return total
+
+
+def clearAllHours(self):
+    employees = Group.objects.get(id=3).user_set.all()
+    for i in employees:
+        i.clearHours
+
+
+def payAllEmployees(self):
+    employees = Group.objects.get(id=3).user_set.all()
+    for i in employees:
+        i.increaseBalance(15 * i.hours_worked)
 
 
 class Price_Markup(models.Model):

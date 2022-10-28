@@ -1,4 +1,5 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -121,6 +122,50 @@ def update_hours(request):
     }
     return render(request, 'coffee/update_hours.html', context)
 
+
+def getTotalHoursWorked():
+    total = 0
+    employees = Group.objects.get(id=3).user_set.all()
+    for i in employees:
+        user = Profile.objects.get(id=i.id)
+        total += user.hours_worked
+
+    return total
+
+
+def clearAllHours():
+    employees = Group.objects.get(id=3).user_set.all()
+    for i in employees:
+        user = Profile.objects.get(id=i.id)
+        user.clearHours()
+
+
+def payAllEmployees():
+    employees = Group.objects.get(id=3).user_set.all()
+    for i in employees:
+        user = Profile.objects.get(id=i.id)
+        user.increaseBalance(15 * user.hours_worked)
+
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
+def payEmployees(request):
+    manager = Profile.objects.first()
+    totalOwed = 15 * getTotalHoursWorked()
+
+    if manager.account_balance >= totalOwed:
+        payAllEmployees()
+        clearAllHours()
+        manager.decreaseBalance(totalOwed)
+
+    else:
+        messages.info(request, 'Error: Insufficient funds')
+        return HttpResponseRedirect('/managerView')
+        
+    return redirect('coffee:managerView')
+
+
+
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def userView(request):
@@ -173,14 +218,25 @@ def inventory(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def update_inventory(request, pk):
+    manager = Profile.objects.first()
     item = Inventory_Item.objects.get(id=pk)
     if request.method == 'POST':
         form = InventoryForm(request.POST, initial={'quantity': 1})
         if form.is_valid():
+            manager = Profile.objects.first()
+            
             howMuch = form.cleaned_data['quantity']
-            form.save(commit=False)
+            totalOwed = item.price * howMuch
 
-            item.gainInventory(howMuch)
+            if manager.account_balance >= totalOwed:
+                item.gainInventory(howMuch)
+                manager.decreaseBalance(totalOwed)
+            else:
+                messages.info(request, 'Error: Insufficient funds')
+                return HttpResponseRedirect('/inventory')
+
+
+            form.save(commit=False)
 
             return redirect('coffee:inventory')
 
