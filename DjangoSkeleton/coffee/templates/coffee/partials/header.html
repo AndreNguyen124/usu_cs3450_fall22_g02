@@ -1,14 +1,45 @@
 <nav class="navbar">
-    <div class="heading">
-        <h1>Welcome {{ request.user }}!</h1>
-    </div>
-    
+
     <ul class="navbar-links">
-        <li><a href="/managerView">Customers</a></li>
+        <li><a href="/managerView">Manager</a></li>
         <li><a href="/manageEmployees">Employees</a></li>
-        <li><a href="/inventory">Manage Store</a></li>
+        <li><a href="/userView">Customers</a></li>
+        <form action="/logout">
+            <input type="submit" value="Logout" class="logout-btn">
+        </form>
     </ul>
-    <form action="/logout">
-        <input type="submit" value="Logout" class="logout-btn">
-    </form>
+
+    <div class="heading">
+        <h1>Welcome {{ request.user.username }}!</h1>
+    </div>
+
+    <div class="row-container">
+        <div class="column-container">
+            <div class="accountBalanceContainer">
+                <div class="column-container">
+                    <p>Account Balance: ${{ baseUser.account_balance }}</p>
+                </div>
+                <div class="column-container">
+                    <a class="btn" href="{% url 'coffee:update-balance' %}">+</a>
+                </div>
+            </div>
+        </div>
+        <div class="column-container">
+            <div class="accountBalanceContainer">
+                <div class="column-container">
+                    <p>Hours Worked: {{ baseUser.hours_worked }} hrs</p>
+                </div>
+                <div class="column-container">
+                    <a class="btn" href="{% url 'coffee:update-hours' %}">+</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row=container messages">
+        {% if messages %}
+            {% for message in messages %}
+            <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
 </nav>

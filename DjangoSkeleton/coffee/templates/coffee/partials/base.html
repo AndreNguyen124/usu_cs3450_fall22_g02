@@ -5,21 +5,35 @@
     <head>
         <meta charset="utf-8" />
         <title>{% block title %}Dan's Cool Beans{% endblock%}</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
+
+        {% if request.user.is_authenticated %}
+        <link rel="stylesheet" type="text/css" href="{% static 'blog/managerStyle.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'blog/userStyle.css' %}">
+        {% else %}
+        <link rel="stylesheet" type="text/css" href="{% static 'blog/login.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        {% endif %}
+
         <script src="script.js" defer></script>
     </head>
     <body class="full-height-grow">
+        {% if request.user.is_authenticated %}
         {% include './header.html' %}
+        {% endif %}
         <section class="main-section">
-            <div class="container">
-                <h1>{% block page_heading %}{% endblock %}</h1>
+            <div class="column-container">
+                {% if request.user.is_authenticated %}
+                <h1 class="column-heading">{% block page_heading %}{% endblock %}</h1>
+                {% endif %}
 
                 {% block content %}
                 {% endblock %}
             </div>
         </section>
+        {% if request.user.is_authenticated %}
         {% include './footer.html' %}
+        {% endif %}
     </body>
 </html>

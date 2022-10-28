@@ -1,4 +1,5 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -10,6 +11,9 @@ from .decorators import unauthenticated_user, allowed_users
 
 from .models import Inventory_Item, Drink_Item, Menu_Item
 from .forms import InventoryForm, CreateUserForm, DrinkForm
+from .models import Inventory_Item, Drink_Item, Price_Markup, Profile
+from .forms import InventoryForm, CreateUserForm, DrinkForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm
+
 
 
 @unauthenticated_user
@@ -59,12 +63,131 @@ def registerPage(request):
     context = {'form': form}
     return render(request, 'coffee/register.html', context)
 
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
+def createEmployee(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            group = Group.objects.get(name='Employee')
+            user.groups.add(group)
+            user.profile.hours_worked = 0
+            user.save()
+
+            messages.success(request, 'Employee account was created successfully')
+            return redirect('coffee:managerView')
+
+    context = {'form': form}
+    return render(request, 'coffee/createEmployee.html', context)
+
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
+def update_account_balance(request):
+    user = Profile.objects.get(id=request.user.id)
+    if request.method == 'POST':
+        form = AccountBalanceForm(request.POST, initial={'account_balance': 1})
+        if form.is_valid():
+            form.save(commit=False) 
+            user.increaseBalance(form.cleaned_data['account_balance'])
+
+            return redirect('coffee:login')
+
+    else:
+        form = AccountBalanceForm(initial={'account_balance': 1})
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'coffee/update_account_balance.html', context)
+
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Employee'])
+def update_hours(request):
+    user = Profile.objects.get(id=request.user.id)
+    if request.method == 'POST':
+        form = LogHoursForm(request.POST, initial={'hours_worked': 1})
+        if form.is_valid():
+            form.save(commit=False) 
+            user.logHours(form.cleaned_data['hours_worked'])
+
+            return redirect('coffee:login')
+
+    else:
+        form = LogHoursForm(initial={'hours_worked': 1})
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'coffee/update_hours.html', context)
+
+
+def getTotalHoursWorked():
+    total = 0
+    employees = Group.objects.get(id=3).user_set.all()
+    for i in employees:
+        user = Profile.objects.get(id=i.id)
+        total += user.hours_worked
+
+    return total
+
+
+def clearAllHours():
+    employees = Group.objects.get(id=3).user_set.all()
+    for i in employees:
+        user = Profile.objects.get(id=i.id)
+        user.clearHours()
+
+
+def payAllEmployees():
+    employees = Group.objects.get(id=3).user_set.all()
+    for i in employees:
+        user = Profile.objects.get(id=i.id)
+        user.increaseBalance(15 * user.hours_worked)
+
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
+def payEmployees(request):
+    manager = Profile.objects.first()
+    totalOwed = 15 * getTotalHoursWorked()
+
+    if manager.account_balance >= totalOwed:
+        payAllEmployees()
+        clearAllHours()
+        manager.decreaseBalance(totalOwed)
+
+    else:
+        messages.info(request, 'Error: Insufficient funds')
+        return HttpResponseRedirect('/managerView')
+        
+    return redirect('coffee:managerView')
+
+
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def userView(request):
-    return render(request, 'coffee/userView.html')
+    drink_list = Drink_Item.objects.order_by('name')
+    context = { 'drink_list': drink_list }
 
+    return render(request, 'coffee/userView.html', context)
+
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
+def customizeDrink(request, pk):
+    item = Drink_Item.objects.get(id=pk)
+    if request.method == 'POST':
+        form = DrinkForm(request.POST, instance=item)
+
+    context = {'drink': item}
+    return render(request, 'coffee/customizeDrink.html', context)
+    
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Employee'])
@@ -98,14 +221,25 @@ def inventory(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def update_inventory(request, pk):
+    manager = Profile.objects.first()
     item = Inventory_Item.objects.get(id=pk)
     if request.method == 'POST':
         form = InventoryForm(request.POST, initial={'quantity': 1})
         if form.is_valid():
+            manager = Profile.objects.first()
+            
             howMuch = form.cleaned_data['quantity']
-            form.save(commit=False)
+            totalOwed = item.price * howMuch
 
-            item.gainInventory(howMuch)
+            if manager.account_balance >= totalOwed:
+                item.gainInventory(howMuch)
+                manager.decreaseBalance(totalOwed)
+            else:
+                messages.info(request, 'Error: Insufficient funds')
+                return HttpResponseRedirect('/inventory')
+
+
+            form.save(commit=False)
 
             return redirect('coffee:inventory')
 
@@ -117,6 +251,13 @@ def update_inventory(request, pk):
     }
     return render(request, 'coffee/update_inventory.html', context)
 
+def product_delete(request, pk):
+    item = Drink_Item.objects.get(id=pk)
+
+    if request.method == 'POST':
+        item.delete()
+        return redirect('coffee:drink')
+    return render(request, 'coffee/drink_delete.html')
 
 def drink(request):
     return render(request, 'coffee/drink.html')
@@ -125,13 +266,36 @@ def drink(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def drinkProduct(request):
+    markup = Price_Markup.objects.first()
+
     drink_list = Drink_Item.objects.order_by('name')
     context = {
-        'drink_list': drink_list
+        'drink_list': drink_list,
+            'markup': markup
     }
 
     return render(request, 'coffee/drink.html', context)
 
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
+def update_markup(request):
+    markupObj = Price_Markup.objects.first()
+    if request.method == 'POST':
+        form = PriceMarkupForm(request.POST, initial={'markup': markupObj.markup})
+        if form.is_valid():
+            form.save(commit=False)
+            markupObj.setPriceMarkup(form.cleaned_data['markup'])
+
+            return redirect('coffee:drink')
+
+    else:
+        form = PriceMarkupForm(initial={'markup': markupObj.markup})
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'coffee/update_markup.html', context)
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])

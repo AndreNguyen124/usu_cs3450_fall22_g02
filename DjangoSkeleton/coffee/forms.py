@@ -1,7 +1,8 @@
 from django import forms
 from .models import Inventory_Item, Menu_Item
+from .models import Inventory_Item, Drink_Item, Price_Markup, Profile
 
-from .models import Drink_Item
+
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -15,6 +16,12 @@ class InventoryForm(forms.ModelForm):
         model = Inventory_Item
         fields = ['quantity']
 
+class PriceMarkupForm(forms.ModelForm):
+    class Meta:
+        model = Price_Markup
+        fields = ['markup']
+
+
 
 class CreateUserForm(UserCreationForm):
     class Meta:
@@ -27,8 +34,30 @@ class DrinkForm(forms.ModelForm):
         model = Drink_Item
         fields = ['name', 'Ingredients', 'price']
 
-
 class MenuForm(forms.ModelForm):
     class Meta:
         model = Menu_Item
         fields = ['name', 'Ingredients']
+
+#class OrderForm(forms.ModelForm):
+#    class Meta:
+#        model =
+
+
+class AccountBalanceForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['account_balance']
+        widgets = {
+                'account_balance': forms.NumberInput(attrs={'min': 0}),
+                }
+
+
+class LogHoursForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['hours_worked']
+        widgets = {
+                'hours_worked': forms.NumberInput(attrs={'min': 0}),
+                }
+

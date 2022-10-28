@@ -1,24 +1,21 @@
 {% extends './partials/base.html' %}
 
-{% block title %} Update Drink {% endblock %}
-{% block page_heading %} Update Drink {% endblock %}
+{% block title %} Update Markup {% endblock %}
+{% block page_heading %} Update Markup {% endblock %}
 
 {% block content %}
-<div class="table">
     <div class="row mt-5">
         <div class="col-md-6 offset-md-3">
             <div class="border bg-white p-3">
-                <h3>Edit Item</h3>
+                <h3>What would you like to set the new price markup as?</h3>
                 <hr>
-
-                <form method ="POST">
+                <form method="POST">
                     {% csrf_token %}
-                    <div class="inputStyling main-section">{{ form }}</div>
+                    {{ form }}
                     <a class="btn btn-secondary" href="{% url 'coffee:drink' %}">Cancel</a>
-                    <input class ="btn btn-info" type ="submit" value="Update">
+                    <input class="btn btn-info" type="submit" value="Update">
                 </form>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
