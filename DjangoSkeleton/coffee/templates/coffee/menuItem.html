@@ -1,0 +1,49 @@
+{% extends './partials/base.html' %}
+
+{% block title %} Menu Items {% endblock %}
+{% block page_heading %} Manage Menu Items {% endblock %}
+
+{% block content %}
+{% if menu_list %}
+<table class="table" style="border-color:#ccb593;">
+
+    <thead>
+    <tr>
+        <th scope="col">Drink</th>
+        <th scope="col">Price</th>
+        <th scope="col">Ingredient</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in menu_list %}
+    <tr>
+        <th scope="row">{{ item.name }}</th>
+        <td>{{ item.name }}</td>
+        <td>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>
+                        {% for test in item.Ingredients.all %}
+                        {{ test.name }},
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <a class="btn btn-info" href="{% url 'coffee:drink_add' item.id %}">+</a>
+                    <a class="btn btn-danger" href="{% url 'coffee:drink_delete' item.id %}">-</a>
+                    <a class="btn btn-dark" href="{% url 'coffee:drink_update' item.id %}">Edit</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<h5>No inventory items in database</h5>
+{% endif %}
+
+{% endblock %}
+
+
