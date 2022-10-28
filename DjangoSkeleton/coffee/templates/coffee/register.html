@@ -1,35 +1,21 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'blog/registerStyle.css' %}">
-  <title>Register</title>
-</head>
+{% extends './partials/base.html' %}
+{% block title %} Login {% endblock %}
+{% block content %}
+<section class="data-entry-form">
 
-<body class="full-height-grow">
-    <section class="register-container">
-        <h3>Register</h3>
-
-        <form method="POST" action="" class="field-container">
-            {% csrf_token %}
-            
-            {{form.username.label}}
-            {{form.username}}
-            {{form.password1.label}}
-            {{form.password1}}
-            {{form.password2.label}}
-            {{form.password2}}
-
-
-            <input type="submit" name="Create User">
-        </form>
-        <div class="register-here-text">
-            Already have an account? <a href="{% url 'coffee:login' %}" >Login</a>
-        </div>
-    </section>  
-</body>
-</html>
+    <h1 class="entry-heading">Register</h2>
+    <form method="POST" action="" class="field-container">
+        {% csrf_token %}
+        {{form.username.label}}
+        {{form.username}}
+        {{form.password1.label}}
+        {{form.password1}}
+        {{form.password2.label}}
+        {{form.password2}}
+        <input type="submit" name="Create User">
+    </form>
+    <div class="entry-heading">
+        Already have an account? <a href="{% url 'coffee:login' %}" >Login</a>
+    </div>
+</section>  
+{% endblock %}

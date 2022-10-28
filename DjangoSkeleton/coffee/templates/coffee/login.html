@@ -1,11 +1,10 @@
 {% extends './partials/base.html' %}
 {% block title %} Login {% endblock %}
 {% block content %}
-<section class="login-container">
+<section class="data-entry-form">
 
     <h1 class="sign-in-h1">Sign In</h2>
     <form method="POST" action=""> 
-      
         {% csrf_token %}
         <label for="fname">Username:</label><br>
         <input type="text" id="fname" name="username" ><br>

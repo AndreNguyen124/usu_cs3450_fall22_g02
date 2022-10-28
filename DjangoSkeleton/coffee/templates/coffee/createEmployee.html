@@ -1,33 +1,19 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'blog/registerStyle.css' %}">
-  <title>Create Employee</title>
-</head>
+{% extends './partials/base.html' %}
+{% block title %} Login {% endblock %}
+{% block content %}
+<section class="data-entry-form">
+    <h3 class="entry-heading">Create New Employee Account</h3>
 
-<body class="full-height-grow">
-    <section class="register-container">
-        <h3>Create New Employee Account</h3>
-
-        <form method="POST" action="" class="field-container">
-            {% csrf_token %}
-            
-            {{form.username.label}}
-            {{form.username}}
-            {{form.password1.label}}
-            {{form.password1}}
-            {{form.password2.label}}
-            {{form.password2}}
-
-
-            <input type="submit" name="Create Employee">
-        </form>
+    <form method="POST" action="" class="field-container">
+        {% csrf_token %}
         
-    </section>  
-</body>
-</html>
+        {{form.username.label}}
+        {{form.username}}
+        {{form.password1.label}}
+        {{form.password1}}
+        {{form.password2.label}}
+        {{form.password2}}
+        <input type="submit" name="Create Employee">
+    </form>
+</section>  
+{% endblock %}
