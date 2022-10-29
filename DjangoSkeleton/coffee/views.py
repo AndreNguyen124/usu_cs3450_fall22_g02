@@ -354,3 +354,12 @@ def menuItem(request):
         'menu_list': menu_list
     }
     return render(request, 'coffee/menuItem.html', context)
+
+
+def getMenuItemPrice(itemId):
+    menuItem = Menu_Item.objects.get(id=itemId)
+    price = 0
+    for i in menuItem.Ingredients.all():
+        price += i.price
+
+    return price
