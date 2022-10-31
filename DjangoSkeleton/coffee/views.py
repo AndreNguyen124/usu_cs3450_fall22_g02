@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 
 from .models import Inventory_Item, Drink_Item, Menu_Item
-from .forms import InventoryForm, CreateUserForm, DrinkForm
+from .forms import InventoryForm, CreateUserForm, DrinkForm, MenuForm
 
 
 @unauthenticated_user
@@ -162,7 +162,6 @@ def product_delete(request, pk):
         return redirect('coffee:drink')
     return render(request, 'coffee/drink_delete.html')
 
-
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def product_update(request, pk):
@@ -190,3 +189,49 @@ def menuItem(request):
         'menu_list': menu_list
     }
     return render(request, 'coffee/menuItem.html', context)
+
+# TODO
+# addDrinkProduct
+def addMenuItem(request, pk):
+    item = Menu_Item.objects.get(id=pk)
+    if request.method == 'POST':
+        form = MenuForm(request.POST)
+        if form.is_valid():
+            item.save()
+            form.save()
+            return redirect('coffee:menu')
+    else:
+        form = MenuForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'coffee/menu_add.html', context)
+
+
+def deleteMenuItem(request, pk):
+    item = Menu_Item.objects.get(id=pk)
+
+    if request.method == 'POST':
+        item.delete()
+        return redirect('coffee:menu')
+    return render(request, 'coffee/menu_delete.html')
+
+
+
+def menu_update(request, pk):
+    item = Menu_Item.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form = MenuForm(request.POST, instance=item)
+
+        if form.is_valid():
+            form.save()
+            return redirect('coffee:menu')
+    else:
+        form = MenuForm(instance=item)
+    context = {
+        'form': form
+
+    }
+    return render(request, 'coffee/menu_update.html', context)
