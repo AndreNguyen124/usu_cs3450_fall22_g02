@@ -39,17 +39,23 @@ def populate_db(apps, schema):
     i10 = Inventory_Item(name='Cup', quantity=50, price=0.60)
     i10.save()
 
+    i11 = Inventory_Item(name='Strawberry Puree', quantity=30, price=1.20)
+    i11.save()
+
+    i12 = Inventory_Item(name='Lids', quantity=50, price=0.50)
+    i12.save()
+
     m1 = Menu_Item(name='Caramel Frap', price=6.50)
     m1.save()
-    m1.Ingredients.add(i1, i2, i5)
+    m1.Ingredients.add(i1, i2, i5, i12, i10)
 
     m2 = Menu_Item(name='Mocha Frap', price=6.50)
     m2.save()
-    m2.Ingredients.add(i1, i2, i4, i8)
+    m2.Ingredients.add(i1, i2, i4, i8, i12, i10)
 
     m3 = Menu_Item(name='Pink Lady', price=6.50)
     m3.save()
-    m3.Ingredients.add(i1, i2, i10)
+    m3.Ingredients.add(i1, i2, i3, i10, i11, i12)
 
 
 

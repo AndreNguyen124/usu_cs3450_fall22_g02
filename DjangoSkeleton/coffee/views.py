@@ -249,7 +249,7 @@ def update_inventory(request, pk):
     return render(request, 'coffee/update_inventory.html', context)
 
 def product_delete(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
 
     if request.method == 'POST':
         item.delete()
@@ -297,7 +297,7 @@ def update_markup(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def addDrinkProduct(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
     if request.method == 'POST':
         form = DrinkForm(request.POST)
         if form.is_valid():
@@ -316,7 +316,7 @@ def addDrinkProduct(request, pk):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def product_delete(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
 
     if request.method == 'POST':
         item.delete()
@@ -327,7 +327,7 @@ def product_delete(request, pk):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def product_update(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
 
     if request.method == 'POST':
         form = DrinkForm(request.POST, instance=item)
