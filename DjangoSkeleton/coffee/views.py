@@ -9,11 +9,8 @@ from django.contrib.auth.decorators import login_required
 
 from .decorators import unauthenticated_user, allowed_users
 
-from .models import Inventory_Item, Drink_Item, Menu_Item
-from .forms import InventoryForm, CreateUserForm, DrinkForm
-from .models import Inventory_Item, Drink_Item, Price_Markup, Profile
-from .forms import InventoryForm, CreateUserForm, DrinkForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm
-
+from .models import Inventory_Item, Price_Markup, Profile, Menu_Item #Drink_Item
+from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm
 
 
 @unauthenticated_user
@@ -172,7 +169,7 @@ def payEmployees(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def userView(request):
-    drink_list = Drink_Item.objects.order_by('name')
+    drink_list = Menu_Item.objects.order_by('name')
     context = { 'drink_list': drink_list }
 
     return render(request, 'coffee/userView.html', context)
@@ -181,7 +178,7 @@ def userView(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def customizeDrink(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
     if request.method == 'POST':
         form = DrinkForm(request.POST, instance=item)
 
@@ -252,7 +249,7 @@ def update_inventory(request, pk):
     return render(request, 'coffee/update_inventory.html', context)
 
 def product_delete(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
 
     if request.method == 'POST':
         item.delete()
@@ -268,7 +265,7 @@ def drink(request):
 def drinkProduct(request):
     markup = Price_Markup.objects.first()
 
-    drink_list = Drink_Item.objects.order_by('name')
+    drink_list = Menu_Item.objects.order_by('name')
     context = {
         'drink_list': drink_list,
             'markup': markup
@@ -300,7 +297,7 @@ def update_markup(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def addDrinkProduct(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
     if request.method == 'POST':
         form = DrinkForm(request.POST)
         if form.is_valid():
@@ -319,7 +316,7 @@ def addDrinkProduct(request, pk):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def product_delete(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
 
     if request.method == 'POST':
         item.delete()
@@ -330,7 +327,7 @@ def product_delete(request, pk):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def product_update(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
 
     if request.method == 'POST':
         form = DrinkForm(request.POST, instance=item)
