@@ -24,7 +24,7 @@ h1 h2 {
 
 a {
     text-decoration: none;
-    color: #192124
+    color: black;
 }
 
 a:hover {
@@ -95,6 +95,13 @@ a:hover {
 .accountBalanceContainer * {
     font-size: 2rem;
     padding: 1.2rem;
+    width: fit-content;
+}
+
+.accountRowContainer {
+    display: flex;
+    margin-right: auto;
+    padding: 2rem;
 }
 
 /* Heading - Navbar ish */
