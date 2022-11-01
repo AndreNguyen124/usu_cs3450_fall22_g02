@@ -1,0 +1,16 @@
+{% extends './partials/base.html' %}
+
+{% block title %} Update Balance {% endblock %}
+{% block page_heading %} Update Balance {% endblock %}
+
+{% block content %}
+    <div class="boxShadow">
+        <h3 class="formHeader">How much would you like to add to your account?</h3>
+            <form class="inputStyling" method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <a class="" href="{% url 'coffee:login' %}">Cancel</a>
+                <input class="inputStyling" type="submit" value="Update">
+            </form>
+    </div>
+{% endblock %}

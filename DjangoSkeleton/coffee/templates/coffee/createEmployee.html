@@ -2,20 +2,18 @@
 {% block title %} Login {% endblock %}
 {% block content %}
 <section class="data-entry-form">
+    <h3 class="entry-heading">Create New Employee Account</h3>
 
-    <h1 class="entry-heading">Register</h2>
     <form method="POST" action="" class="field-container">
         {% csrf_token %}
+        
         {{form.username.label}}
         {{form.username}}
         {{form.password1.label}}
         {{form.password1}}
         {{form.password2.label}}
         {{form.password2}}
-        <input type="submit" name="Create User">
+        <input type="submit" name="Create Employee">
     </form>
-    <div class="entry-heading">
-        Already have an account? <a href="{% url 'coffee:login' %}" >Login</a>
-    </div>
 </section>  
 {% endblock %}

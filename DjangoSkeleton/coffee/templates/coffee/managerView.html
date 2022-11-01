@@ -1,80 +1,20 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-    <head>
-      <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'blog/managerStyle.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'blog/userStyle.css' %}">
-      <script src="script.js" defer></script>
-      <title>Manager View</title>
-    </head>
+{% extends './partials/base.html' %}
 
-    <body class="full-height-grow">
-      <nav class="navbar">
-        <div class="heading">
-          <h1>Welcome Manager!</h1>
-        </div>
-        
-        <ul class="navbar-links">
-          <li><a href="/managerView">Customers</a></li>
-          <li><a href="/manageEmployees">Employees</a></li>
-          <li><a href="/inventory">Manage Store</a></li>
-        </ul>
-        <form action="/logout">
-          <input type="submit" value="Logout" class="logout-btn">
-        </form>
-      </nav>
+{% block title %} Manager View {% endblock %}
+{% block page_heading %} Let's Cook {% endblock %}
 
-      <section class="main-section">
-        <div class="column-container">
+{% block content %}
+<div class="row-container">
 
-        <h1 class="column-heading">Start New Order</h1>
+  <div class="manage-edit">
+    <a class="boxShadow" href="/inventory">Manage Inventory</a>
+    <a class="boxShadow" href="/drink">Edit Menu</a>
+  </div>
 
-          <div class="order">
-            <div class="image">
-              <img src="{% static 'blog/media/aFrap.jpeg' %}">
-            </div>
-            <div class="order-description">
-              <h2>Fancy Frap 1</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-                dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-            </div>
-          </div>
-
-            <div class="order">
-              <div class="image">
-                <img src="{% static 'blog/media/aFrap.jpeg' %}">
-              </div>
-              <div class="order-description">
-                <h2>Fancy Frap 1</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-                  dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-              </div>
-            </div>
-
-              <div class="order">
-                <div class="image">
-                  <img src="{% static 'blog/media/aFrap.jpeg' %}">
-                </div>
-                <div class="order-description">
-                  <h2>Fancy Frap 1</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-                    dolor in reprehenderit in voluptate velit esse cillum dolore
-                  </p>
-                </div>
-              </div>
-          </div>
-      </section>
-
-      <footer class="main-footer">
-        <p>All rights reserved to Dan's Cool Beans</p>
-      </footer>
-
-    </body>
-</html>
+  <div class="manage-employees">
+    <a class="boxShadow" href="{% url 'coffee:createEmployee' %}">Add New Employee</a>
+    <a class="boxShadow" href="{% url 'coffee:pay-employees' %}">Pay Employees</a>
+  </div>
+  
+</div>
+{% endblock %}
