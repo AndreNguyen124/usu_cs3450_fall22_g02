@@ -3,6 +3,8 @@
 from django.db import migrations, models
 import django.db.models.deletion
 
+from coffee.views import getMenuItemPrice
+
 def populate_db(apps, schema):
     Menu_Item = apps.get_model('coffee', 'Menu_Item')
     Menu_Item.objects.all().delete()
@@ -45,17 +47,26 @@ def populate_db(apps, schema):
     i12 = Inventory_Item(name='Lids', quantity=50, price=0.50)
     i12.save()
 
-    m1 = Menu_Item(name='Caramel Frap', price=6.50)
+    m1 = Menu_Item(name='Caramel Frap')
     m1.save()
     m1.Ingredients.add(i1, i2, i5, i12, i10)
+    m1.save()
+    m1.price = getMenuItemPrice(m1.id)
+    m1.save()
 
-    m2 = Menu_Item(name='Mocha Frap', price=6.50)
+    m2 = Menu_Item(name='Mocha Frap')
     m2.save()
     m2.Ingredients.add(i1, i2, i4, i8, i12, i10)
+    m2.save()
+    m2.price = getMenuItemPrice(m2.id)
+    m2.save()
 
-    m3 = Menu_Item(name='Pink Lady', price=6.50)
+    m3 = Menu_Item(name='Pink Lady')
     m3.save()
     m3.Ingredients.add(i1, i2, i3, i10, i11, i12)
+    m3.save()
+    m3.price = getMenuItemPrice(m3.id)
+    m3.save()
 
 
 
