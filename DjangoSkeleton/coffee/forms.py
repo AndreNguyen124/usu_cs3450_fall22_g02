@@ -1,6 +1,6 @@
 from django import forms
 from .models import Inventory_Item, Menu_Item
-from .models import Inventory_Item, Drink_Item, Price_Markup, Profile
+from .models import Inventory_Item, Price_Markup, Profile #Drink_Item,
 
 
 from django.contrib.auth.models import User
@@ -31,7 +31,7 @@ class CreateUserForm(UserCreationForm):
 
 class DrinkForm(forms.ModelForm):
     class Meta:
-        model = Drink_Item
+        model = Menu_Item
         fields = ['name', 'Ingredients', 'price']
 
 class MenuForm(forms.ModelForm):

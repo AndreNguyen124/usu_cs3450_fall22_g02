@@ -10,10 +10,9 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 
 from .models import Inventory_Item, Drink_Item, Menu_Item
-from .forms import InventoryForm, CreateUserForm, DrinkForm
-from .models import Inventory_Item, Drink_Item, Price_Markup, Profile
-from .forms import InventoryForm, CreateUserForm, DrinkForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm
-
+from .forms import InventoryForm, CreateUserForm, DrinkForm, MenuForm
+from .models import Inventory_Item, Price_Markup, Profile, Menu_Item #Drink_Item
+from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm
 
 
 @unauthenticated_user
@@ -172,7 +171,7 @@ def payEmployees(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def userView(request):
-    drink_list = Drink_Item.objects.order_by('name')
+    drink_list = Menu_Item.objects.order_by('name')
     context = { 'drink_list': drink_list }
 
     return render(request, 'coffee/userView.html', context)
@@ -181,7 +180,7 @@ def userView(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def customizeDrink(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
     if request.method == 'POST':
         form = DrinkForm(request.POST, instance=item)
 
@@ -252,7 +251,7 @@ def update_inventory(request, pk):
     return render(request, 'coffee/update_inventory.html', context)
 
 def product_delete(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
 
     if request.method == 'POST':
         item.delete()
@@ -268,7 +267,7 @@ def drink(request):
 def drinkProduct(request):
     markup = Price_Markup.objects.first()
 
-    drink_list = Drink_Item.objects.order_by('name')
+    drink_list = Menu_Item.objects.order_by('name')
     context = {
         'drink_list': drink_list,
             'markup': markup
@@ -300,7 +299,7 @@ def update_markup(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def addDrinkProduct(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
     if request.method == 'POST':
         form = DrinkForm(request.POST)
         if form.is_valid():
@@ -319,18 +318,17 @@ def addDrinkProduct(request, pk):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def product_delete(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
 
     if request.method == 'POST':
         item.delete()
         return redirect('coffee:drink')
     return render(request, 'coffee/drink_delete.html')
 
-
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def product_update(request, pk):
-    item = Drink_Item.objects.get(id=pk)
+    item = Menu_Item.objects.get(id=pk)
 
     if request.method == 'POST':
         form = DrinkForm(request.POST, instance=item)
@@ -354,3 +352,59 @@ def menuItem(request):
         'menu_list': menu_list
     }
     return render(request, 'coffee/menuItem.html', context)
+
+# TODO
+# addDrinkProduct
+def addMenuItem(request, pk):
+    item = Menu_Item.objects.get(id=pk)
+    if request.method == 'POST':
+        form = MenuForm(request.POST)
+        if form.is_valid():
+            item.save()
+            form.save()
+            return redirect('coffee:menu')
+    else:
+        form = MenuForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'coffee/menu_add.html', context)
+
+
+def deleteMenuItem(request, pk):
+    item = Menu_Item.objects.get(id=pk)
+
+    if request.method == 'POST':
+        item.delete()
+        return redirect('coffee:menu')
+    return render(request, 'coffee/menu_delete.html')
+
+
+
+def menu_update(request, pk):
+    item = Menu_Item.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form = MenuForm(request.POST, instance=item)
+
+        if form.is_valid():
+            form.save()
+            return redirect('coffee:menu')
+    else:
+        form = MenuForm(instance=item)
+    context = {
+        'form': form
+
+    }
+    return render(request, 'coffee/menu_update.html', context)
+
+
+def getMenuItemPrice(itemId):
+    menuItem = Menu_Item.objects.get(id=itemId)
+    price = 0
+    for i in menuItem.Ingredients.all():
+        price += i.price
+
+    return price
+
