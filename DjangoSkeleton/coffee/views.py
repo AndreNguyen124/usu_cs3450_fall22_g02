@@ -9,10 +9,12 @@ from django.contrib.auth.decorators import login_required
 
 from .decorators import unauthenticated_user, allowed_users
 
-from .models import Inventory_Item, Drink_Item, Menu_Item
+from .models import Inventory_Item, Menu_Item #Drink_Item
 from .forms import InventoryForm, CreateUserForm, DrinkForm, MenuForm
 from .models import Inventory_Item, Price_Markup, Profile, Menu_Item #Drink_Item
 from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm
+
+from decimal import Decimal
 
 
 @unauthenticated_user
@@ -285,6 +287,8 @@ def update_markup(request):
         if form.is_valid():
             form.save(commit=False)
             markupObj.setPriceMarkup(form.cleaned_data['markup'])
+            updateAllPrices()
+
 
             return redirect('coffee:drink')
 
@@ -346,6 +350,8 @@ def product_update(request, pk):
 
 
 # TODO: Implement Add/Remove/Edit Menu Item
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def menuItem(request):
     menu_list = Menu_Item.objects.all()
     context = {
@@ -355,6 +361,8 @@ def menuItem(request):
 
 # TODO
 # addDrinkProduct
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def addMenuItem(request, pk):
     item = Menu_Item.objects.get(id=pk)
     if request.method == 'POST':
@@ -362,6 +370,7 @@ def addMenuItem(request, pk):
         if form.is_valid():
             item.save()
             form.save()
+            updateAllPrices()
             return redirect('coffee:menu')
     else:
         form = MenuForm()
@@ -372,6 +381,8 @@ def addMenuItem(request, pk):
     return render(request, 'coffee/menu_add.html', context)
 
 
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def deleteMenuItem(request, pk):
     item = Menu_Item.objects.get(id=pk)
 
@@ -382,6 +393,8 @@ def deleteMenuItem(request, pk):
 
 
 
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def menu_update(request, pk):
     item = Menu_Item.objects.get(id=pk)
 
@@ -390,6 +403,7 @@ def menu_update(request, pk):
 
         if form.is_valid():
             form.save()
+            item.updatePrice(getMenuItemPrice(item.id))
             return redirect('coffee:menu')
     else:
         form = MenuForm(instance=item)
@@ -400,11 +414,25 @@ def menu_update(request, pk):
     return render(request, 'coffee/menu_update.html', context)
 
 
+
 def getMenuItemPrice(itemId):
     menuItem = Menu_Item.objects.get(id=itemId)
+    markupDecimal = (Price_Markup.objects.first().markup / 100) + 1
+
     price = 0
     for i in menuItem.Ingredients.all():
         price += i.price
 
+    price = price * Decimal(markupDecimal)
+
+    # --- Uncomment when testing is done to add baseline price
+    #if price < 7.50: price = 7.50
+
     return price
+
+
+def updateAllPrices():
+    menuItems = Menu_Item.objects.all()
+    for item in menuItems:
+        item.updatePrice(getMenuItemPrice(item.id))
 
