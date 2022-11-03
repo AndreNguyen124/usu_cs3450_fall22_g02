@@ -287,6 +287,8 @@ def update_markup(request):
         if form.is_valid():
             form.save(commit=False)
             markupObj.setPriceMarkup(form.cleaned_data['markup'])
+            updateAllPrices()
+
 
             return redirect('coffee:drink')
 
@@ -368,6 +370,7 @@ def addMenuItem(request, pk):
         if form.is_valid():
             item.save()
             form.save()
+            updateAllPrices()
             return redirect('coffee:menu')
     else:
         form = MenuForm()
@@ -400,6 +403,7 @@ def menu_update(request, pk):
 
         if form.is_valid():
             form.save()
+            item.updatePrice(getMenuItemPrice(item.id))
             return redirect('coffee:menu')
     else:
         form = MenuForm(instance=item)
@@ -408,6 +412,7 @@ def menu_update(request, pk):
 
     }
     return render(request, 'coffee/menu_update.html', context)
+
 
 
 def getMenuItemPrice(itemId):
@@ -420,7 +425,14 @@ def getMenuItemPrice(itemId):
 
     price = price * Decimal(markupDecimal)
 
-    if price < 7.50: return 7.50
+    # --- Uncomment when testing is done to add baseline price
+    #if price < 7.50: price = 7.50
 
     return price
+
+
+def updateAllPrices():
+    menuItems = Menu_Item.objects.all()
+    for item in menuItems:
+        item.updatePrice(getMenuItemPrice(item.id))
 
