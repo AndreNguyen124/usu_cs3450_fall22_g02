@@ -173,7 +173,8 @@ def payEmployees(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def userView(request):
-    drink_list = Menu_Item.objects.order_by('name')
+    drink_list = Menu_Item.objects.filter(custom=False)
+    #Menu_Item.objects.order_by('name')
     context = { 'drink_list': drink_list }
 
     return render(request, 'coffee/userView.html', context)
@@ -348,13 +349,13 @@ def product_update(request, pk):
         form = DrinkForm(request.POST, instance=item)
 
         if form.is_valid():
-            form.save()
+            menu_item = form.save()
+            menu_item.updatePrice(getMenuItemPrice(menu_item.id))
             return redirect('coffee:drink')
     else:
         form = DrinkForm(instance=item)
     context = {
         'form': form
-
     }
     return render(request, 'coffee/drink_update.html', context)
 
@@ -429,7 +430,7 @@ def getMenuItemPrice(itemId):
     menuItem = Menu_Item.objects.get(id=itemId)
     markupDecimal = (Price_Markup.objects.first().markup / 100) + 1
 
-    price = 0
+    price = 2
     for i in menuItem.Ingredients.all():
         price += i.price
 
@@ -445,6 +446,7 @@ def updateAllPrices():
     menuItems = Menu_Item.objects.all()
     for item in menuItems:
         item.updatePrice(getMenuItemPrice(item.id))
+    
 
 
 def notAuth(request):

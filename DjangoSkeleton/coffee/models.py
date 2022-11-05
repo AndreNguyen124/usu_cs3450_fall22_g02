@@ -82,6 +82,7 @@ class Inventory_Item(models.Model):
         self.quantity -= value
         self.save()
 
+
     def __str__(self):
         return f"\n\tid: {self.id} \n\tName: {self.name} \n\tQuantity: {self.quantity} \n\tPrice: {self.price}"
 
@@ -89,23 +90,28 @@ class Inventory_Item(models.Model):
 class Menu_Item(models.Model):
     name = models.CharField(max_length=200)
     Ingredients = models.ManyToManyField(Inventory_Item, through='Item_Amount', related_name='inventory_items', blank=True)
-    price = models.DecimalField(max_digits=7, decimal_places=2, default=7.50)
+    price = models.DecimalField(max_digits=7, decimal_places=2, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True) # display menu items whose order=null
+    custom = models.BooleanField(default = False)
 
     def updatePrice(self, value):
         self.price = value
         self.save()
 
     def __str__(self):
-        return f"\n\tid: {self.id} \n\tName: {self.name} \n\tIngredients: a lil complicated \n\tPrice: {self.price}"
+        return f"\n\tName: {self.name}, \n\tPrice: {self.price}"
 
 class Item_Amount(models.Model):
     inventory_item = models.ForeignKey(Inventory_Item, related_name = 'item_amounts', on_delete=models.CASCADE)
     menu_item = models.ForeignKey(Menu_Item, related_name = 'item_amounts', on_delete=models.CASCADE)
-    amount = models.IntegerField(default=0)
+    amount = models.IntegerField(default=1)
 
     def __str__(self):
         return f"\n\t {self.amount} {self.inventory_item.name}"
+
+    def updateAmount(self, value):
+        self.amount = value
+        self.save()
 
 # # TODO: Implement a Many to Many Field for Drink Item
 # class Drink_Item(models.Model):
