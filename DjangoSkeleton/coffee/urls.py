@@ -30,4 +30,6 @@ urlpatterns = [
     path('menu/menu_delete/<int:pk>/', views.deleteMenuItem, name="menu_delete"),
     path('menu/menu_update/<int:pk>/', views.menu_update, name="menu_update"),
 
+    path('notAuth.html', views.notAuth, name='notAuth'),
+
 ]

@@ -446,3 +446,7 @@ def updateAllPrices():
     for item in menuItems:
         item.updatePrice(getMenuItemPrice(item.id))
 
+
+def notAuth(request):
+    return render(request, 'coffee/notAuth.html')
+

@@ -19,6 +19,6 @@ def allowed_users(allowed_roles=[]):
             if group in allowed_roles:
                 return view_func(request, *args, **kwargs)
             else:
-                return HttpResponse("You are not authorized to view this page")
+                return redirect("coffee:notAuth")
         return wrapper_func
     return decorator
