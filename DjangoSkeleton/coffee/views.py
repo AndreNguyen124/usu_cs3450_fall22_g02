@@ -205,7 +205,17 @@ def managerView(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def manageEmployees(request):
-    return render(request, 'coffee/manageEmployees.html')
+    if 'q' in request.GET:
+        q = request.GET['q']
+        users = Profile.objects.filter(user__username__icontains=q)
+
+        context = {
+                'users': users,
+                'clearSearch': True
+                }
+    else:
+        context = {'clearSearch': False}
+    return render(request, 'coffee/manageEmployees.html', context)
 
 
 @login_required(login_url='coffee:login')

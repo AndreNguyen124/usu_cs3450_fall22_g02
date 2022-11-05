@@ -2,9 +2,17 @@
 <nav class="navbar">
 
     <ul class="navbar-links">
+        {% if request.user.groups.first.name == 'Manager' %}
         <li><a href="/managerView">Manager</a></li>
         <li><a href="/manageEmployees">Employees</a></li>
+        {% endif %}
+
+        {% if request.user.groups.first.name == 'Employee' %}
+        <li><a href="/manageEmployees">Employees</a></li>
+        {% endif %}
+
         <li><a href="/userView">Customers</a></li>
+
         <li><a id="shoppingCartImage" href="#">
             <img src="{% static 'blog/media/shopping-cart.png' %}"></a></li>
         <form action="/logout">
@@ -22,10 +30,12 @@
             <a href="{% url 'coffee:update-balance' %}">+</a>
         </div>
 
+        {% if request.user.groups.first.name == 'Employee' %}
         <div class="accountBalanceContainer">
             <p>Hours Worked: {{ baseUser.hours_worked }} hrs</p>
             <a href="{% url 'coffee:update-hours' %}">+</a>
         </div>
+        {% endif %}
 
         <div class="accountBalanceContainer">
             {% if messages %}

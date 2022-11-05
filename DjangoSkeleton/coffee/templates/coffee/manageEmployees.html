@@ -5,6 +5,19 @@
 
 {% block content %}
     <div class="column-container">
-        <input type="search" class="search-customers" placeholder="Employee Lookup"/>  
+        <div class="row=container">
+            <form>
+                <input name="q" type="search" class="search" placeholder="Enter customer name" aria-label="Search"/>  
+                <input class="inputStyling" type="submit"/>
+            </form>
+            {% if clearSearch %}
+            <a href="{% url 'coffee:manageEmployees' %}">X clear search</a>
+            {% endif %}
+        </div>
+        {% if users %}
+        {% for user in users %}
+        <a class='boxShadow' href="#"> {{ user.user.username }}</a>
+        {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}
