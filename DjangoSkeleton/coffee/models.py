@@ -5,7 +5,6 @@ from django.contrib.auth.models import User, Group
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-
 # Create your models here.
 
 def get_absolute_url(self):
@@ -46,25 +45,6 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"\n\tUser: {self.user}"
-
-
-def getTotalHoursWorked(self):
-    total = 0
-    employees = Group.objects.get(id=3).user_set.all()
-    for i in employees:
-        user = Profile.objects.get(id=i.id)
-        total += user.hours_worked
-    return total
-
-def clearAllHours(self):
-    employees = Group.objects.get(id=3).user_set.all()
-    for i in employees:
-        i.clearHours
-
-def payAllEmployees(self):
-    employees = Group.objects.get(id=3).user_set.all()
-    for i in employees:
-        i.increaseBalance(15 * i.hours_worked)
 
 
 class Price_Markup(models.Model):
@@ -112,8 +92,17 @@ class Menu_Item(models.Model):
     price = models.DecimalField(max_digits=7, decimal_places=2, default=7.50)
     order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True) # display menu items whose order=null
 
+
+    def updatePrice(self, value):
+        self.price = value
+        self.save()
+
+
+
+
     def __str__(self):
         return f"\n\tid: {self.id} \n\tName: {self.name} \n\tIngredients: {self.Ingredients} \n\tPrice: {self.price}"
+
 
 # # TODO: Implement a Many to Many Field for Drink Item
 # class Drink_Item(models.Model):
