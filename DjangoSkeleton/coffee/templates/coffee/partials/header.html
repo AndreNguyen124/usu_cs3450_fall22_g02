@@ -1,9 +1,12 @@
+{% load static %}
 <nav class="navbar">
 
     <ul class="navbar-links">
         <li><a href="/managerView">Manager</a></li>
         <li><a href="/manageEmployees">Employees</a></li>
         <li><a href="/userView">Customers</a></li>
+        <li><a id="shoppingCartImage" href="#">
+            <img src="{% static 'blog/media/shopping-cart.png' %}"></a></li>
         <form action="/logout">
             <input type="submit" value="Logout" class="logout-btn">
         </form>

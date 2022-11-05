@@ -46,7 +46,7 @@ a:hover {
     position: relative;
     justify-content: space-between;
     align-items: center;
-    background-color: #f9b248; /*#d77b52;*/
+    background-color: #E1B995; /*#d77b52;*/
     min-height: 200px;
     width: 100%;
     border-bottom: 1px solid #0066b2;
@@ -86,6 +86,19 @@ a:hover {
     background-color: #fbf2d5; 
 }
 
+#shoppingCartImage {
+    display: flex;
+    height: 100%;
+    width: 8rem;
+    padding: 1rem;
+}
+
+#shoppingCartImage img {
+    height: 100%;
+    margin: auto;
+    text-align: center;
+}
+
 .accountBalanceContainer {
     display: flex;
     margin-right: auto;
@@ -111,6 +124,11 @@ a:hover {
     margin: 1rem;
     margin-right: 2rem;
     font-size: 1.2rem;
+    background-color: #e8d5b7;
+}
+
+.logout-btn:hover {
+    background-color: #fae5c2;
 }
 
 .heading {
