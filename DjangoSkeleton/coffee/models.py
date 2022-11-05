@@ -97,12 +97,15 @@ class Menu_Item(models.Model):
         self.save()
 
     def __str__(self):
-        return f"\n\tid: {self.id} \n\tName: {self.name} \n\tIngredients: {self.Ingredients} \n\tPrice: {self.price}"
+        return f"\n\tid: {self.id} \n\tName: {self.name} \n\tIngredients: a lil complicated \n\tPrice: {self.price}"
 
 class Item_Amount(models.Model):
     inventory_item = models.ForeignKey(Inventory_Item, related_name = 'item_amounts', on_delete=models.CASCADE)
     menu_item = models.ForeignKey(Menu_Item, related_name = 'item_amounts', on_delete=models.CASCADE)
     amount = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"\n\t {self.amount} {self.inventory_item.name}"
 
 # # TODO: Implement a Many to Many Field for Drink Item
 # class Drink_Item(models.Model):
