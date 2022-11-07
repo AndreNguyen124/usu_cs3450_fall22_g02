@@ -203,7 +203,7 @@ def managerView(request):
 
 
 @login_required(login_url='coffee:login')
-@allowed_users(allowed_roles=['Manager'])
+@allowed_users(allowed_roles=['Manager', 'Employee'])
 def manageEmployees(request):
     if 'q' in request.GET:
         q = request.GET['q']
@@ -216,6 +216,20 @@ def manageEmployees(request):
     else:
         context = {'clearSearch': False}
     return render(request, 'coffee/manageEmployees.html', context)
+
+
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Employee'])
+def viewPaidOrders (request, pk):
+    userProfile = Profile.objects.get(id=pk)
+
+    context = {
+            'customer' : userProfile
+            }
+
+    return render(request, 'coffee/paidOrders.html', context)
+
 
 
 @login_required(login_url='coffee:login')
