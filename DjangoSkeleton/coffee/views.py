@@ -11,7 +11,7 @@ from .decorators import unauthenticated_user, allowed_users
 
 from .models import Inventory_Item, Menu_Item #Drink_Item
 from .forms import InventoryForm, CreateUserForm, DrinkForm, MenuForm
-from .models import Inventory_Item, Price_Markup, Profile, Menu_Item #Drink_Item
+from .models import Inventory_Item, Price_Markup, Profile, Menu_Item, Order #Drink_Item
 from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm
 
 from decimal import Decimal
@@ -168,6 +168,15 @@ def payEmployees(request):
         
     return redirect('coffee:managerView')
 
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
+def shoppingCartView(request):
+    current_orders = Order.objects.filter(profile__user__id=request.user.id)
+    #Menu_Item.objects.order_by('name')
+    context = { 'current_order': current_orders }
+
+    return render(request, 'coffee/shopping_cart.html', context)
 
 
 @login_required(login_url='coffee:login')

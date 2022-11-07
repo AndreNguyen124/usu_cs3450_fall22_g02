@@ -1,0 +1,28 @@
+{% extends './partials/base.html' %}
+
+{% block title %} Drinks {% endblock %}
+{% block page_heading %} Manage Drinks {% endblock %}
+
+{% block content %}
+
+{% for item in current_order %}
+    <div class="order">
+        <a class="order-link" href="{% url 'coffee:customizeDrink' item.id%}">
+            <div class="image">
+                <img src="{% static 'blog/media/aFrap.jpeg' %}">
+            </div>
+            <div class="order-description">
+                <h2>{{ item.profile }}</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+                dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+            </div>
+            <div class="price-of-order">
+                <h1>${{ item.status }}</h1>
+            </div>
+        </a>
+    </div>
+{% endfor %}
+
+{% endblock %}
