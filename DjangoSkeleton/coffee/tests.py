@@ -22,3 +22,6 @@ class URLTests(TestCase):
         c = Client()
         response = c.post('/login/', {'username': 'Test', 'password': 'Test12345'})
         self.assertEqual(response.status_code, 200)
+
+
+    # response/post with manager creds.
