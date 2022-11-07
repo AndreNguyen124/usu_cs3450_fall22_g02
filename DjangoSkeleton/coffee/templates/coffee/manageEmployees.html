@@ -1,7 +1,7 @@
 {% extends './partials/base.html' %}
 
 {% block title %} Manage Employees {% endblock %}
-{% block page_heading %} Search for Employee {% endblock %}
+{% block page_heading %} Search for user {% endblock %}
 
 {% block content %}
     <div class="column-container">
@@ -16,8 +16,19 @@
         </div>
         {% if users %}
         {% for user in users %}
-        <a class='boxShadow' href="#"> {{ user.user.username }}</a>
+        <div class='boxShadow row-container'>
+            <div class='column-container'>
+                <p>{{ user.user.username }}</p>
+            </div>
+            <div class='column-container'>
+                <a class='btn' href='#'>New Order</a>
+            </div>
+            <div class='column-container'>
+                <a class='btn' href="{% url 'coffee:paidOrders' user.user.id %}">View Orders</a>
+            </div>
+        </div>
         {% endfor %}
         {% endif %}
     </div>
+    
 {% endblock %}
