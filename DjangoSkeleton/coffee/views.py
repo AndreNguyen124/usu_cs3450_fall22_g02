@@ -185,7 +185,6 @@ def shoppingCartView(request):
 
     
 
-
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def userView(request):
