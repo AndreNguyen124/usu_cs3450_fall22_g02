@@ -11,7 +11,7 @@ from .decorators import unauthenticated_user, allowed_users
 
 from .models import Inventory_Item, Menu_Item #Drink_Item
 from .forms import InventoryForm, CreateUserForm, DrinkForm, MenuForm
-from .models import Inventory_Item, Price_Markup, Profile, Menu_Item #Drink_Item
+from .models import Inventory_Item, Price_Markup, Profile, Menu_Item, Order #Drink_Item
 from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm
 
 from decimal import Decimal
@@ -169,11 +169,25 @@ def payEmployees(request):
     return redirect('coffee:managerView')
 
 
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
+def shoppingCartView(request):
+    current_orderq = Order.objects.filter(profile__id=request.user.id, status=0)
+    if current_orderq.exists():
+        current_order = current_orderq.first()
+        print('current order:', current_order)
+        print('current order:', current_order.menu_item_set.all())
+        context = { 'current_order': current_order }
+    else:
+        context = {'current_order' : '' } 
+    return render(request, 'coffee/shopping_cart.html', context)
+    
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def userView(request):
-    drink_list = Menu_Item.objects.order_by('name')
+    drink_list = Menu_Item.objects.filter(custom=False)
+    #Menu_Item.objects.order_by('name')
     context = { 'drink_list': drink_list }
 
     return render(request, 'coffee/userView.html', context)
@@ -293,7 +307,7 @@ def drink(request):
 def drinkProduct(request):
     markup = Price_Markup.objects.first()
 
-    drink_list = Menu_Item.objects.order_by('name')
+    drink_list = Menu_Item.objects.filter(custom=False).order_by('name')
     context = {
         'drink_list': drink_list,
             'markup': markup
@@ -362,13 +376,13 @@ def product_update(request, pk):
         form = DrinkForm(request.POST, instance=item)
 
         if form.is_valid():
-            form.save()
+            menu_item = form.save()
+            menu_item.updatePrice(getMenuItemPrice(menu_item.id))
             return redirect('coffee:drink')
     else:
         form = DrinkForm(instance=item)
     context = {
         'form': form
-
     }
     return render(request, 'coffee/drink_update.html', context)
 
@@ -377,7 +391,7 @@ def product_update(request, pk):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def menuItem(request):
-    menu_list = Menu_Item.objects.all()
+    menu_list = Menu_Item.objects.filter(custom=False)
     context = {
         'menu_list': menu_list
     }
@@ -443,7 +457,7 @@ def getMenuItemPrice(itemId):
     menuItem = Menu_Item.objects.get(id=itemId)
     markupDecimal = (Price_Markup.objects.first().markup / 100) + 1
 
-    price = 0
+    price = 2
     for i in menuItem.Ingredients.all():
         price += i.price
 
@@ -459,6 +473,7 @@ def updateAllPrices():
     menuItems = Menu_Item.objects.all()
     for item in menuItems:
         item.updatePrice(getMenuItemPrice(item.id))
+    
 
 
 def notAuth(request):
