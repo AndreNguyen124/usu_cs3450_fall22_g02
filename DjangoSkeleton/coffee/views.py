@@ -391,7 +391,7 @@ def product_update(request, pk):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def menuItem(request):
-    menu_list = Menu_Item.objects.all()
+    menu_list = Menu_Item.objects.filter(custom=False)
     context = {
         'menu_list': menu_list
     }
