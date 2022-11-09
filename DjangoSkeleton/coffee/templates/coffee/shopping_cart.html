@@ -1,0 +1,36 @@
+{% extends './partials/base.html' %}
+
+{% block title %} Drinks {% endblock %}
+{% block page_heading %} Current Order {% endblock %}
+
+{% block content %}
+
+{% if current_order.menu_item_set.all %}
+    {% for drink in current_order.menu_item_set.all %}
+        <div class="order">
+            <a class="order-link" href="">
+                
+                <div class="order-description">
+                    <h2>{{ drink.name }}</h2>
+                    <p>
+                        {% for ingr in drink.item_amounts.all %}
+                            {{ ingr.amount }} {{ ingr.inventory_item.name }},
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="price-of-order">
+                    <h1>${{ drink.price }}</h1>
+                </div>
+            </a>
+        </div>
+    {% endfor %}  
+{% else %}
+    <div>
+        <a class="order-link" href="/userView"> Start Shopping! </a>
+    </div>
+{% endif %}
+
+
+{% block page_footer %} Order Total {% endblock %}
+
+{% endblock %}
