@@ -169,8 +169,8 @@ def payEmployees(request):
     return redirect('coffee:managerView')
 
 
-#@login_required(login_url='coffee:login')
-#@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def shoppingCartView(request):
     current_orderq = Order.objects.filter(profile__id=request.user.id, status=0)
     if current_orderq.exists():
@@ -178,11 +178,9 @@ def shoppingCartView(request):
         print('current order:', current_order)
         print('current order:', current_order.menu_item_set.all())
         context = { 'current_order': current_order }
-        return render(request, 'coffee/shopping_cart.html', context)
-    #Menu_Item.objects.order_by('name')
     else:
-        return HttpResponse('Start shopping! You have no current order')
-
+        context = {'current_order' : '' } 
+    return render(request, 'coffee/shopping_cart.html', context)
     
 
 @login_required(login_url='coffee:login')

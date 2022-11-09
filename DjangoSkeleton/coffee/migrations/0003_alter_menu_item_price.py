@@ -5,6 +5,7 @@ from django.contrib.auth.models import Group, User
 from coffee.views import getMenuItemPrice
 
 def populate_db(apps, schema):
+    ############################ CREATE SOME USERS ############################
     manager_group, createdm = Group.objects.get_or_create(name='Manager')
     customer_group, createdc = Group.objects.get_or_create(name='Customer')
     employee_group, createde = Group.objects.get_or_create(name='Employee')
@@ -18,18 +19,19 @@ def populate_db(apps, schema):
     employee.groups.add(employee_group)
     employee.profile.hours_worked = 0.0
     employee.save()
-    
+
     customer = User.objects.create_user(username='personJoe', password='goodpassword')
     customer.save()
     customer.groups.add(customer_group)
 
-
+    ############################ CREATE PRICE MARKUP ############################
     Price_Markup = apps.get_model('coffee', 'Price_Markup')
     Price_Markup.objects.all().delete()
 
     markup = Price_Markup(markup=43)
     markup.save()
 
+    ############################ CREATE SOME INVENTORY ITEMS ############################
     Menu_Item = apps.get_model('coffee', 'Menu_Item')
     Menu_Item.objects.all().delete()
     Inventory_Item = apps.get_model('coffee', 'Inventory_Item')
@@ -90,6 +92,7 @@ def populate_db(apps, schema):
     i18 = Inventory_Item(name='Peppermint', quantity=50, price=0.10)
     i18.save()
 
+    ############################ CREATE SOME MENU ITEMS ############################
     m1 = Menu_Item(name='Caramel Frap')
     m1.save()
     Item_Amount.objects.create(menu_item=m1, inventory_item=i1)
@@ -225,7 +228,6 @@ def populate_db(apps, schema):
     Item_Amount.objects.create(menu_item=cm5, inventory_item=i15)
     Item_Amount.objects.create(menu_item=cm5, inventory_item=i10)
     cm5.price = getMenuItemPrice(cm5.id)
-    cm5.save()
     cm5.custom = True
     cm5.save()
 
@@ -237,7 +239,6 @@ def populate_db(apps, schema):
     Item_Amount.objects.create(menu_item=cm4, inventory_item=i15)
     Item_Amount.objects.create(menu_item=cm4, inventory_item=i10)
     cm4.price = getMenuItemPrice(cm4.id)
-    cm4.save()
     cm4.custom = True
     cm4.save()
 
@@ -253,12 +254,23 @@ def populate_db(apps, schema):
     cm5.save()
     cm4.order = anOrder
     cm4.save()
-    anOrder.save()
+
+    cm8 = Menu_Item(name='Chai Lee Latte', price=7.50)
+    cm8.save()
+    Item_Amount.objects.create(menu_item=cm8, inventory_item=i16)
+    Item_Amount.objects.create(menu_item=cm8, inventory_item=i1)
+    Item_Amount.objects.create(menu_item=cm8, inventory_item=i17)
+    Item_Amount.objects.create(menu_item=cm8, inventory_item=i14)
+    Item_Amount.objects.create(menu_item=cm8, inventory_item=i8)
+    Item_Amount.objects.create(menu_item=cm8, inventory_item=i10)
+    cm8.price = getMenuItemPrice(cm8.id)
+    cm8.custom = True
+    cm8.save()
     
-    # anOrder2 = Order(profile=mprofile, status = 1)
-    # anOrder2.save()
-    # cm5.order = anOrder2
-    # cm5.save()
+    anOrder2 = Order(profile=mprofile, status = 1)
+    anOrder2.save()
+    cm8.order = anOrder2
+    cm8.save()
     # cm4.order = anOrder2
     # cm4.save()
 
