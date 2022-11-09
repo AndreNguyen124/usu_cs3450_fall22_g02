@@ -6,6 +6,7 @@
 
 {% block content %}
 
+
 {% for item in drink_list %}
     <div class="order">
         <a class="order-link" href="{% url 'coffee:customizeDrink' item.id%}">
