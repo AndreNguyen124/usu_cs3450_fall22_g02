@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect
 from .decorators import unauthenticated_user, allowed_users
 from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm, MenuForm
 from .models import Inventory_Item, Price_Markup, Profile, Menu_Item, Order 
-
+from decimal import Decimal
 
 @unauthenticated_user
 def loginPage(request):
