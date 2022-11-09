@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from pyparsing import Or
 
 from .decorators import unauthenticated_user, allowed_users
 
@@ -222,6 +223,7 @@ def employeeView(request):
         except: # If there is an empty post request, do nothing
             None
     return render(request, 'coffee/employeeView.html', context)
+
 
 
 @login_required(login_url='coffee:login')
