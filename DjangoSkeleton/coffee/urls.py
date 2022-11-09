@@ -16,6 +16,7 @@ urlpatterns = [
     path('managerView/', views.managerView, name='managerView'),
     path('pay-employees/', views.payEmployees, name='pay-employees'),
     path('manageEmployees/', views.manageEmployees, name='manageEmployees'),
+    path('manageEmployees/paidOrders/<int:pk>/', views.viewPaidOrders, name='paidOrders'),
     path('createEmployee/', views.createEmployee, name='createEmployee'),
     path('inventory/', views.inventory, name='inventory'),
     path('inventory/update/<int:pk>/', views.update_inventory, name="update-inventory"),
