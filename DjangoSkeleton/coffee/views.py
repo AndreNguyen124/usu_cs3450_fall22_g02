@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from pyparsing import Or
 
 from .decorators import unauthenticated_user, allowed_users
 
@@ -199,14 +200,22 @@ def employeeView(request):
     # return a context with menu item status
     order_list = Order.objects.order_by('status')
     context = { 'order_list': order_list }
+    print(request.user)
+    
+    #item = Menu_Item.objects.get(id=pk)
     # press a button to update the order
+    print(request.method)
     if request.method == 'POST':
-        # now create an order object
-        order = order_list[0]
-        order.orderIsCompleted()
-        #return render(request, 'coffee/employeeView.html', context)
+        try:
+            pk = request.POST.get('id')
+            order = Order.objects.get(id=pk)
+            order.delete()
+            return render(request, 'coffee/employeeView.html', context)
+        except: # If there is an empty post request, do nothing
+            None
 
     return render(request, 'coffee/employeeView.html', context)
+
 
 
 @login_required(login_url='coffee:login')

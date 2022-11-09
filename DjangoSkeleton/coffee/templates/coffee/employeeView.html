@@ -6,8 +6,22 @@
 {% block content %}
 {% for order in order_list %}
     <div class="order">
-        <p> here </p>
+        <div class="column-container">
+            <div class="order-description"><h3>Order by: {{ order.profile.user }}</h3></div>
+            <div class="order-description"><h3>Status: {{ order.status }}</h3></div>
+        </div>
+
+        <div class="column-heading center-item-vertically">
+            <form name="submitform" method="post">
+                {% csrf_token %}
+                <input type='hidden' name="id" value="{{order.pk}}">
+                <input type="submit" value="Submit"/>
+                </div>        
+            </form>
+        </div>
+
     </div>
+    
 {% endfor %}
 {% endblock %}
 

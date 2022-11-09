@@ -103,7 +103,7 @@ class Order(models.Model):
         self.status = 4
 
     def __str__(self):
-        return f"\n\t {self.profile}'s order"
+        return f"\n\t {self.id} {self.profile}'s order"
 
 class Menu_Item(models.Model):
     name = models.CharField(max_length=200)
