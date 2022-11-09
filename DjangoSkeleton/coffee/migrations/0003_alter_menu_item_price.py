@@ -154,30 +154,127 @@ def populate_db(apps, schema):
     # m5.Ingredients.add(i6, i17, i8, i14, i15, i10)
     # m5.save()
 
-    # m6 = Menu_Item(name='TripleX', price=6.50)
-    # m6.save()
+    m6 = Menu_Item(name='TripleX', price=6.50)
+    m6.save()
+    Item_Amount.objects.create(menu_item=m6, inventory_item=i15, amount=3)
+    Item_Amount.objects.create(menu_item=m6, inventory_item=i14)
+    Item_Amount.objects.create(menu_item=m6, inventory_item=i3)
+    Item_Amount.objects.create(menu_item=m6, inventory_item=i10)
+    m6.price = getMenuItemPrice(m6.id)
+    m6.save()
     # m6.Ingredients.add(i15, i15, i15, i14, i3, i10)
     # m6.save()
 
-    # m7 = Menu_Item(name='Vanilla Ice', price=6.50)
-    # m7.save()
+    m7 = Menu_Item(name='Vanilla Ice', price=6.50)
+    m7.save()
+    Item_Amount.objects.create(menu_item=m7, inventory_item=i3, amount=2)
+    Item_Amount.objects.create(menu_item=m7, inventory_item=i2)
+    Item_Amount.objects.create(menu_item=m7, inventory_item=i14)
+    Item_Amount.objects.create(menu_item=m7, inventory_item=i15)
+    Item_Amount.objects.create(menu_item=m7, inventory_item=i10)
+    m7.price = getMenuItemPrice(m7.id)
+    m7.save()
     # m7.Ingredients.add(i3, i3, i15, i14, i2, i10)
     # m7.save()
 
-    # m8 = Menu_Item(name='Chai Lee Latte', price=7.50)
-    # m8.save()
+    m8 = Menu_Item(name='Chai Lee Latte', price=7.50)
+    m8.save()
+    Item_Amount.objects.create(menu_item=m8, inventory_item=i16)
+    Item_Amount.objects.create(menu_item=m8, inventory_item=i1)
+    Item_Amount.objects.create(menu_item=m8, inventory_item=i17)
+    Item_Amount.objects.create(menu_item=m8, inventory_item=i14)
+    Item_Amount.objects.create(menu_item=m8, inventory_item=i8)
+    Item_Amount.objects.create(menu_item=m8, inventory_item=i10)
+    m8.price = getMenuItemPrice(m8.id)
+    m8.save()
     # m8.Ingredients.add(i16, i1, i17, i14, i8, i10)
     # m8.save()
 
-    # m9 = Menu_Item(name='Cocoa Mudslide', price=7.50)
-    # m9.save()
+    m9 = Menu_Item(name='Cocoa Mudslide', price=7.50)
+    m9.save()
+    Item_Amount.objects.create(menu_item=m9, inventory_item=i4)
+    Item_Amount.objects.create(menu_item=m9, inventory_item=i7)
+    Item_Amount.objects.create(menu_item=m9, inventory_item=i8)
+    Item_Amount.objects.create(menu_item=m9, inventory_item=i14)
+    Item_Amount.objects.create(menu_item=m9, inventory_item=i15)
+    Item_Amount.objects.create(menu_item=m9, inventory_item=i10)
+    m9.price = getMenuItemPrice(m9.id)
+    m9.save()
     # m9.Ingredients.add(i15, i4, i7, i14, i8, i10)
     # m9.save()
 
-    # m10 = Menu_Item(name='Tis the Season', price=5.50)
-    # m10.save()
+    m10 = Menu_Item(name='Tis the Season', price=5.50)
+    m10.save()
+    Item_Amount.objects.create(menu_item=m10, inventory_item=i6)
+    Item_Amount.objects.create(menu_item=m10, inventory_item=i17)
+    Item_Amount.objects.create(menu_item=m10, inventory_item=i4)
+    Item_Amount.objects.create(menu_item=m10, inventory_item=i18)
+    Item_Amount.objects.create(menu_item=m10, inventory_item=i15)
+    Item_Amount.objects.create(menu_item=m10, inventory_item=i10)
+    m10.price = getMenuItemPrice(m10.id)
+    m10.save()
     # m10.Ingredients.add(i17, i4, i6, i15, i18, i10)
     # m10.save()
+
+    cm5 = Menu_Item(name='Headless Horseman')
+    cm5.save()
+    Item_Amount.objects.create(menu_item=cm5, inventory_item=i6)
+    Item_Amount.objects.create(menu_item=cm5, inventory_item=i17)
+    Item_Amount.objects.create(menu_item=cm5, inventory_item=i8)
+    Item_Amount.objects.create(menu_item=cm5, inventory_item=i14)
+    Item_Amount.objects.create(menu_item=cm5, inventory_item=i15)
+    Item_Amount.objects.create(menu_item=cm5, inventory_item=i10)
+    cm5.price = getMenuItemPrice(cm5.id)
+    cm5.save()
+    cm5.custom = True
+    cm5.save()
+
+    cm4 = Menu_Item(name='Gaelic Storm')
+    cm4.save()
+    Item_Amount.objects.create(menu_item=cm4, inventory_item=i14, amount=2)
+    Item_Amount.objects.create(menu_item=cm4, inventory_item=i2)
+    Item_Amount.objects.create(menu_item=cm4, inventory_item=i13, amount=2)
+    Item_Amount.objects.create(menu_item=cm4, inventory_item=i15)
+    Item_Amount.objects.create(menu_item=cm4, inventory_item=i10)
+    cm4.price = getMenuItemPrice(cm4.id)
+    cm4.save()
+    cm4.custom = True
+    cm4.save()
+
+    Order = apps.get_model('coffee', 'Order')
+    Order.objects.all().delete()
+
+    Profile = apps.get_model('coffee', 'Profile')
+    mprofile = Profile.objects.get(id=manager.id)
+
+    anOrder = Order(profile=mprofile, status = 0)
+    anOrder.save()
+    cm5.order = anOrder
+    cm5.save()
+    cm4.order = anOrder
+    cm4.save()
+    anOrder.save()
+    
+    # anOrder2 = Order(profile=mprofile, status = 1)
+    # anOrder2.save()
+    # cm5.order = anOrder2
+    # cm5.save()
+    # cm4.order = anOrder2
+    # cm4.save()
+
+    # anOrder3 = Order(profile=mprofile, status = 2)
+    # anOrder3.save()
+    # cm5.order = anOrder3
+    # cm5.save()
+    # cm4.order = anOrder3
+    # cm4.save()
+
+    # anOrder4 = Order(profile=mprofile, status = 3)
+    # anOrder4.save()
+    # cm5.order = anOrder4
+    # cm5.save()
+    # cm4.order = anOrder4
+    # cm4.save()
 
 class Migration(migrations.Migration):
 

@@ -169,14 +169,21 @@ def payEmployees(request):
     return redirect('coffee:managerView')
 
 
-@login_required(login_url='coffee:login')
-@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
+#@login_required(login_url='coffee:login')
+#@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def shoppingCartView(request):
-    current_orders = Order.objects.filter(profile__user__id=request.user.id)
+    current_orderq = Order.objects.filter(profile__id=request.user.id, status=0)
+    if current_orderq.exists():
+        current_order = current_orderq.first()
+        print('current order:', current_order)
+        print('current order:', current_order.menu_item_set.all())
+        context = { 'current_order': current_order }
+        return render(request, 'coffee/shopping_cart.html', context)
     #Menu_Item.objects.order_by('name')
-    context = { 'current_order': current_orders }
+    else:
+        return HttpResponse('Start shopping! You have no current order')
 
-    return render(request, 'coffee/shopping_cart.html', context)
+    
 
 
 @login_required(login_url='coffee:login')
@@ -289,7 +296,7 @@ def drink(request):
 def drinkProduct(request):
     markup = Price_Markup.objects.first()
 
-    drink_list = Menu_Item.objects.order_by('name')
+    drink_list = Menu_Item.objects.filter(custom=False).order_by('name')
     context = {
         'drink_list': drink_list,
             'markup': markup

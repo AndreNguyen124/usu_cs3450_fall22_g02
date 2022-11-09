@@ -1,28 +1,35 @@
 {% extends './partials/base.html' %}
 
 {% block title %} Drinks {% endblock %}
-{% block page_heading %} Manage Drinks {% endblock %}
+{% block page_heading %} Current Order {% endblock %}
 
 {% block content %}
 
-{% for item in current_order %}
+{% if current_order.menu_item_set.all %}
+<p>HEloooo</p>
+{% endif %}
+
+{% for drink in current_order.menu_item_set.all %}
     <div class="order">
-        <a class="order-link" href="{% url 'coffee:customizeDrink' item.id%}">
-            <div class="image">
-                <img src="{% static 'blog/media/aFrap.jpeg' %}">
-            </div>
+        <p>HEloooo</p>
+        <a class="order-link" href="">
+            
             <div class="order-description">
-                <h2>{{ item.profile }}</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-                dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+                <h2>{{ drink.name }}</h2>
+                <p>HEloooo</p>
+                <p>
+                    {% for ingr in drink.item_amounts.all %}
+                        {{ ingr.amount }} {{ ingr.inventory_item.name }},
+                    {% endfor %}
+                </p>
             </div>
             <div class="price-of-order">
-                <h1>${{ item.status }}</h1>
+                <h1>${{ drink.price }}</h1>
             </div>
         </a>
     </div>
 {% endfor %}
+
+{% block page_footer %} Order Total {% endblock %}
 
 {% endblock %}

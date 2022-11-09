@@ -48,8 +48,9 @@ class Profile(models.Model):
 
 class Order(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    totalPrice = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     status = models.IntegerField(default=0)
-    # 0 : order being created by customer/
+    # 0 : order being created by customer
     # 1 : online order has been paid for - shows up in cashier queue
     # 2 : order submitted to barista to be made - shows in cashier queue
     # 3 : order completed by barista, ready to be delivered to customer - shows in other cashier queue?
@@ -57,6 +58,10 @@ class Order(models.Model):
 
     def __str__(self):
         return f"\n\t {self.profile}'s order"
+
+    #def getTotalPrice(self):
+    ############ SHOULD THIS BE IN VIEWS?? CAUSE ITS ACTUALLY CALCULATE< NOT GET? ###################
+
 
 class Price_Markup(models.Model):
     markup = models.IntegerField(default=0)

@@ -33,7 +33,7 @@ urlpatterns = [
     path('menu/menu_delete/<int:pk>/', views.deleteMenuItem, name="menu_delete"),
     path('menu/menu_update/<int:pk>/', views.menu_update, name="menu_update"),
 
-    path('menu/shopping_cart/', views.shoppingCartView, name="shopping_cart"),
+    path('shopping_cart/', views.shoppingCartView, name="shopping_cart"),
 
     path('notAuth.html/', views.notAuth, name='notAuth'),
 
