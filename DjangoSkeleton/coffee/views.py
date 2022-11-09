@@ -265,6 +265,7 @@ def employeeView(request):
     return render(request, 'coffee/employeeView.html', context)
 
 
+
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def managerView(request):
