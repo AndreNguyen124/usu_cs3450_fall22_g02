@@ -4,7 +4,11 @@
 {% block page_heading %} Hello Employee! {% endblock %}
 
 {% block content %}
-<p>No content yet :)</p>
+{% for order in order_list %}
+    <div class="order">
+        <p> here </p>
+    </div>
+{% endfor %}
 {% endblock %}
 
 

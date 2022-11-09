@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 from .decorators import unauthenticated_user, allowed_users
 
-from .models import Inventory_Item, Menu_Item #Drink_Item
+from .models import Inventory_Item, Menu_Item, Order #Drink_Item
 from .forms import InventoryForm, CreateUserForm, DrinkForm, MenuForm
 from .models import Inventory_Item, Price_Markup, Profile, Menu_Item #Drink_Item
 from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm
@@ -182,18 +182,31 @@ def userView(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def customizeDrink(request, pk):
+    profile = Profile.objects.get(id=request.user.id)
     item = Menu_Item.objects.get(id=pk)
+    form = Order()
     if request.method == 'POST':
-        form = DrinkForm(request.POST, instance=item)
+        # now create an order object
+        order = Order.createOrder(form, profile)
+        #form = Menu_Item(request.POST, instance=order)
 
-    context = {'drink': item}
-    return render(request, 'coffee/customizeDrink.html', context)
+    return render(request   , 'coffee/customizeDrink.html')
     
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Employee'])
 def employeeView(request):
-    return render(request, 'coffee/employeeView.html')
+    # return a context with menu item status
+    order_list = Order.objects.order_by('status')
+    context = { 'order_list': order_list }
+    # press a button to update the order
+    if request.method == 'POST':
+        # now create an order object
+        order = order_list[0]
+        order.orderIsCompleted()
+        #return render(request, 'coffee/employeeView.html', context)
+
+    return render(request, 'coffee/employeeView.html', context)
 
 
 @login_required(login_url='coffee:login')

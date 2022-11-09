@@ -81,7 +81,26 @@ class Order(models.Model):
     # 1 : online order has been paid for - shows up in cashier queue
     # 2 : order submitted to barista to be made - shows in cashier queue
     # 3 : order completed by barista, ready to be delivered to customer - shows in other cashier queue?
-    # 4 : delivered to customer - can be deleted
+    # 4 : delivered to customer - can be delete
+    def createOrder(self, profile):
+        self.profile = profile
+        self.status = 0
+        self.save()
+    
+    def createOrderStatus(self):
+        self.status = 0
+
+    def orderIsPaidFor(self):
+        self.status = 1
+
+    def orderIsSubmitted(self):
+        self.status = 2
+
+    def orderIsCompleted(self):
+        self.status = 3
+
+    def orderDelivered(self):
+        self.status = 4
 
     def __str__(self):
         return f"\n\t {self.profile}'s order"
