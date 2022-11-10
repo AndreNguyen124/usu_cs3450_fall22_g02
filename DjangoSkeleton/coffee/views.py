@@ -185,13 +185,14 @@ def userView(request):
 def customizeDrink(request, pk):
     profile = Profile.objects.get(id=request.user.id)
     item = Menu_Item.objects.get(id=pk)
+    context = { 'item': item }
     form = Order()
     if request.method == 'POST':
         # now create an order object
         order = Order.createOrder(form, profile)
         #form = Menu_Item(request.POST, instance=order)
 
-    return render(request   , 'coffee/customizeDrink.html')
+    return render(request, 'coffee/customizeDrink.html', context)
     
 
 @login_required(login_url='coffee:login')
