@@ -61,26 +61,6 @@ class Order(models.Model):
 
     #def getTotalPrice(self):
     ############ SHOULD THIS BE IN VIEWS?? CAUSE ITS ACTUALLY CALCULATE< NOT GET? ###################
-    
-    def createOrder(self, profile):
-        self.profile = profile
-        self.status = 0
-        self.save()
-    
-    def createOrderStatus(self):
-        self.status = 0
-
-    def orderIsPaidFor(self):
-        self.status = 1
-
-    def orderIsSubmitted(self):
-        self.status = 2
-
-    def orderIsCompleted(self):
-        self.status = 3
-
-    def orderDelivered(self):
-        self.status = 4
 
 
 class Price_Markup(models.Model):

@@ -6,11 +6,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from pyparsing import Or
 
 from .decorators import unauthenticated_user, allowed_users
 
-from .models import Inventory_Item, Menu_Item, Order #Drink_Item
+from .models import Inventory_Item, Menu_Item #Drink_Item
 from .forms import InventoryForm, CreateUserForm, DrinkForm, MenuForm
 from .models import Inventory_Item, Price_Markup, Profile, Menu_Item, Order #Drink_Item
 from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm
@@ -197,40 +196,18 @@ def userView(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def customizeDrink(request, pk):
-    profile = Profile.objects.get(id=request.user.id)
     item = Menu_Item.objects.get(id=pk)
-    context = { 'item': item }
-    form = Order()
     if request.method == 'POST':
-        # now create an order object
-        order = Order.createOrder(form, profile)
-        #form = Menu_Item(request.POST, instance=order)
+        form = DrinkForm(request.POST, instance=item)
 
+    context = {'drink': item}
     return render(request, 'coffee/customizeDrink.html', context)
     
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Employee'])
 def employeeView(request):
-    # return a context with menu item status
-    order_list = Order.objects.order_by('status')
-    context = { 'order_list': order_list }
-    print(request.user)
-    
-    #item = Menu_Item.objects.get(id=pk)
-    # press a button to update the order
-    print(request.method)
-    if request.method == 'POST':
-        try:
-            pk = request.POST.get('id')
-            order = Order.objects.get(id=pk)
-            order.delete()
-            return render(request, 'coffee/employeeView.html', context)
-        except: # If there is an empty post request, do nothing
-            None
-
-    return render(request, 'coffee/employeeView.html', context)
-
+    return render(request, 'coffee/employeeView.html')
 
 
 @login_required(login_url='coffee:login')
