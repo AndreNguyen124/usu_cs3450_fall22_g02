@@ -46,6 +46,42 @@ class Profile(models.Model):
     def __str__(self):
         return f"\n\tUser: {self.user}"
 
+class Order(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    totalPrice = models.DecimalField(max_digits=9, decimal_places=2, default=0)
+    status = models.IntegerField(default=0)
+    # 0 : order being created by customer
+    # 1 : online order has been paid for - shows up in cashier queue
+    # 2 : order submitted to barista to be made - shows in cashier queue
+    # 3 : order completed by barista, ready to be delivered to customer - shows in other cashier queue?
+    # 4 : delivered to customer - can be deleted
+
+    def __str__(self):
+        return f"\n\t {self.profile}'s order"
+
+    #def getTotalPrice(self):
+    ############ SHOULD THIS BE IN VIEWS?? CAUSE ITS ACTUALLY CALCULATE< NOT GET? ###################
+    
+    def createOrder(self, profile):
+        self.profile = profile
+        self.status = 0
+        self.save()
+    
+    def createOrderStatus(self):
+        self.status = 0
+
+    def orderIsPaidFor(self):
+        self.status = 1
+
+    def orderIsSubmitted(self):
+        self.status = 2
+
+    def orderIsCompleted(self):
+        self.status = 3
+
+    def orderDelivered(self):
+        self.status = 4
+
 
 class Price_Markup(models.Model):
     markup = models.IntegerField(default=0)
@@ -71,57 +107,36 @@ class Inventory_Item(models.Model):
         self.quantity -= value
         self.save()
 
+
     def __str__(self):
         return f"\n\tid: {self.id} \n\tName: {self.name} \n\tQuantity: {self.quantity} \n\tPrice: {self.price}"
 
-class Order(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    status = models.IntegerField(default=0)
-    # 0 : order being created by customer/
-    # 1 : online order has been paid for - shows up in cashier queue
-    # 2 : order submitted to barista to be made - shows in cashier queue
-    # 3 : order completed by barista, ready to be delivered to customer - shows in other cashier queue?
-    # 4 : delivered to customer - can be delete
-    def createOrder(self, profile):
-        self.profile = profile
-        self.status = 0
-        self.save()
-    
-    def createOrderStatus(self):
-        self.status = 0
-
-    def orderIsPaidFor(self):
-        self.status = 1
-
-    def orderIsSubmitted(self):
-        self.status = 2
-
-    def orderIsCompleted(self):
-        self.status = 3
-
-    def orderDelivered(self):
-        self.status = 4
-
-    def __str__(self):
-        return f"\n\t {self.id} {self.profile}'s order"
 
 class Menu_Item(models.Model):
     name = models.CharField(max_length=200)
-    Ingredients = models.ManyToManyField(Inventory_Item, related_name='Inventory_Item', blank=True)
-    price = models.DecimalField(max_digits=7, decimal_places=2, default=7.50)
+    Ingredients = models.ManyToManyField(Inventory_Item, through='Item_Amount', related_name='inventory_items', blank=True)
+    price = models.DecimalField(max_digits=7, decimal_places=2, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True) # display menu items whose order=null
-
+    custom = models.BooleanField(default = False)
 
     def updatePrice(self, value):
         self.price = value
         self.save()
 
+    def __str__(self):
+        return f"\n\tName: {self.name}, \n\tPrice: {self.price}"
 
-
+class Item_Amount(models.Model):
+    inventory_item = models.ForeignKey(Inventory_Item, related_name = 'item_amounts', on_delete=models.CASCADE)
+    menu_item = models.ForeignKey(Menu_Item, related_name = 'item_amounts', on_delete=models.CASCADE)
+    amount = models.IntegerField(default=1)
 
     def __str__(self):
-        return f"\n\tid: {self.id} \n\tName: {self.name} \n\tIngredients: {self.Ingredients} \n\tPrice: {self.price}"
+        return f"\n\t {self.amount} {self.inventory_item.name}"
 
+    def updateAmount(self, value):
+        self.amount = value
+        self.save()
 
 # # TODO: Implement a Many to Many Field for Drink Item
 # class Drink_Item(models.Model):

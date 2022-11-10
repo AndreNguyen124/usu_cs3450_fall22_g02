@@ -32,7 +32,7 @@ class CreateUserForm(UserCreationForm):
 class DrinkForm(forms.ModelForm):
     class Meta:
         model = Menu_Item
-        fields = ['name', 'Ingredients', 'price']
+        fields = ['name', 'Ingredients']
 
 class MenuForm(forms.ModelForm):
     class Meta:
