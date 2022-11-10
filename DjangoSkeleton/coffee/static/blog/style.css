@@ -162,7 +162,12 @@ a:hover {
     display: flex;
     flex-direction: column;
     margin: auto;
-}  
+}
+
+/* General Styling */
+.center-item-vertically {
+    margin: auto;
+}
 
 /* add box shadow to any elements that gives it a pop :) */
 .boxShadow {
