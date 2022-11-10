@@ -19,13 +19,14 @@
     {% for item in menu_list %}
     <tr>
         <th scope="row">{{ item.name }}</th>
-        <td>{{ item.name }}</td>
+        <td>{{ item.price }}</td>
         <td>
             <div class="row">
                 <div class="col-md-6">
                     <p>
-                        {% for test in item.Ingredients.all %}
-                        {{ test.name }},
+
+                        {% for test in item.item_amounts.all %}
+                            {{ test.amount }} {{ test.inventory_item.name }},
                         {% endfor %}
                     </p>
                 </div>

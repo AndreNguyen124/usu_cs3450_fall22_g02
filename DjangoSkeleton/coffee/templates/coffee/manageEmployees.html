@@ -1,10 +1,34 @@
 {% extends './partials/base.html' %}
 
 {% block title %} Manage Employees {% endblock %}
-{% block page_heading %} Search for Employee {% endblock %}
+{% block page_heading %} Search for user {% endblock %}
 
 {% block content %}
     <div class="column-container">
-        <input type="search" class="search-customers" placeholder="Employee Lookup"/>  
+        <div class="row=container">
+            <form>
+                <input name="q" type="search" class="search" placeholder="Enter customer name" aria-label="Search"/>  
+                <input class="inputStyling" type="submit"/>
+            </form>
+            {% if clearSearch %}
+            <a href="{% url 'coffee:manageEmployees' %}">X clear search</a>
+            {% endif %}
+        </div>
+        {% if users %}
+        {% for user in users %}
+        <div class='boxShadow row-container'>
+            <div class='column-container'>
+                <p>{{ user.user.username }}</p>
+            </div>
+            <div class='column-container'>
+                <a class='btn' href='#'>New Order</a>
+            </div>
+            <div class='column-container'>
+                <a class='btn' href="{% url 'coffee:paidOrders' user.user.id %}">View Orders</a>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
     </div>
+    
 {% endblock %}

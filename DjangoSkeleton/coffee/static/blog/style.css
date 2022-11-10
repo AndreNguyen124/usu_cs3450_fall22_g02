@@ -45,10 +45,8 @@ a:hover {
     flex-direction: column;
     position: relative;
     justify-content: space-between;
-    align-items: center;
-    background-color: #f9b248; /*#d77b52;*/
+    background-color: #E1B995; /*#d77b52;*/
     min-height: 200px;
-    width: 100%;
     border-bottom: 1px solid #0066b2;
     box-shadow: 0px 5px 5px #fc3a52;
 }
@@ -56,8 +54,9 @@ a:hover {
 .navbar-links {
     display: flex;
     height: 100%;
+    margin-right: 4rem;
+    width: fit-content;
     margin-left: auto;
-    margin-right: 2rem;
 }
 
 .navbar-links ul {
@@ -86,6 +85,19 @@ a:hover {
     background-color: #fbf2d5; 
 }
 
+#shoppingCartImage {
+    display: flex;
+    height: 100%;
+    width: 8rem;
+    padding: 1rem;
+}
+
+#shoppingCartImage img {
+    height: 100%;
+    margin: auto;
+    text-align: center;
+}
+
 .accountBalanceContainer {
     display: flex;
     margin-right: auto;
@@ -101,7 +113,6 @@ a:hover {
 .accountRowContainer {
     display: flex;
     margin-right: auto;
-    padding: 2rem;
 }
 
 /* Heading - Navbar ish */
@@ -111,6 +122,11 @@ a:hover {
     margin: 1rem;
     margin-right: 2rem;
     font-size: 1.2rem;
+    background-color: #e8d5b7;
+}
+
+.logout-btn:hover {
+    background-color: #fae5c2;
 }
 
 .heading {
@@ -267,4 +283,47 @@ input {
     margin-bottom: 10px;
     background-color: #f8f8ff;
     font-size: 1.2rem;
+}
+
+/* ORDER STYLING */
+/* Order List styling for user page */
+.order-link {
+    display: flex;
+}
+
+.order {
+    display: flex;
+    margin: 2em;
+    width: fit-content;
+    border-left: 5px solid #fc3a52;
+    border-bottom: 5px solid #f9b248;
+    border-top: 5px solid #0066b2;
+    background-color: #f1ddbd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.image {
+    display: flex;
+    justify-content: center;
+}
+
+.image img {
+    max-width: 200px;
+    align-self: center;
+}
+
+.order-description {
+    padding: 2rem;
+    max-width: 40em;
+}
+
+.order-description h2 {
+    border-bottom: 4px dashed #fc3a52;
+    width: fit-content;
+}
+
+.price-of-order {
+    margin:auto;
+    padding: 2rem;
 }
