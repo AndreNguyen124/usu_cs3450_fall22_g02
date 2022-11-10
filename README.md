@@ -46,6 +46,20 @@ Dan's Frappuccino Paradise is a web app powered by Django and Python
  - At the moment, Andre is assigned as our system tester. After a feature is accepted and merged into the development branch, Andre will manually test the feature and the entire application to ensure that the new merge did not create any bugs. If the system test passes, Andre will merge the development branch into the main branch. 
  - To run system tests, the developer of the feature or code will also be responsible for drafting some test steps for the tester to run. The test steps will be linked through Jira where Andre will be responsible for failing or passing the test. 
  
+## Automatic Testing Instructions 
+ - Besides our manual and system testing, there will be automatic tests that will test the general functionality of the website. 
+ 1. Fork the repo
+ 2. Clone the repo down into the local machine 
+ 3. Verify that the clone contains the latest changes
+ 4. Open the terminal (Either in an IDE or Command Line Shell)
+ 5. CD or navigate to ~\usu_cs3450_fall22_g02\DjangoSkeleton
+ 6. Run the command: "python .\manage.py test"
+ 7. A message will display showing the number of tests and how long it took to run the tests.
+    - Found 4 test(s).
+    Creating test database for alias 'default'...
+    System check identified no issues (0 silenced).
+    Ran 4 tests in 0.191s
+8. Verify that the tests all pass and the test database is destroyed 
 ## Milestone 2:
 - Use case diagram: docs/Requirements.docx (Situation 9)
 - UML Class diagram: docs/Class Diagram/UML.png
