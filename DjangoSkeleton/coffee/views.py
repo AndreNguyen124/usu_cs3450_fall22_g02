@@ -250,8 +250,13 @@ def manageEmployees(request):
 def viewPaidOrders (request, pk):
     userProfile = Profile.objects.get(id=pk)
 
+    # list orders for given user with a status of 'Paid'
+    paidOrders = Order.objects.filter(profile__id=userProfile.id, status=1)
+
+
     context = {
-            'customer' : userProfile
+            'customer' : userProfile,
+            'paidOrderList' : paidOrders
             }
 
     return render(request, 'coffee/paidOrders.html', context)
