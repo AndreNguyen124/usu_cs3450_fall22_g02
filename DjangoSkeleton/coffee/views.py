@@ -185,6 +185,7 @@ def shoppingCartView(request):
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
+# TODO: Need to refactor 'drink_list'
 def userView(request):
     drink_list = Menu_Item.objects.filter(custom=False)
     #Menu_Item.objects.order_by('name')
@@ -193,14 +194,17 @@ def userView(request):
     return render(request, 'coffee/userView.html', context)
 
 
+
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def customizeDrink(request, pk):
+    drink_list = Menu_Item.objects.filter(custom=False)
+
     item = Menu_Item.objects.get(id=pk)
     if request.method == 'POST':
         form = DrinkForm(request.POST, instance=item)
 
-    context = {'drink': item}
+    context = {'drink': item,'drink_list': drink_list }
     return render(request, 'coffee/customizeDrink.html', context)
     
 
@@ -415,8 +419,8 @@ def product_update(request, pk):
 
 
 # TODO: Implement Add/Remove/Edit Menu Item
-@login_required(login_url='coffee:login')
-@allowed_users(allowed_roles=['Manager'])
+# @login_required(login_url='coffee:login')
+# @allowed_users(allowed_roles=['Manager'])
 def menuItem(request):
     menu_list = Menu_Item.objects.filter(custom=False)
     context = {
@@ -426,8 +430,8 @@ def menuItem(request):
 
 # TODO
 # addDrinkProduct
-@login_required(login_url='coffee:login')
-@allowed_users(allowed_roles=['Manager'])
+# @login_required(login_url='coffee:login')
+# @allowed_users(allowed_roles=['Manager'])
 def addMenuItem(request, pk):
     item = Menu_Item.objects.get(id=pk)
     if request.method == 'POST':
@@ -458,8 +462,8 @@ def deleteMenuItem(request, pk):
 
 
 
-@login_required(login_url='coffee:login')
-@allowed_users(allowed_roles=['Manager'])
+# @login_required(login_url='coffee:login')
+# @allowed_users(allowed_roles=['Manager'])
 def menu_update(request, pk):
     item = Menu_Item.objects.get(id=pk)
 
@@ -505,4 +509,5 @@ def updateAllPrices():
 
 def notAuth(request):
     return render(request, 'coffee/notAuth.html')
+
 
