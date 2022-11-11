@@ -46,43 +46,6 @@ class Profile(models.Model):
     def __str__(self):
         return f"\n\tUser: {self.user}"
 
-class Order(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    totalPrice = models.DecimalField(max_digits=9, decimal_places=2, default=0)
-    status = models.IntegerField(default=0)
-    # 0 : order being created by customer
-    # 1 : online order has been paid for - shows up in cashier queue
-    # 2 : order submitted to barista to be made - shows in cashier queue
-    # 3 : order completed by barista, ready to be delivered to customer - shows in other cashier queue?
-    # 4 : delivered to customer - can be deleted
-
-    def __str__(self):
-        return f"\n\t {self.profile}'s order"
-
-    #def getTotalPrice(self):
-    ############ SHOULD THIS BE IN VIEWS?? CAUSE ITS ACTUALLY CALCULATE< NOT GET? ###################
-    
-    def createOrder(self, profile):
-        self.profile = profile
-        self.status = 0
-        self.save()
-    
-    def createOrderStatus(self):
-        self.status = 0
-
-    def orderIsPaidFor(self):
-        self.status = 1
-
-    def orderIsSubmitted(self):
-        self.status = 2
-
-    def orderIsCompleted(self):
-        self.status = 3
-
-    def orderDelivered(self):
-        self.status = 4
-
-
 class Price_Markup(models.Model):
     markup = models.IntegerField(default=0)
 
@@ -112,12 +75,46 @@ class Inventory_Item(models.Model):
         return f"\n\tid: {self.id} \n\tName: {self.name} \n\tQuantity: {self.quantity} \n\tPrice: {self.price}"
 
 
+# TODO: Implement a Many to Many Field for Menu Item
+class Custom_Drink(models.Model): # An customized menu Item
+    name = models.CharField(max_length=200)
+    Ingredients = models.CharField(max_length=1000)
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+    def __str__(self):
+        return f"\n\tid: {self.id} \n\tName: {self.name} \n\tIngredients: {self.Ingredients} \n\tPrice: {self.price}"
+
+
+class Order(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    # Order can have many customized drinks:
+    customizedDrink = models.ForeignKey(Custom_Drink, on_delete=models.CASCADE)
+    totalPrice = models.DecimalField(max_digits=9, decimal_places=2, default=0)
+    status = models.IntegerField(default=0)
+    # 0 : order being created by customer
+    # 1 : online order has been paid for - shows up in cashier queue
+    # 2 : order submitted to barista to be made - shows in cashier queue
+    # 3 : order completed by barista, ready to be delivered to customer - shows in other cashier queue?
+    # 4 : delivered to customer - can be deleted
+
+    def __str__(self):
+        return f"\n\t {self.profile}'s order"
+    
+    def createOrder(self, profile):
+        self.profile = profile
+        self.status = 0
+        self.save()
+    
+
 class Menu_Item(models.Model):
     name = models.CharField(max_length=200)
     Ingredients = models.ManyToManyField(Inventory_Item, through='Item_Amount', related_name='inventory_items', blank=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, null=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True) # display menu items whose order=null
     custom = models.BooleanField(default = False)
+
+    def getIngredients(self):
+        for item in self.Ingredients:
+            print(item)
 
     def updatePrice(self, value):
         self.price = value
@@ -138,14 +135,5 @@ class Item_Amount(models.Model):
         self.amount = value
         self.save()
 
-# # TODO: Implement a Many to Many Field for Drink Item
-# class Drink_Item(models.Model):
-#     name = models.CharField(max_length=200)
-#     # TODO: Using a charField need to determine if there is a way to implement a dictionary in the model
-#     Ingredients = models.CharField(max_length=1000)
-#     price = models.DecimalField(max_digits=5, decimal_places=2)
-#     order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True)
 
-#     def __str__(self):
-#         return f"\n\tid: {self.id} \n\tName: {self.name} \n\tIngredients: {self.Ingredients} \n\tPrice: {self.price}"
 

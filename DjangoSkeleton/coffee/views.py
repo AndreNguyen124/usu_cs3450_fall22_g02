@@ -6,11 +6,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from pyparsing import Or
 
 from .decorators import unauthenticated_user, allowed_users
 
-from .models import Inventory_Item, Menu_Item, Order #Drink_Item
+from .models import Custom_Drink, Inventory_Item, Menu_Item, Order
 from .forms import InventoryForm, CreateUserForm, DrinkForm, MenuForm
 from .models import Inventory_Item, Price_Markup, Profile, Menu_Item, Order #Drink_Item
 from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm
@@ -198,8 +197,18 @@ def userView(request):
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def customizeDrink(request, pk):
     profile = Profile.objects.get(id=request.user.id)
-    item = Menu_Item.objects.get(id=pk)
-    context = { 'item': item }
+    MenuItem = Menu_Item.objects.get(id=pk)
+
+    # Put the Ingredients into the Customized drink object
+    print("_____________________________________")
+    print(MenuItem.Ingredients.all())
+    # Customized drink name
+    nameOfDrink = f"{profile.user}'s {MenuItem.name}"
+    Custom_Drink.name = nameOfDrink
+    # Now put the base value of the menu item into the Custom_Drink
+    Custom_Drink.Ingredients
+
+    context = { 'item': MenuItem }
     form = Order()
     if request.method == 'POST':
         # now create an order object
