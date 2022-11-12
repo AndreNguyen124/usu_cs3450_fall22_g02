@@ -178,10 +178,47 @@ def shoppingCartView(request):
         current_order = current_orderq.first()
         print('current order:', current_order)
         print('current order:', current_order.menu_item_set.all())
-        context = { 'current_order': current_order }
+
+        order_total = calculateOrderTotal(current_order.id)
+        context = { 
+                'current_order': current_order,
+                'order_total': order_total
+                }
     else:
         context = {'current_order' : '' } 
+
+
+    if request.method == 'POST':
+        total =  Decimal(request.POST.get('checkout'))
+
+        user = Profile.objects.get(id=request.user.id)
+
+        if user.account_balance >= total:
+            user.decreaseBalance(total)
+            # This should probably be handled in models eventually
+            current_order.status=1
+            current_order.save()
+
+            return redirect('coffee:login')
+
+        else:
+            messages.info(request, 'Error: Insufficient funds')
+
+
+
+        print(total)
+
     return render(request, 'coffee/shopping_cart.html', context)
+
+
+def calculateOrderTotal(id):
+    order = Order.objects.filter(id=id).first()
+    menuItems = order.menu_item_set.all()
+    total = 0
+    for i in menuItems:
+        total += i.price
+
+    return total
     
 
 @login_required(login_url='coffee:login')

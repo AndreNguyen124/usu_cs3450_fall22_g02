@@ -24,13 +24,25 @@
             </a>
         </div>
     {% endfor %}  
+
+<div class="column-container checkout">
+    <div class="row-container">
+        <h3>Order Total: {{ order_total }}</h3>
+    </div>
+    <div class="row-container">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" id="checkout" name="checkout" value="{{ order_total }}">
+            <input class="btn" type="submit" value="Checkout">
+        </form>
+    </div>
+
+</div>
+
 {% else %}
     <div>
         <a class="order-link" href="/userView"> Start Shopping! </a>
     </div>
 {% endif %}
-
-
-{% block page_footer %} Order Total {% endblock %}
 
 {% endblock %}
