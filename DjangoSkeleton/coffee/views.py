@@ -1,21 +1,21 @@
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from decimal import Decimal
+
 from django.contrib import messages
-from django.shortcuts import get_object_or_404, render, redirect
-from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import Group
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 
 from .decorators import unauthenticated_user, allowed_users
-
 from .models import Inventory_Item, Menu_Item
 from .models import Inventory_Item, Menu_Item 
 from .forms import InventoryForm, CreateUserForm, DrinkForm, MenuForm
 from .models import Inventory_Item, Price_Markup, Profile, Menu_Item, Order #Drink_Item
-from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm
 
-from decimal import Decimal
+from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm
+from .forms import MenuForm
+from .models import Inventory_Item, Price_Markup, Profile, Menu_Item, Order  # Drink_Item
 
 
 @unauthenticated_user
@@ -65,6 +65,7 @@ def registerPage(request):
     context = {'form': form}
     return render(request, 'coffee/register.html', context)
 
+
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def createEmployee(request):
@@ -93,7 +94,7 @@ def update_account_balance(request):
     if request.method == 'POST':
         form = AccountBalanceForm(request.POST, initial={'account_balance': 1})
         if form.is_valid():
-            form.save(commit=False) 
+            form.save(commit=False)
             user.increaseBalance(form.cleaned_data['account_balance'])
 
             return redirect('coffee:login')
@@ -114,7 +115,7 @@ def update_hours(request):
     if request.method == 'POST':
         form = LogHoursForm(request.POST, initial={'hours_worked': 1})
         if form.is_valid():
-            form.save(commit=False) 
+            form.save(commit=False)
             user.logHours(form.cleaned_data['hours_worked'])
 
             return redirect('coffee:login')
@@ -166,7 +167,7 @@ def payEmployees(request):
     else:
         messages.info(request, 'Error: Insufficient funds')
         return HttpResponseRedirect('/managerView')
-        
+
     return redirect('coffee:managerView')
 
 
@@ -178,18 +179,19 @@ def shoppingCartView(request):
         current_order = current_orderq.first()
         print('current order:', current_order)
         print('current order:', current_order.menu_item_set.all())
-        context = { 'current_order': current_order }
+        context = {'current_order': current_order}
     else:
-        context = {'current_order' : '' } 
+        context = {'current_order': ''}
     return render(request, 'coffee/shopping_cart.html', context)
-    
+
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
+# TODO: Need to refactor 'drink_list'
 def userView(request):
     drink_list = Menu_Item.objects.filter(custom=False)
-    #Menu_Item.objects.order_by('name')
-    context = { 'drink_list': drink_list }
+    # Menu_Item.objects.order_by('name')
+    context = {'drink_list': drink_list}
 
     return render(request, 'coffee/userView.html', context)
 
@@ -197,13 +199,15 @@ def userView(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def customizeDrink(request, pk):
+    drink_list = Menu_Item.objects.filter(custom=False)
+
     item = Menu_Item.objects.get(id=pk)
     if request.method == 'POST':
         form = DrinkForm(request.POST, instance=item)
 
-    context = {'drink': item}
+    context = {'drink': item, 'drink_list': drink_list}
     return render(request, 'coffee/customizeDrink.html', context)
-    
+
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Employee'])
@@ -225,9 +229,9 @@ def manageEmployees(request):
         users = Profile.objects.filter(user__username__icontains=q)
 
         context = {
-                'users': users,
-                'clearSearch': True
-                }
+            'users': users,
+            'clearSearch': True
+        }
     else:
         context = {'clearSearch': False}
     return render(request, 'coffee/manageEmployees.html', context)
@@ -235,7 +239,7 @@ def manageEmployees(request):
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Employee'])
-def viewPaidOrders (request, pk):
+def viewPaidOrders(request, pk):
     userProfile = Profile.objects.get(id=pk)
 
     # list orders for given user with a status of 'Paid'
@@ -258,6 +262,7 @@ def viewPaidOrders (request, pk):
             'customer' : userProfile,
             'paidOrderList' : paidOrders
             }
+
 
     return render(request, 'coffee/paidOrders.html', context)
 
@@ -282,7 +287,7 @@ def update_inventory(request, pk):
         form = InventoryForm(request.POST, initial={'quantity': 1})
         if form.is_valid():
             manager = Profile.objects.first()
-            
+
             howMuch = form.cleaned_data['quantity']
             totalOwed = item.price * howMuch
 
@@ -292,7 +297,6 @@ def update_inventory(request, pk):
             else:
                 messages.info(request, 'Error: Insufficient funds')
                 return HttpResponseRedirect('/inventory')
-
 
             form.save(commit=False)
 
@@ -306,6 +310,7 @@ def update_inventory(request, pk):
     }
     return render(request, 'coffee/update_inventory.html', context)
 
+
 def product_delete(request, pk):
     item = Menu_Item.objects.get(id=pk)
 
@@ -313,6 +318,7 @@ def product_delete(request, pk):
         item.delete()
         return redirect('coffee:drink')
     return render(request, 'coffee/drink_delete.html')
+
 
 def drink(request):
     return render(request, 'coffee/drink.html')
@@ -326,7 +332,7 @@ def drinkProduct(request):
     drink_list = Menu_Item.objects.filter(custom=False).order_by('name')
     context = {
         'drink_list': drink_list,
-            'markup': markup
+        'markup': markup
     }
 
     return render(request, 'coffee/drink.html', context)
@@ -343,7 +349,6 @@ def update_markup(request):
             markupObj.setPriceMarkup(form.cleaned_data['markup'])
             updateAllPrices()
 
-
             return redirect('coffee:drink')
 
     else:
@@ -353,6 +358,7 @@ def update_markup(request):
         'form': form,
     }
     return render(request, 'coffee/update_markup.html', context)
+
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
@@ -383,6 +389,7 @@ def product_delete(request, pk):
         return redirect('coffee:drink')
     return render(request, 'coffee/drink_delete.html')
 
+
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])
 def product_update(request, pk):
@@ -404,8 +411,8 @@ def product_update(request, pk):
 
 
 # TODO: Implement Add/Remove/Edit Menu Item
-@login_required(login_url='coffee:login')
-@allowed_users(allowed_roles=['Manager'])
+# @login_required(login_url='coffee:login')
+# @allowed_users(allowed_roles=['Manager'])
 def menuItem(request):
     menu_list = Menu_Item.objects.filter(custom=False)
     context = {
@@ -413,10 +420,11 @@ def menuItem(request):
     }
     return render(request, 'coffee/menuItem.html', context)
 
+
 # TODO
 # addDrinkProduct
-@login_required(login_url='coffee:login')
-@allowed_users(allowed_roles=['Manager'])
+# @login_required(login_url='coffee:login')
+# @allowed_users(allowed_roles=['Manager'])
 def addMenuItem(request, pk):
     item = Menu_Item.objects.get(id=pk)
     if request.method == 'POST':
@@ -446,9 +454,8 @@ def deleteMenuItem(request, pk):
     return render(request, 'coffee/menu_delete.html')
 
 
-
-@login_required(login_url='coffee:login')
-@allowed_users(allowed_roles=['Manager'])
+# @login_required(login_url='coffee:login')
+# @allowed_users(allowed_roles=['Manager'])
 def menu_update(request, pk):
     item = Menu_Item.objects.get(id=pk)
 
@@ -468,7 +475,6 @@ def menu_update(request, pk):
     return render(request, 'coffee/menu_update.html', context)
 
 
-
 def getMenuItemPrice(itemId):
     menuItem = Menu_Item.objects.get(id=itemId)
     markupDecimal = (Price_Markup.objects.first().markup / 100) + 1
@@ -480,7 +486,7 @@ def getMenuItemPrice(itemId):
     price = price * Decimal(markupDecimal)
 
     # --- Uncomment when testing is done to add baseline price
-    #if price < 7.50: price = 7.50
+    # if price < 7.50: price = 7.50
 
     return price
 
@@ -489,9 +495,7 @@ def updateAllPrices():
     menuItems = Menu_Item.objects.all()
     for item in menuItems:
         item.updatePrice(getMenuItemPrice(item.id))
-    
 
 
 def notAuth(request):
     return render(request, 'coffee/notAuth.html')
-

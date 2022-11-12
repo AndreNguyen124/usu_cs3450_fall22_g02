@@ -12,14 +12,19 @@
     </div>
     <div class="drinkOptionsConatiner boxShadow">
         <h2>{{ drink.name }}</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-        dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+        {% for item in drink_list %}
+        <p>
+            {% if drink.name == item.name %}
+            {% for test in item.Ingredients.all %}
+            {{ test.name }},
+            {% endfor %}
+            {% endif %}
+        </p>
+        {% endfor %}
 
         <form method="POST" action="" class="customizeDrink-InputForum">
             {% csrf_token %}
-            
+
             <div class="labelStyling">{{form.name.label}}</div>
             <div class="inputStyling">{{form.name}}</div>
             <div class="labelStyling">{{form.Ingredients.label}}</div>
@@ -27,7 +32,13 @@
             <div class="labelStyling">{{form.price.label}}</div>
             <div class="inputStyling">{{form.price}}</div>
 
+            <!--            TODO-->
             <div class="inputStyling"><input type="Submit Order" name="Create User"></div>
+
+            <div class="col-md-6">
+                <a class="btn btn-info" href="">Add to Order</a>
+            </div>
+
         </form>
 
     </div>
