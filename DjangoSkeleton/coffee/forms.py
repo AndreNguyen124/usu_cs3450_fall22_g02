@@ -1,10 +1,9 @@
 from django import forms
-from .models import Inventory_Item, Menu_Item
-from .models import Inventory_Item, Price_Markup, Profile #Drink_Item,
-
-
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+from .models import Inventory_Item, Price_Markup, Profile  # Drink_Item,
+from .models import Menu_Item
 
 
 class NameForm(forms.Form):
