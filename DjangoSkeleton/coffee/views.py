@@ -335,18 +335,16 @@ def manageEmployees(request):
     return render(request, 'coffee/manageEmployees.html', context)
 
 
-
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Employee'])
-def viewPaidOrders (request, pk):
+def viewPaidOrders(request, pk):
     userProfile = Profile.objects.get(id=pk)
 
     context = {
-            'customer' : userProfile
-            }
+        'customer': userProfile
+    }
 
     return render(request, 'coffee/paidOrders.html', context)
-
 
 
 @login_required(login_url='coffee:login')
