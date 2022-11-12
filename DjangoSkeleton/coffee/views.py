@@ -8,16 +8,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 from .decorators import unauthenticated_user, allowed_users
-from .models import Inventory_Item, Menu_Item
-from .models import Inventory_Item, Menu_Item 
-
-from .models import Inventory_Item, Menu_Item
-from .forms import InventoryForm, CreateUserForm, DrinkForm, MenuForm
-from .models import Inventory_Item, Price_Markup, Profile, Menu_Item, Order #Drink_Item
-
-from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm
-from .forms import MenuForm
-from .models import Inventory_Item, Price_Markup, Profile, Menu_Item, Order  # Drink_Item
+from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm, MenuForm
+from .models import Inventory_Item, Price_Markup, Profile, Menu_Item, Order 
 
 
 @unauthenticated_user
