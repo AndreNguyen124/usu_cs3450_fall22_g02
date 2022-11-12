@@ -232,7 +232,6 @@ def manageEmployees(request):
     return render(request, 'coffee/manageEmployees.html', context)
 
 
-
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Employee'])
 def viewPaidOrders (request, pk):
@@ -241,6 +240,14 @@ def viewPaidOrders (request, pk):
     # list orders for given user with a status of 'Paid'
     paidOrders = Order.objects.filter(profile__id=userProfile.id, status=1)
 
+    if request.method == 'POST':
+        orderID = request.POST.get('to-barista')
+        order = Order.objects.filter(id=orderID).first()                # Have to grab first because filter returns a query set of one
+
+        # this should eventually be handled in models.py
+        order.status = 2
+        order.save()
+
 
     context = {
             'customer' : userProfile,
@@ -248,7 +255,6 @@ def viewPaidOrders (request, pk):
             }
 
     return render(request, 'coffee/paidOrders.html', context)
-
 
 
 @login_required(login_url='coffee:login')
