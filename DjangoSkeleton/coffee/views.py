@@ -257,8 +257,12 @@ def viewPaidOrders (request, pk):
         order = Order.objects.filter(id=orderID).first()                # Have to grab first because filter returns a query set of one
 
         # this should eventually be handled in models.py
+        print("Old order status:")
+        print(order.status)
         order.status = 2
         order.save()
+        print("New order status:")
+        print(order.status)
 
 
     context = {
