@@ -4,8 +4,36 @@
 {% block page_heading %} {{ customer.user }}'s Orders {% endblock %}
 
 {% block content %}
-    <div class="column-container">
-        <p>No orders yet.</p>
-    </div>
-    
+
+<div class="column-container">
+    {% if paidOrderList %}
+    {% for order in paidOrderList %}
+        <div class="order">
+        {% for menuItem in order.menu_item_set.all %}
+                <div class="order-description">
+                    <h2>{{ menuItem.name }}</h2>
+                    <p>
+                        {% for ingr in menuItem.item_amounts.all %}
+                            {{ ingr.amount }} {{ ingr.inventory_item.name }},
+                        {% endfor %}
+                    </p>
+                </div>
+        {% endfor %}
+                <div class="price-of-order">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" id="to-barista" name="to-barista" value="{{ order.id }}">
+                        <input id="to-barista" type="submit" class="btn" value="Submit">
+                    </form>
+                </div>
+        </div>
+    {% endfor %}  
+
+    {% else %}
+    <p>No orders yet.</p>
+
+    {% endif %}
+</div>
+
+
 {% endblock %}

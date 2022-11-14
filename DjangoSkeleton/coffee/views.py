@@ -242,9 +242,27 @@ def manageEmployees(request):
 def viewPaidOrders(request, pk):
     userProfile = Profile.objects.get(id=pk)
 
+    # list orders for given user with a status of 'Paid'
+    paidOrders = Order.objects.filter(profile__id=userProfile.id, status=1)
+
+    if request.method == 'POST':
+        orderID = request.POST.get('to-barista')
+        order = Order.objects.filter(id=orderID).first()                # Have to grab first because filter returns a query set of one
+
+        # this should eventually be handled in models.py
+        print("Old order status:")
+        print(order.status)
+        order.status = 2
+        order.save()
+        print("New order status:")
+        print(order.status)
+
+
     context = {
-        'customer': userProfile
-    }
+            'customer' : userProfile,
+            'paidOrderList' : paidOrders
+            }
+
 
     return render(request, 'coffee/paidOrders.html', context)
 
