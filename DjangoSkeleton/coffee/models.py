@@ -100,8 +100,8 @@ class Menu_Item(models.Model):
     name = models.CharField(max_length=200)
     Ingredients = models.ManyToManyField(Inventory_Item, through='Item_Amount', related_name='inventory_items', blank=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, null=True)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True) # display menu items whose order=null
-    custom = models.BooleanField(default = False)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True) 
+    custom = models.BooleanField(default = False) # display menu items whose custom=False
 
     def updatePrice(self, value):
         self.price = value
