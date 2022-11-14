@@ -227,15 +227,37 @@ def userView(request):
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def customizeDrink(request, pk):
-    drink_list = Menu_Item.objects.filter(custom=False)
+    ####### Make copy of menuItem ########
+    menuItem = Menu_Item.objects.get(id=pk)
+    drinkName = 'custom ' + menuItem.name
+    customDrink = Menu_Item(name = drinkName, price = menuItem.price, custom=True)
+    customDrink.save()
+    for ingr in menuItem.item_amounts.all():    
+        Item_Amount.objects.create(menu_item=customDrink, inventory_item=ingr.inventory_item, amount = ingr.amount)
+    print(customDrink)
+    ingr_list = customDrink.item_amounts.all()
 
-    item = Menu_Item.objects.get(id=pk)
-    form = Order()
+    
+    form = CustomizeDrinkForm()
     if request.method == 'POST':
-        form = DrinkForm(request.POST, instance=item)
+        form = CustomizeDrinkForm(request.POST)
 
-    context = {'drink': item, 'drink_list': drink_list}
+
+    context = {'ingr_list': ingr_list, 'form': form, 'drink' : customDrink}
     return render(request, 'coffee/customizeDrink.html', context)
+
+
+# @login_required(login_url='coffee:login')
+# @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
+# def customizeDrink(request, pk):
+#     drink_list = Menu_Item.objects.filter(custom=False)
+
+#     item = Menu_Item.objects.get(id=pk)
+#     if request.method == 'POST':
+#         form = DrinkForm(request.POST, instance=item)
+
+#     context = {'drink': item, 'drink_list': drink_list}
+#     return render(request, 'coffee/customizeDrink.html', context)
 
 
 @login_required(login_url='coffee:login')
