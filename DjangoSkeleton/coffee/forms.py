@@ -56,3 +56,10 @@ class LogHoursForm(forms.ModelForm):
                 'hours_worked': forms.NumberInput(attrs={'min': 0}),
                 }
 
+class CustomizeDrinkForm(forms.ModelForm):
+    class Meta:
+        model = Item_Amount
+        fields = ['amount']
+        widgets = {
+                'amount': forms.NumberInput(attrs={'min': 0}),
+                }
