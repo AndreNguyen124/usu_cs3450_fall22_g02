@@ -461,15 +461,15 @@ def menuItem(request):
 # addDrinkProduct
 # @login_required(login_url='coffee:login')
 # @allowed_users(allowed_roles=['Manager'])
-def addMenuItem(request, pk):
-    item = Menu_Item.objects.get(id=pk)
+def addMenuItem(request):
+    #item = Menu_Item.objects.get(id=pk)
     if request.method == 'POST':
         form = MenuForm(request.POST)
         if form.is_valid():
-            item.save()
+            #item.save()
             form.save()
             updateAllPrices()
-            return redirect('coffee:menu')
+            return redirect('coffee:edit-menu')
     else:
         form = MenuForm()
 
