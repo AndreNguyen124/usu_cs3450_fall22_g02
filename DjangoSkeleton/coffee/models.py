@@ -56,6 +56,10 @@ class Order(models.Model):
     # 3 : order completed by barista, ready to be delivered to customer - shows in other cashier queue?
     # 4 : delivered to customer - can be deleted
 
+    def changeStatus(self, newStatus):
+        self.status = newStatus
+        self.save()
+
     def __str__(self):
         return f"\n\t {self.profile}'s order"
 
