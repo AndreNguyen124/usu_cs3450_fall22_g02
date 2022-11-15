@@ -4,18 +4,14 @@
 {% block page_heading %} Update Markup {% endblock %}
 
 {% block content %}
-    <div class="row mt-5">
-        <div class="col-md-6 offset-md-3">
-            <div class="border bg-white p-3">
-                <h3>What would you like to set the new price markup as?</h3>
-                <hr>
-                <form method="POST">
-                    {% csrf_token %}
-                    {{ form }}
-                    <a class="btn btn-secondary" href="{% url 'coffee:drink' %}">Cancel</a>
-                    <input class="btn btn-info" type="submit" value="Update">
-                </form>
-            </div>
-        </div>
+    <div class="boxShadow">
+        <h3 class="formHeader">What would you like to set the new price markup as?</h3>
+        <hr>
+        <form class="inputStyling" method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <a class="" href="{% url 'coffee:edit-menu' %}">Cancel</a>
+            <input class="inputStyling" type="submit" value="Update">
+        </form>
     </div>
 {% endblock %}

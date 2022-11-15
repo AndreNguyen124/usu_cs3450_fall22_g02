@@ -383,7 +383,7 @@ def update_markup(request):
             markupObj.setPriceMarkup(form.cleaned_data['markup'])
             updateAllPrices()
 
-            return redirect('coffee:drink')
+            return redirect('coffee:menu')
 
     else:
         form = PriceMarkupForm(initial={'markup': markupObj.markup})
@@ -449,8 +449,10 @@ def product_update(request, pk):
 # @allowed_users(allowed_roles=['Manager'])
 def menuItem(request):
     menu_list = Menu_Item.objects.filter(custom=False)
+    markup = Price_Markup.objects.first()
     context = {
-        'menu_list': menu_list
+        'menu_list': menu_list,
+        'markup': markup
     }
     return render(request, 'coffee/menuItem.html', context)
 

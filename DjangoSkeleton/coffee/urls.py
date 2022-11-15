@@ -28,7 +28,7 @@ urlpatterns = [
     path('drink/drink_add/<int:pk>/', views.addDrinkProduct, name="drink_add"),
     path('drink/drink_update/<int:pk>/', views.product_update, name="drink_update"),
 
-    path('menu', views.menuItem, name="menu"),
+    path('edit-menu', views.menuItem, name="edit-menu"),
     path('menu/menu_add/<int:pk>/', views.addMenuItem, name="menu_add"),
     path('menu/menu_delete/<int:pk>/', views.deleteMenuItem, name="menu_delete"),
     path('menu/menu_update/<int:pk>/', views.menu_update, name="menu_update"),
