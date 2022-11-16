@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 
 from .decorators import unauthenticated_user, allowed_users
 from .forms import InventoryForm, CreateUserForm, PriceMarkupForm, AccountBalanceForm, LogHoursForm, DrinkForm, MenuForm
-from .models import Inventory_Item, Price_Markup, Profile, Menu_Item, Order 
+from .models import Inventory_Item, Price_Markup, Profile, Menu_Item, Order, Item_Amount 
 from decimal import Decimal
 
 @unauthenticated_user
@@ -288,6 +288,8 @@ def customizeDrink(request, pk):
             current_order = orders[0]
         customDrink.order = current_order
         customDrink.save()
+        new_price = getMenuItemPrice(customDrink.id)
+        customDrink.updatePrice(new_price)
         return redirect('coffee:userView')
 
     context = { 'drink' : customDrink, 'drinkIngreds' : ingred_names, 'ingredAmounts' : ing_amt_dict}
