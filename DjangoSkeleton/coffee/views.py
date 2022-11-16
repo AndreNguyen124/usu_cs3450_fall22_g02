@@ -195,21 +195,50 @@ def userView(request):
 def customizeDrink(request, pk):
     ####### Make copy of menuItem ########
     menuItem = Menu_Item.objects.get(id=pk)
-    drinkName = 'custom ' + menuItem.name
+    drinkName = 'Custom ' + menuItem.name
     customDrink = Menu_Item(name = drinkName, price = menuItem.price, custom=True)
     customDrink.save()
     for ingr in menuItem.item_amounts.all():    
         Item_Amount.objects.create(menu_item=customDrink, inventory_item=ingr.inventory_item, amount = ingr.amount)
-    print(customDrink)
-    ingr_list = customDrink.item_amounts.all()
-
+    # print(customDrink)
     
-    form = CustomizeDrinkForm()
+    # ingr_list = Inventory_Item.objects.all()
+
+    ingred_amounts = customDrink.item_amounts.all()
+    print('Ing amounts', ingred_amounts)
+    
+    drink_ingreds = customDrink.Ingredients.all()
+    #print(drink_ingreds)
+    ingred_names = [dr.name for dr in drink_ingreds]
+    print('ing names', ingred_names)
+
+    #print('test', ingred_amounts.filter(inventory_item__name='Ice').first().amount)
+    test = {}
+    for ingamt in ingred_amounts:
+        #print('gross? ', ingamt.inventory_item.name)
+        test[ingamt.inventory_item.name.split(' ', 1)[0]] = ingamt.amount
+    print('test dict:  ', test)
+    #ingred_names = drink_ingreds.
+
     if request.method == 'POST':
-        form = CustomizeDrinkForm(request.POST)
+        # ingrForms = [CustomizeDrinkForm(request.POST, prefix=str(x), instance=Inventory_Item()) for x in len(ingr_list)]
+        print('submitted!')
+        caramel = request.POST.get('caramel')
+        chai = request.POST.get('chai')
+        print('caramel and chai', caramel, chai)
+        
+        # if all([ingF.is_valid() for ingF in ingrForms]):
+        #     for ingF in ingrForms:
+        #         #amount = form.cleaned_data('amount')
+        #         newItemamt = ingF.save(commit=False)
+            
+        return redirect('coffee:userView')
 
-
-    context = {'ingr_list': ingr_list, 'form': form, 'drink' : customDrink}
+    else: 
+        print('not submitted')
+        # ingrForms = [CustomizeDrinkForm(prefix=str(x), instance=Inventory_Item()) for x in ingr_list]
+        # print('ingr form 0', ingrForms[1])
+    context = { 'drink' : customDrink, 'drinkIngreds' : ingred_names, 'ingredAmounts' : test}
     return render(request, 'coffee/customizeDrink.html', context)
 
 
