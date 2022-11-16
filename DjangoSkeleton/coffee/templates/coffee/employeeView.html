@@ -4,7 +4,30 @@
 {% block page_heading %} Hello Employee! {% endblock %}
 
 {% block content %}
-<p>No content yet :)</p>
+{% for order in order_list %}
+    <div class="order">
+        <div class="column-container">
+            <div><h3>Order by: {{ order.profile.user }}</h3></div>
+            <div><h3>Status: {{ order.status }}</h3></div>
+            {% for menuItem in order.menu_item_set.all %}
+            <div class="newLine"></div>
+            <div><h3>{{ menuItem.name }}</h3></div>
+                {% for ingredient in menuItem.item_amounts.all %}
+                    <div>{{ ingredient.amount }} {{ ingredient.inventory_item.name }}</div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        <div class="column-heading center-item-vertically">
+            <form name="submitform" method="post">
+                {% csrf_token %}
+                <input type='hidden' name="id" value="{{order.pk}}">
+                <input type="submit" value="Submit"/>
+                </div>        
+            </form>
+        </div>
+
+    </div>
+
+{% endfor %}
 {% endblock %}
-
-

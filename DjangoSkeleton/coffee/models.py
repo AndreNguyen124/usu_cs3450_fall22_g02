@@ -56,11 +56,13 @@ class Order(models.Model):
     # 3 : order completed by barista, ready to be delivered to customer - shows in other cashier queue?
     # 4 : delivered to customer - can be deleted
 
+    def changeStatus(self, newStatus):
+        self.status = newStatus
+        self.save()
+
     def __str__(self):
         return f"\n\t {self.profile}'s order"
 
-    #def getTotalPrice(self):
-    ############ SHOULD THIS BE IN VIEWS?? CAUSE ITS ACTUALLY CALCULATE< NOT GET? ###################
 
 
 class Price_Markup(models.Model):
@@ -96,8 +98,8 @@ class Menu_Item(models.Model):
     name = models.CharField(max_length=200)
     Ingredients = models.ManyToManyField(Inventory_Item, through='Item_Amount', related_name='inventory_items', blank=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, null=True)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True) # display menu items whose order=null
-    custom = models.BooleanField(default = False)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True) 
+    custom = models.BooleanField(default = False) # display menu items whose custom=False
 
     def updatePrice(self, value):
         self.price = value
