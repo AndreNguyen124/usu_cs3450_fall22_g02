@@ -10,6 +10,8 @@ from django.shortcuts import render, redirect
 from .decorators import unauthenticated_user, allowed_users
 from .models import Inventory_Item, Menu_Item
 from .models import Inventory_Item, Menu_Item 
+
+from .models import Inventory_Item, Menu_Item, Order #Drink_Item
 from .forms import InventoryForm, CreateUserForm, DrinkForm, MenuForm
 from .models import Inventory_Item, Price_Markup, Profile, Menu_Item, Order #Drink_Item
 
@@ -236,8 +238,11 @@ def customizeDrink(request, pk):
     drink_list = Menu_Item.objects.filter(custom=False)
 
     item = Menu_Item.objects.get(id=pk)
+    form = Order()
     if request.method == 'POST':
-        form = DrinkForm(request.POST, instance=item)
+        # now create an order object
+        order = Order.createOrder(form, profile)
+        #form = Menu_Item(request.POST, instance=order)
 
     context = {'drink': item, 'drink_list': drink_list}
     return render(request, 'coffee/customizeDrink.html', context)
