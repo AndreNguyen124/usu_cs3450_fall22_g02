@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Inventory_Item, Price_Markup, Profile  # Drink_Item,
+from .models import Inventory_Item, Price_Markup, Profile, Item_Amount  # Drink_Item,
 from .models import Menu_Item
 
 
@@ -38,10 +38,6 @@ class MenuForm(forms.ModelForm):
         model = Menu_Item
         fields = ['name', 'Ingredients']
 
-#class OrderForm(forms.ModelForm):
-#    class Meta:
-#        model =
-
 
 class AccountBalanceForm(forms.ModelForm):
     class Meta:
@@ -60,3 +56,10 @@ class LogHoursForm(forms.ModelForm):
                 'hours_worked': forms.NumberInput(attrs={'min': 0}),
                 }
 
+class CustomizeDrinkForm(forms.ModelForm):
+    class Meta:
+        model = Item_Amount
+        fields = ['amount']
+        widgets = {
+                'amount': forms.NumberInput(attrs={'min': 0}),
+                }
