@@ -64,6 +64,14 @@ class CustomizeDrinkForm(forms.ModelForm):
     class Meta:
         model = Item_Amount
         fields = ['amount']
-        widgets = {
-                'amount': forms.NumberInput(attrs={'min': 0}),
-                }
+        # widgets = {
+        #         'amount': forms.NumberInput(attrs={'min': 0}),
+        #         }
+
+class idkCustomizeDrinkForm(forms.ModelForm):
+    class Meta:
+        model = Menu_Item
+        fields = ['name']
+        # widgets = {
+        #         'amount': forms.NumberInput(attrs={'min': 0}),
+        #         }

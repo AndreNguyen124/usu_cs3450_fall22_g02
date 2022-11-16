@@ -6,43 +6,78 @@
 
 {% block content %}
 
-<div class="displayDrinkContainer">
-    <div class="larger-image">
-        <img class="boxShadow" src="{% static 'blog/media/aFrap.jpeg' %}">
-    </div>
+<div class="">
     <div class="drinkOptionsConatiner boxShadow">
-        <h2>{{ drink.name }}</h2>
-        {% for item in drink_list %}
-        <p>
-            {% if drink.name == item.name %}
-            {% for test in item.Ingredients.all %}
-            {{ test.name }},
-            {% endfor %}
-            {% endif %}
-        </p>
-        {% endfor %}
+        <h2>{{drink.name}}</h2>
 
-        <form method="POST" action="" class="customizeDrink-InputForum">
+        <form method="post" action="" class="">
             {% csrf_token %}
+            <label for="quantity">Caramel Base :</label>
+            {% if 'Caramel Base' in drinkIngreds %}
+                <input type="number" name="caramel" value={{ingredAmounts.Caramel}}> 
+            {% else %}
+                <input type="number" name="caramel" value="0">
+            {% endif %}
+            <label for="quantity">Chai Tea Base :</label>
+            {% if 'Chai Tea Base' in drinkIngreds %}
+                <input type="number" name="chai" min="0" max="5" value={{ingredAmounts.Chai}}> 
+            {% else %}
+                <input type="number" name="chai" min="0" max="5" value="0">
+            {% endif %}
+            <label for="quantity">Chocolate Chips :</label>
+            {% if 'Chocolate Chips' in drinkIngreds %}
+                <input type="number" name="chocolate" min="0" max="5" value={{ingredAmounts.Chocolate}}> 
+            {% else %}
+                <input type="number" name="chocolate" min="0" max="5" value="0">
+            {% endif %}
+            <label for="quantity">Cinnamon :</label>
+            {% if 'Cinnamon' in drinkIngreds %}
+                <input type="number" name="cinnamon" min="0" max="5" value={{ingredAmounts.Cinnamon}}> 
+            {% else %}
+                <input type="number" name="cinnamon" min="0" max="5" value="0">   
+            {% endif %}
+            <label for="quantity">Espresso Shot :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
+            <label for="quantity">Cinnamon :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
+            <label for="quantity">Cinnamon :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
+            <label for="quantity">Cinnamon :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
+            <label for="quantity">Cinnamon :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
+            <label for="quantity">Cinnamon :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
+            <label for="quantity">Cinnamon :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
+            <label for="quantity">Cinnamon :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
+            <label for="quantity">Cinnamon :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
+            <label for="quantity">Cinnamon :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
+            <label for="quantity">Cinnamon :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
+            <label for="quantity">Cinnamon :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
+            <label for="quantity">Cinnamon :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
+            <label for="quantity">Cinnamon :</label>
+            <input type="number" name="cinnamon" min="0" max="5" value="0">
 
-            <div class="labelStyling">{{form.name.label}}</div>
-            <div class="inputStyling">{{form.name}}</div>
-            <div class="labelStyling">{{form.Ingredients.label}}</div>
-            <div class="inputStyling">{{form.Ingredients}}</div>
-            <div class="labelStyling">{{form.price.label}}</div>
-            <div class="inputStyling">{{form.price}}</div>
-
-            <!--            TODO-->
-            <div class="inputStyling"><input type="Submit Order" name="Create User"></div>
-
-            <div class="col-md-6">
-                <a class="btn btn-info" href="{% url 'coffee:userView' %}">Cancel</a> 
-                <a class="btn btn-info" href="">Add to Order</a>
-            </div>
+            <input type="submit" value="Add to Order">
             
-
         </form>
-
+            <!-- {% for f in form %} -->
+            <!-- {% endfor %} -->
+            <div class="col-md-6">
+                <a class="btn btn-info" href="{% url 'coffee:userView' %}">Cancel</a> <!-- delete the drink if this is clicked -->
+                 <!-- Make this the submit button, it will check if the url 
+                (or hidden variable?) is carrying a userId (assuming that's how cashier's do that) and if not will just
+                check the currently  logged in user, to see if they have an order already (query for status 0, if the query
+                is empty, make a new order and add the customized drink to it)-->
+            </div>
+        
     </div>
 </div>
 
