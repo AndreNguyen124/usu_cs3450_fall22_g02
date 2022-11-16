@@ -63,8 +63,6 @@ class Order(models.Model):
     def __str__(self):
         return f"\n\t {self.profile}'s order"
 
-    #def getTotalPrice(self):
-    ############ SHOULD THIS BE IN VIEWS?? CAUSE ITS ACTUALLY CALCULATE< NOT GET? ###################
 
 
 class Price_Markup(models.Model):

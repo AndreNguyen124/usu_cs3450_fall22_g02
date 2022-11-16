@@ -200,59 +200,65 @@ def customizeDrink(request, pk):
     customDrink.save()
     for ingr in menuItem.item_amounts.all():    
         Item_Amount.objects.create(menu_item=customDrink, inventory_item=ingr.inventory_item, amount = ingr.amount)
-    # print(customDrink)
     
-    # ingr_list = Inventory_Item.objects.all()
 
+    ######## Make various lists for the template context ####### 
     ingred_amounts = customDrink.item_amounts.all()
-    print('Ing amounts', ingred_amounts)
+    ingred_names = [dr.name for dr in customDrink.Ingredients.all()]
     
-    drink_ingreds = customDrink.Ingredients.all()
-    #print(drink_ingreds)
-    ingred_names = [dr.name for dr in drink_ingreds]
-    print('ing names', ingred_names)
-
-    #print('test', ingred_amounts.filter(inventory_item__name='Ice').first().amount)
-    test = {}
+    ing_amt_dict = {}
     for ingamt in ingred_amounts:
-        #print('gross? ', ingamt.inventory_item.name)
-        test[ingamt.inventory_item.name.split(' ', 1)[0]] = ingamt.amount
-    print('test dict:  ', test)
-    #ingred_names = drink_ingreds.
+        ing_amt_dict[ingamt.inventory_item.name.split(' ', 1)[0]] = ingamt.amount
+    
 
+    ######## Handle POST request and etc ############
     if request.method == 'POST':
-        # ingrForms = [CustomizeDrinkForm(request.POST, prefix=str(x), instance=Inventory_Item()) for x in len(ingr_list)]
         print('submitted!')
-        caramel = request.POST.get('caramel')
-        chai = request.POST.get('chai')
-        print('caramel and chai', caramel, chai)
-        
-        # if all([ingF.is_valid() for ingF in ingrForms]):
-        #     for ingF in ingrForms:
-        #         #amount = form.cleaned_data('amount')
-        #         newItemamt = ingF.save(commit=False)
-            
+       
+        custom_ingreds = {
+            'caramel' : request.POST.get('caramel'),
+            'chai' : request.POST.get('chai'),
+            'chocolate' : request.POST.get('chocolate'),
+            'cinnamon' : request.POST.get('cinnamon'),
+            'espresso' : request.POST.get('espresso'),
+            'half' : request.POST.get('half'),
+            'ice' : request.POST.get('ice'),
+            'irish' : request.POST.get('irish'),
+            'matcha' : request.POST.get('matcha'),
+            'milk' : request.POST.get('milk'),
+            'mocha' : request.POST.get('mocha'),
+            'peppermint' : request.POST.get('peppermint'),
+            'pumpkin' : request.POST.get('pumpkin'),
+            'strawberry' : request.POST.get('strawberry'),
+            'vanilla' : request.POST.get('vanilla'),
+            'whipped' : request.POST.get('whipped'),
+        }
+
+        ########## Customize the drink based on form specifications ##########
+        for ing in custom_ingreds:
+            amt = int(custom_ingreds[ing])
+            if amt > 0:
+                inv_item = Inventory_Item.objects.get(name__startswith=ing)
+                item_amt, created = Item_Amount.objects.get_or_create(menu_item=customDrink, inventory_item=inv_item)
+                item_amt.updateAmount(amt)
+                
+                
+        ######### Handle adding the custom drink to the current order ##########
+        whos_ordering = Profile.objects.get(id=request.user.id) #TODO make this adjustable for cashier creating customer order
+        print('user ordering is ', whos_ordering)
+        orders = Order.objects.filter(profile=whos_ordering, status=0)  
+        print('current order is: ', orders)
+        if not orders.exists():
+            current_order = Order.objects.create(profile=whos_ordering)
+        else:
+            current_order = orders[0]
+        customDrink.order = current_order
+        customDrink.save()
         return redirect('coffee:userView')
 
-    else: 
-        print('not submitted')
-        # ingrForms = [CustomizeDrinkForm(prefix=str(x), instance=Inventory_Item()) for x in ingr_list]
-        # print('ingr form 0', ingrForms[1])
-    context = { 'drink' : customDrink, 'drinkIngreds' : ingred_names, 'ingredAmounts' : test}
+    context = { 'drink' : customDrink, 'drinkIngreds' : ingred_names, 'ingredAmounts' : ing_amt_dict}
     return render(request, 'coffee/customizeDrink.html', context)
 
-
-# @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
-# def customizeDrink(request, pk):
-#     drink_list = Menu_Item.objects.filter(custom=False)
-
-#     item = Menu_Item.objects.get(id=pk)
-#     if request.method == 'POST':
-#         form = DrinkForm(request.POST, instance=item)
-
-#     context = {'drink': item, 'drink_list': drink_list}
-#     return render(request, 'coffee/customizeDrink.html', context)
 
 
 @login_required(login_url='coffee:login')
@@ -305,7 +311,7 @@ def viewPaidOrders(request, pk):
 
     if request.method == 'POST':
         orderID = request.POST.get('to-barista')
-        order = Order.objects.filter(id=orderID).first()                # Have to grab first because filter returns a query set of one
+        order = Order.objects.filter(id=orderID).first()    # Have to grab first because filter returns a query set of one
 
         # this should eventually be handled in models.py
         print("Old order status:")
