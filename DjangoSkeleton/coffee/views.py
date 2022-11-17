@@ -461,7 +461,7 @@ def update_markup(request):
             markupObj.setPriceMarkup(form.cleaned_data['markup'])
             updateAllPrices()
 
-            return redirect('coffee:menu')
+            return redirect('coffee:edit-menu')
 
     else:
         form = PriceMarkupForm(initial={'markup': markupObj.markup})
@@ -564,7 +564,7 @@ def deleteMenuItem(request, pk):
 
     if request.method == 'POST':
         item.delete()
-        return redirect('coffee:menu')
+        return redirect('coffee:edit-menu')
     return render(request, 'coffee/menu_delete.html')
 
 
@@ -579,7 +579,7 @@ def menu_update(request, pk):
         if form.is_valid():
             form.save()
             item.updatePrice(getMenuItemPrice(item.id))
-            return redirect('coffee:menu')
+            return redirect('coffee:edit-menu')
     else:
         form = MenuForm(instance=item)
     context = {
