@@ -1,7 +1,7 @@
 {% extends './partials/base.html' %}
 
-{% block title %} TEST {% endblock %}
-{% block page_heading %} TEST {% endblock %}
+{% block title %} Update Item {% endblock %}
+{% block page_heading %} Update Item {% endblock %}
 
 {% block content %}
 <div class="container">
@@ -14,7 +14,7 @@
                 <form method ="POST">
                     {% csrf_token %}
                     {{ form }}
-                    <a class="btn btn-secondary" href="{% url 'coffee:menu' %}">Cancel</a>
+                    <a class="btn btn-secondary" href="{% url 'coffee:edit-menu' %}">Cancel</a>
                     <input class ="btn btn-info" type ="submit" value="Update">
                 </form>
             </div>

@@ -461,7 +461,7 @@ def update_markup(request):
             markupObj.setPriceMarkup(form.cleaned_data['markup'])
             updateAllPrices()
 
-            return redirect('coffee:drink')
+            return redirect('coffee:edit-menu')
 
     else:
         form = PriceMarkupForm(initial={'markup': markupObj.markup})
@@ -527,8 +527,10 @@ def product_update(request, pk):
 # @allowed_users(allowed_roles=['Manager'])
 def menuItem(request):
     menu_list = Menu_Item.objects.filter(custom=False)
+    markup = Price_Markup.objects.first()
     context = {
-        'menu_list': menu_list
+        'menu_list': menu_list,
+        'markup': markup
     }
     return render(request, 'coffee/menuItem.html', context)
 
@@ -537,15 +539,15 @@ def menuItem(request):
 # addDrinkProduct
 # @login_required(login_url='coffee:login')
 # @allowed_users(allowed_roles=['Manager'])
-def addMenuItem(request, pk):
-    item = Menu_Item.objects.get(id=pk)
+def addMenuItem(request):
+    #item = Menu_Item.objects.get(id=pk)
     if request.method == 'POST':
         form = MenuForm(request.POST)
         if form.is_valid():
-            item.save()
+            #item.save()
             form.save()
             updateAllPrices()
-            return redirect('coffee:menu')
+            return redirect('coffee:edit-menu')
     else:
         form = MenuForm()
 
@@ -562,7 +564,7 @@ def deleteMenuItem(request, pk):
 
     if request.method == 'POST':
         item.delete()
-        return redirect('coffee:menu')
+        return redirect('coffee:edit-menu')
     return render(request, 'coffee/menu_delete.html')
 
 
@@ -577,7 +579,7 @@ def menu_update(request, pk):
         if form.is_valid():
             form.save()
             item.updatePrice(getMenuItemPrice(item.id))
-            return redirect('coffee:menu')
+            return redirect('coffee:edit-menu')
     else:
         form = MenuForm(instance=item)
     context = {
