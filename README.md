@@ -30,8 +30,22 @@ Dan's Frappuccino Paradise is a web app powered by Django and Python
 - Git (Latest Version)
 
 ## Build instructions
- - The web Server Gateway Interface will be our main deployment and build system for the Django Web Application 
- - WSGI is automatically configured for Django projects but will be modified if needed for custom build steps 
+ - Clone repo
+ - run 'python manage.py makemigrations'
+ - run 'python manage.py migrate'
+ - run 'python manage.py runserver' 
+ - navigate to http://127.0.0.1:8000/login (or site given by runserver at /login)
+ - login options:
+   user: managerDan
+   pass: imtheboss
+   
+   user: workerJill
+   pass: ilovetowork
+   
+   user: personJoe
+   pass: goodpassword
+ 
+ - Log in to one of the provided accounts (or create your own customer account at /register) and explore the site!
 ## Unit testing instructions
  - https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Testing
  - Our Unit tests will be written according to the documentation above. The developer of the feature will be responsible for drafting test steps for the new feature for system testing. 
