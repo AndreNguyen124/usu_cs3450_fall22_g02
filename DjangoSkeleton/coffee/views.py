@@ -314,6 +314,22 @@ def employeeView(request):
     return render(request, 'coffee/employeeView.html', context)
 
 
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Employee'])
+def deliverDrinks(request):
+    order_list = Order.objects.filter(status=3)
+    context = { 'order_list': order_list }
+
+    if request.method == 'POST':
+        try:
+            pk = request.POST.get('id')
+            order = Order.objects.get(id=pk)
+            order.changeStatus(4)
+            return render(request, 'coffee/deliverDrinks.html', context)
+        except: # If there is an empty post request, do nothing
+            None
+    return render(request, 'coffee/deliverDrinks.html', context)
+
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager'])

@@ -1,13 +1,13 @@
 {% extends './partials/base.html' %}
 
-{% block title %} Make Drinks {% endblock %}
-{% block page_heading %} Make Drinks {% endblock %}
+{% block title %} Deliver Drinks {% endblock %}
+{% block page_heading %} Deliver Drinks {% endblock %}
 
 {% block content %}
 <nav>
     <ul class="navbar-links">
         <li><a class="btn" href="{% url "coffee:manageEmployees"%}">Search for Customer</a></li>
-        <li><a class="btn" href="{% url "coffee:deliverDrinks"%}">Deliver Drinks</a></li>
+        <li><a class="btn" href="{% url "coffee:employeeView"%}">Make Drinks</a></li>
     </ul>
 </nav>
 {% if order_list %}
@@ -15,8 +15,6 @@
 
     <div class="order">
         <div class="column-container">
-            <div><h3>Order by: {{ order.profile.user }}</h3></div>
-            <div><h3>Status: {{ order.status }}</h3></div>
             {% for menuItem in order.menu_item_set.all %}
             <div class="newLine"></div>
             <div><h3>{{ menuItem.name }}</h3></div>
@@ -39,6 +37,6 @@
 
 {% endfor %}
 {% else %}
-<p class="boxShadow">No orders to be made. Go take a break!</p>
+<p class="boxShadow">No drinks to send out. Go take a break!</p>
 {% endif %}
 {% endblock %}

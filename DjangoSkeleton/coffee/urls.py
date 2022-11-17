@@ -13,6 +13,7 @@ urlpatterns = [
     path('userView/update-hours/', views.update_hours, name='update-hours'),
     path('employeeView/', views.employeeView, name='employeeView'),
     path('managerView/', views.managerView, name='managerView'),
+    path('deliver-drinks/', views.deliverDrinks, name='deliverDrinks'),
     path('pay-employees/', views.payEmployees, name='pay-employees'),
     path('manageEmployees/', views.manageEmployees, name='manageEmployees'),
     path('manageEmployees/paidOrders/<int:pk>/', views.viewPaidOrders, name='paidOrders'),
