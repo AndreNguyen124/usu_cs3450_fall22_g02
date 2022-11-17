@@ -5,13 +5,13 @@
     <head>
         <meta charset="utf-8" />
         <title>{% block title %}Dan's Cool Beans{% endblock%}</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'coffee/style.css' %}">
 
         {% if request.user.is_authenticated %}
-        <link rel="stylesheet" type="text/css" href="{% static 'blog/managerStyle.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'blog/userStyle.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'coffee/managerStyle.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'coffee/userStyle.css' %}">
         {% else %}
-        <link rel="stylesheet" type="text/css" href="{% static 'blog/login.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'coffee/login.css' %}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         {% endif %}
