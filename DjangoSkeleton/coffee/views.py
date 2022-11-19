@@ -361,24 +361,12 @@ def manageEmployees(request):
 def viewPaidOrders(request, pk):
     userProfile = Profile.objects.get(id=pk)
 
-    context = {
-        'customer': userProfile
-    }
-
-    return render(request, 'coffee/paidOrders.html', context)
-
-
-@login_required(login_url='coffee:login')
-@allowed_users(allowed_roles=['Manager', 'Employee'])
-def viewPaidOrders(request, pk):
-    userProfile = Profile.objects.get(id=pk)
-
     # list orders for given user with a status of 'Paid'
     paidOrders = Order.objects.filter(profile__id=userProfile.id, status=1)
 
     if request.method == 'POST':
         orderID = request.POST.get('to-barista')
-        order = Order.objects.filter(id=orderID).first()    # Have to grab first because filter returns a query set of one
+        order = Order.objects.get(id=orderID)
 
         # this should eventually be handled in models.py
         print("Old order status:")

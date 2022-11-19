@@ -29,9 +29,11 @@
             <div class='column-container'>
                 <a class='btn' href='#'>New Order</a>
             </div>
+            {% if user.hasPaidOrders %}
             <div class='column-container'>
                 <a class='btn' href="{% url 'coffee:paidOrders' user.user.id %}">View Orders</a>
             </div>
+            {% endif %}
         </div>
         {% endfor %}
         {% endif %}

@@ -42,6 +42,13 @@ class Profile(models.Model):
         self.hours_worked = 0
         self.save()
 
+    def hasPaidOrders(self):
+        if Order.objects.filter(profile__id=self.id, status=1):
+            print("self has paid orders")
+            return True
+        else: 
+            print("self does not have paid orders")
+            return False
 
     def __str__(self):
         return f"\n\tUser: {self.user}"
