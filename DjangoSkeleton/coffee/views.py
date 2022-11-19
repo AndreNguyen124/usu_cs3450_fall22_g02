@@ -529,9 +529,8 @@ def product_update(request, pk):
     return render(request, 'coffee/drink_update.html', context)
 
 
-# TODO: Implement Add/Remove/Edit Menu Item
-# @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager'])
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def menuItem(request):
     menu_list = Menu_Item.objects.filter(custom=False)
     markup = Price_Markup.objects.first()
@@ -542,10 +541,8 @@ def menuItem(request):
     return render(request, 'coffee/menuItem.html', context)
 
 
-# TODO
-# addDrinkProduct
-# @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager'])
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def addMenuItem(request):
     if request.method == 'POST':
         print('submitted!')
@@ -599,24 +596,66 @@ def deleteMenuItem(request, pk):
     return render(request, 'coffee/menu_delete.html')
 
 
-# @login_required(login_url='coffee:login')
-# @allowed_users(allowed_roles=['Manager'])
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager'])
 def menu_update(request, pk):
-    item = Menu_Item.objects.get(id=pk)
+    ####### Make copy of menuItem ########
+    menuItem = Menu_Item.objects.get(id=pk)
+    
 
+    ######## Make various lists for the template context ####### 
+    ingred_amounts = menuItem.item_amounts.all()
+    ingred_names = [dr.name for dr in menuItem.Ingredients.all()]
+    
+    ing_amt_dict = {}
+    for ingamt in ingred_amounts:
+        ing_amt_dict[ingamt.inventory_item.name.split(' ', 1)[0]] = ingamt.amount
+    
+
+    ######## Handle POST request and etc ############
     if request.method == 'POST':
-        form = MenuForm(request.POST, instance=item)
+        print('submitted!')
+        drinkName = request.POST.get('name')
+       
+        update_ingreds = {
+            'caramel' : request.POST.get('caramel'),
+            'chai' : request.POST.get('chai'),
+            'chocolate' : request.POST.get('chocolate'),
+            'cinnamon' : request.POST.get('cinnamon'),
+            'espresso' : request.POST.get('espresso'),
+            'half' : request.POST.get('half'),
+            'ice' : request.POST.get('ice'),
+            'irish' : request.POST.get('irish'),
+            'matcha' : request.POST.get('matcha'),
+            'milk' : request.POST.get('milk'),
+            'mocha' : request.POST.get('mocha'),
+            'peppermint' : request.POST.get('peppermint'),
+            'pumpkin' : request.POST.get('pumpkin'),
+            'strawberry' : request.POST.get('strawberry'),
+            'vanilla' : request.POST.get('vanilla'),
+            'whipped' : request.POST.get('whipped'),
+        }
 
-        if form.is_valid():
-            form.save()
-            item.updatePrice(getMenuItemPrice(item.id))
-            return redirect('coffee:edit-menu')
-    else:
-        form = MenuForm(instance=item)
-    context = {
-        'form': form
+        ########## Update drink based on form results ##########
+        for ing in update_ingreds:
+            amt = int(update_ingreds[ing])
+            if amt > 0:
+                inv_item = Inventory_Item.objects.get(name__startswith=ing)
+                item_amt, created = Item_Amount.objects.get_or_create(menu_item=menuItem, inventory_item=inv_item)
+                item_amt.updateAmount(amt)
+                
+                
+        menuItem.name = drinkName
+        new_price = getMenuItemPrice(menuItem.id)
+        menuItem.updatePrice(new_price)
+        menuItem.save()
+        return redirect('coffee:edit-menu')
 
-    }
+    context = { 
+            'drink' : menuItem, 
+            'drinkIngreds' : ingred_names, 
+            'ingredAmounts' : ing_amt_dict
+            }
     return render(request, 'coffee/menu_update.html', context)
 
 
