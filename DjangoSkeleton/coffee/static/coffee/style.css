@@ -4,8 +4,15 @@ red: fc3a52
 yellow: f9b248
 tan: e8d5b7
 */
+:root {
+    --headerColor: #C19A6B;
+    --secondaryColor: #c7b198;
+    --highlightColor: #f0ece2;
+    --blueTextColor: #1E90FF;
+    --boxColor: #f1ddbd;
+  }
 
-/* Universal Styling */
+/* --------------Universal Styling-------------- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -28,27 +35,68 @@ a {
 }
 
 a:hover {
-    background-color: #fbf2d5; 
+    background-color: var(--highlightColor); 
 }
 
+/* -------------- main styling and general vertical and horizonal styling and other general styling --------------*/
 .full-height-grow {
     display: flex;
     min-height: 100vh;
     justify-content: center;
     flex-direction: column;
-    background-image: url("media/coffee-background.png");
-    background-color: #E5D1B3;
+    background-color: #EADDCA;
 }
 
+.center-item-vertically {
+    display: flex;
+    align-items: center;
+}
+
+.newLine:after {
+    content: '\200b';
+}
+
+.main-section {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+/* main-column styling */
+.column-heading {
+    font-size: 2rem;
+    color: var(--blueTextColor);
+    background-color: var(--secondaryColor);
+    text-shadow: 1px 1px #0e2431;
+    margin: 1rem;
+    padding: 1rem 5rem;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+.column-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}  
+
+.column-container-reducedWidth {
+    display: flex;
+    max-width: 40rem;
+}
+
+/* -------------- Navbar Styling --------------*/
 .navbar {
     display: flex;
     flex-direction: column;
     position: relative;
     justify-content: space-between;
-    background-color: #E1B995; /*#d77b52;*/
+    background-color: var(--headerColor);
     min-height: 200px;
     border-bottom: 1px solid #0066b2;
-    box-shadow: 0px 5px 5px #fc3a52;
 }
 
 .navbar-links {
@@ -81,10 +129,6 @@ a:hover {
     padding: 2.5rem;
 }
 
-.navbar-links li:hover {
-    background-color: #fbf2d5; 
-}
-
 #shoppingCartImage {
     display: flex;
     height: 100%;
@@ -115,77 +159,55 @@ a:hover {
     margin-right: auto;
 }
 
-/* Heading - Navbar ish */
+/* -------------- Heading - Navbar ish -------------- */
 .logout-btn {
     padding: 20px;
     border-radius: 10px;
     margin: 1rem;
     margin-right: 2rem;
     font-size: 1.2rem;
-    background-color: #e8d5b7;
+    background-color: var(--boxColor);
 }
 
 .logout-btn:hover {
-    background-color: #fae5c2;
+    background-color: var(--highlightColor);
 }
 
 .heading {
     margin-left: 2rem;
     font-size: 2.5rem;
-    color: #0066b2;
+    color: var(--blueTextColor);
     text-shadow: 2px 2px #0e2431;
     margin-right: auto;
     padding: 1.2rem;
+    width: fit-content;
 }
 
-/* main-content styling */
-.main-section {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
-    flex-grow: 1;
-}
 
-/* main-column styling */
-.column-heading {
-    font-size: 2rem;
-    color: #fc3a52;
-    background-color: #E5D1B3;
-    text-shadow: 1px 1px #0e2431;
-    margin: 1rem;
-    padding: 1rem 2rem;
-    border-radius: 5px;
-}
 
-.column-container {
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-}  
 
-/* add box shadow to any elements that gives it a pop :) */
+/* -------------- add box shadow to any elements that gives it a pop :) -------------- */
 .boxShadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
-    background-color: #E5D1B3;
+    background-color: var(--secondaryColor);
     padding: 2rem;
     margin: 2rem;
 }
 
-/* footer styling */
+/* -------------- footer styling -------------- */
 .main-footer {
     display: flex;
-    background-color: #0066b2;
+    background-color: var(--firstColor);
     justify-content: center;
 }
 
 .main-footer p {
-    color:#f9b248;
+    color: var(--blueTextColor);
 }
 
 
-/* Table Styling */
+/* -------------- Table Styling -------------- */
 .table {
     background-color: #e8d5b7;
     border-radius: 5px;
@@ -202,10 +224,11 @@ a:hover {
 }
 
 .btn {
-    background-color: #0066b2;
-    color: white;
+    background-color: var(--secondaryColor);
+    color: black;
     padding: 1rem;
     border-radius: 5px;
+    max-width: 3rem;
 }
 
 #id_quantity {
@@ -234,34 +257,15 @@ tr:nth-child(even) {
     justify-content: space-between;
 }
 
-/* Forum Styling */
-.formHeader {
-    font-size: 2rem;
-}
-
-
-.labelStyling {
-    margin: 0;
-    font-size: 1.6rem;
-    width: fit-content;
-    border-bottom: 4px dashed #fc3a52;
-}
-
-.inputStyling *{
-    font-size: 1.2rem;
-    padding: 1.2rem;
-    margin: 1.2rem;
-}
-
-
-/* data Entry Form Styling (login, register, etc) */
+/* -------------- Forum Styling -------------- */
+/*              login, register, etc           */
 .data-entry-form {
     margin: auto;
     display: flex;
-    flex-direction: column  ;
+    flex-direction: column ;
     justify-content: center;
     padding: 2rem;
-    background-color: #f9b248;
+    background-color: var(--boxColor);
     border: 3px solid #0066b2;
     max-width: 30rem;
     font-size: 1.2rem;
@@ -298,7 +302,7 @@ input {
     border-left: 5px solid #fc3a52;
     border-bottom: 5px solid #f9b248;
     border-top: 5px solid #0066b2;
-    background-color: #f1ddbd;
+    background-color: var(--boxColor);
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -314,7 +318,7 @@ input {
 }
 
 .order-description {
-    padding: 2rem;
+    padding: 1rem;
     max-width: 40em;
 }
 
