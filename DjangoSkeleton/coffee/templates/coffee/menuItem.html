@@ -6,8 +6,8 @@
 {% block content %}
 <div class="column-heading">
     <div class="column-container">
-        <p>Price markup: {{ markup.markup }}%</p>
-        <a href="{% url 'coffee:update-markup' %}">Edit</a>
+        <h3 class="card-heading">Price markup: {{ markup.markup }}%</h3>
+        <a class="btn" href="{% url 'coffee:update-markup' %}">Edit</a>
     </div>
     <div class="column-container">
         <a class="btn" href="{% url 'coffee:menu_add' %}">Create Drink</a>

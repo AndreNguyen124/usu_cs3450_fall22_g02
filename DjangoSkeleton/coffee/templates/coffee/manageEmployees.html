@@ -5,35 +5,32 @@
 
 {% block content %}
 <nav>
-    <ul class="navbar-links">
+    <ul class="button-links">
         <li><a class="btn" href="{% url "coffee:employeeView"%}">Make Drinks</a></li>
         <li><a class="btn" href="{% url "coffee:deliverDrinks"%}">Deliver Drinks</a></li>
     </ul>
 </nav>
     <div class="column-container">
-        <div class="row=container">
             <form>
                 <input name="q" type="search" class="search" placeholder="Enter customer name" aria-label="Search"/>  
                 <input class="inputStyling" type="submit"/>
             </form>
             {% if clearSearch %}
-            <a href="{% url 'coffee:manageEmployees' %}">X clear search</a>
+            <a class="btn" href="{% url 'coffee:manageEmployees' %}">X clear search</a>
             {% endif %}
-        </div>
+    
         {% if users %}
         {% for user in users %}
-        <div class='boxShadow row-container'>
-            <div class='column-container'>
-                <p>{{ user.user.username }}</p>
+        <div class='boxShadow'>
+            <div class='card-heading'>
+                <h3>{{ user.user.username }}</h3>
             </div>
-            <div class='column-container'>
+            <div class='card-contents'>
                 <a class='btn' href='#'>New Order</a>
+                {% if user.hasPaidOrders %}
+                    <a class='btn' href="{% url 'coffee:paidOrders' user.user.id %}">View Orders</a>
+                {% endif %}
             </div>
-            {% if user.hasPaidOrders %}
-            <div class='column-container'>
-                <a class='btn' href="{% url 'coffee:paidOrders' user.user.id %}">View Orders</a>
-            </div>
-            {% endif %}
         </div>
         {% endfor %}
         {% endif %}

@@ -8,7 +8,7 @@ tan: e8d5b7
     --headerColor: #C19A6B;
     --secondaryColor: #c7b198;
     --highlightColor: #f0ece2;
-    --blueTextColor: #1E90FF;
+    --blueTextColor: #6495ED;
     --boxColor: #f1ddbd;
   }
 
@@ -37,6 +37,7 @@ a {
 a:hover {
     background-color: var(--highlightColor); 
 }
+
 
 /* -------------- main styling and general vertical and horizonal styling and other general styling --------------*/
 .full-height-grow {
@@ -195,10 +196,11 @@ a:hover {
     margin: 2rem;
 }
 
+
 /* -------------- footer styling -------------- */
 .main-footer {
     display: flex;
-    background-color: var(--firstColor);
+    background-color: var(--headerColor);
     justify-content: center;
 }
 
@@ -226,9 +228,9 @@ a:hover {
 .btn {
     background-color: var(--secondaryColor);
     color: black;
-    padding: 1rem;
+    padding: 1.2rem;
     border-radius: 5px;
-    max-width: 3rem;
+    width: fit-content;
 }
 
 #id_quantity {
@@ -330,4 +332,35 @@ input {
 .price-of-order {
     margin:auto;
     padding: 2rem;
+}
+
+/* Styling for managing Employees ect... */
+.button-links {
+    display: flex;
+    width: fit-content;
+    list-style: none;
+    padding: 2rem;
+    font-size: 1.5rem;
+}
+
+.button-links li {
+    margin: 1.5rem;
+}
+
+.button-links li a {
+    padding: 2rem;
+}
+
+.card-heading {
+    display: flex;
+    width: max-content;
+    margin: auto;
+    margin-bottom: 1rem;
+    border-bottom: 4px dashed #fc3a52;
+}
+
+.card-contents {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem;
 }
