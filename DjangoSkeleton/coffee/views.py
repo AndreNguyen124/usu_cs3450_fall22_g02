@@ -154,6 +154,9 @@ def payEmployees(request):
     totalOwed = 15 * getTotalHoursWorked()
 
     if manager.account_balance >= totalOwed:
+        if totalOwed == 0:
+            messages.info(request, 'No payment neccessary at this time')
+            return HttpResponseRedirect('/managerView')
         payAllEmployees()
         clearAllHours()
         manager.decreaseBalance(totalOwed)
