@@ -4,18 +4,14 @@
 {% block page_heading %} Purchase Inventory {% endblock %}
 
 {% block content %}
-    <div class="row mt-5">
-        <div class="col-md-6 offset-md-3">
-            <div class="border bg-white p-3">
-                <h3>How much would you like to buy?</h3>
-                <hr>
-                <form method="POST">
-                    {% csrf_token %}
-                    {{ form }}
-                    <a class="btn btn-secondary" href="{% url 'coffee:inventory' %}">Cancel</a>
-                    <input class="btn btn-info" type="submit" value="Update">
-                </form>
-            </div>
-        </div>
+    <div class="boxShadow">
+        <h3>How much would you like to buy?</h3>
+        <hr>
+        <form class="inputStyling" method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <a class="" href="{% url 'coffee:inventory' %}">Cancel</a>
+            <input class="" type="submit" value="Update">
+        </form>
     </div>
 {% endblock %}
