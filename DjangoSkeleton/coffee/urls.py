@@ -29,7 +29,7 @@ urlpatterns = [
     path('drink/drink_add/<int:pk>/', views.addDrinkProduct, name="drink_add"),
     path('drink/drink_update/<int:pk>/', views.product_update, name="drink_update"),
 
-    path('edit-menu', views.menuItem, name="edit-menu"),
+    path('edit-menu/', views.menuItem, name="edit-menu"),
     path('edit-menu/menu_add/', views.addMenuItem, name="menu_add"),
     path('edit-menu/menu_delete/<int:pk>/', views.deleteMenuItem, name="menu_delete"),
     path('edit-menu/menu_update/<int:pk>/', views.menu_update, name="menu_update"),
