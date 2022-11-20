@@ -547,21 +547,45 @@ def menuItem(request):
 # @login_required(login_url='coffee:login')
 # @allowed_users(allowed_roles=['Manager'])
 def addMenuItem(request):
-    #item = Menu_Item.objects.get(id=pk)
     if request.method == 'POST':
-        form = MenuForm(request.POST)
-        if form.is_valid():
-            #item.save()
-            form.save()
-            updateAllPrices()
-            return redirect('coffee:edit-menu')
-    else:
-        form = MenuForm()
+        print('submitted!')
+        drinkName = request.POST.get('name')
+       
+        new_ingreds = {
+            'caramel' : request.POST.get('caramel'),
+            'chai' : request.POST.get('chai'),
+            'chocolate' : request.POST.get('chocolate'),
+            'cinnamon' : request.POST.get('cinnamon'),
+            'espresso' : request.POST.get('espresso'),
+            'half' : request.POST.get('half'),
+            'ice' : request.POST.get('ice'),
+            'irish' : request.POST.get('irish'),
+            'matcha' : request.POST.get('matcha'),
+            'milk' : request.POST.get('milk'),
+            'mocha' : request.POST.get('mocha'),
+            'peppermint' : request.POST.get('peppermint'),
+            'pumpkin' : request.POST.get('pumpkin'),
+            'strawberry' : request.POST.get('strawberry'),
+            'vanilla' : request.POST.get('vanilla'),
+            'whipped' : request.POST.get('whipped'),
+        }
 
-    context = {
-        'form': form,
-    }
-    return render(request, 'coffee/menu_add.html', context)
+        newDrink = Menu_Item(custom=False)
+        newDrink.save()
+        ########## Create drink based on form results ##########
+        for ing in new_ingreds:
+            amt = int(new_ingreds[ing])
+            if amt > 0:
+                inv_item = Inventory_Item.objects.get(name__startswith=ing)
+                item_amt, created = Item_Amount.objects.get_or_create(menu_item=newDrink, inventory_item=inv_item)
+                item_amt.updateAmount(amt)
+                
+        newDrink.name = drinkName
+        new_price = getMenuItemPrice(newDrink.id)
+        newDrink.updatePrice(new_price)
+        return redirect('coffee:edit-menu')
+
+    return render(request, 'coffee/menu_add.html')
 
 
 @login_required(login_url='coffee:login')
