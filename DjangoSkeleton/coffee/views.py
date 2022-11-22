@@ -310,11 +310,47 @@ def employeeView(request):
         try:
             pk = request.POST.get('id')
             order = Order.objects.get(id=pk)
-            order.changeStatus(3)
+            print(checkIngredientLevels(order))
+            #order.changeStatus(3)
+
             return render(request, 'coffee/employeeView.html', context)
         except: # If there is an empty post request, do nothing
             None
     return render(request, 'coffee/employeeView.html', context)
+
+
+def checkIngredientLevels(order):
+    print("Using ingredients!")
+    menuItems = order.menu_item_set.all()
+    allIngredients = list(Inventory_Item.objects.all())
+    #allIngrQuantities = [ingr.quantity for ingr in Inventory_Item.objects.all()]
+    totalNeeded  = [0 for i in range(len(allIngredients))]
+    enoughInventory = True
+
+    ### Calculate required ingredient amounts for entire order
+    for item in menuItems:
+        amts = [amt.amount for amt in item.item_amounts.all()]
+        ingrs = [ingr.id for ingr in item.Ingredients.all()]
+
+        for i in range(len(amts)):
+            totalNeeded[ingrs[i] - 1] += amts[i]
+
+
+    ### Check to see if there is enough in the inventory
+    for i in range(len(totalNeeded)):
+        if totalNeeded[i] > allIngredients[i].quantity:
+            enoughInventory = False
+            print(enoughInventory)
+            messages.info(request, 'Error')
+            print(i)
+
+
+    ### If there is enough, reduce that amount for each inventory item
+    if enoughInventory:
+        for i in range(len(totalNeeded)):
+            allIngredients[i].useInventory(totalNeeded[i])
+
+    print(enoughInventory)
 
 
 @login_required(login_url='coffee:login')
