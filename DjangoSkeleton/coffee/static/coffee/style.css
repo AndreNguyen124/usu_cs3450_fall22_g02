@@ -8,7 +8,7 @@ tan: e8d5b7
     --headerColor: #C19A6B;
     --secondaryColor: #c7b198;
     --highlightColor: #f0ece2;
-    --blueTextColor: #6495ED;
+    --blueTextColor: white;
     --boxColor: #f1ddbd;
   }
 
@@ -53,6 +53,10 @@ a:hover {
     align-items: center;
 }
 
+.autoMargin {
+    margin: auto;
+}
+
 .newLine:after {
     content: '\200b';
 }
@@ -87,6 +91,15 @@ a:hover {
 .column-container-reducedWidth {
     display: flex;
     max-width: 40rem;
+}
+
+.remSpace {
+    padding: 1.2rem;
+    width: 15rem;
+}
+
+.autoMargin {
+    margin: auto;
 }
 
 /* -------------- Navbar Styling --------------*/
@@ -233,6 +246,10 @@ a:hover {
     width: fit-content;
 }
 
+.btn:hover {
+    background-color: var(--highlightColor);
+}
+
 #id_quantity {
     margin: auto;
 }
@@ -256,6 +273,12 @@ tr:nth-child(even) {
 
 .row {
     display: flex;
+    justify-content: space-between;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 
@@ -321,7 +344,7 @@ input {
 
 .order-description {
     padding: 1rem;
-    max-width: 40em;
+    max-width: 20em;
 }
 
 .order-description h2 {
@@ -332,6 +355,12 @@ input {
 .price-of-order {
     margin:auto;
     padding: 2rem;
+}
+
+.drinkOptionsConatiner {
+    background-color: #f1ddbd;
+    padding: 2rem;
+    margin: 2rem;
 }
 
 /* Styling for managing Employees ect... */
