@@ -7,6 +7,7 @@ tan: e8d5b7
 :root {
     --headerColor: #C19A6B;
     --secondaryColor: #c7b198;
+    --buttonColor: #e4d4c0;
     --highlightColor: #f0ece2;
     --blueTextColor: white;
     --boxColor: #f1ddbd;
@@ -141,6 +142,11 @@ a:hover {
     display: block;
     text-decoration: none;
     padding: 2.5rem;
+    color: white;
+}
+
+.navbar-links li a:hover {
+    color: black;
 }
 
 #shoppingCartImage {
@@ -239,7 +245,7 @@ a:hover {
 }
 
 .btn {
-    background-color: var(--secondaryColor);
+    background-color: var(--buttonColor);
     color: black;
     padding: 1.2rem;
     border-radius: 5px;
@@ -248,6 +254,7 @@ a:hover {
 
 .btn:hover {
     background-color: var(--highlightColor);
+    color: black;
 }
 
 #id_quantity {
