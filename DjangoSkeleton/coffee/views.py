@@ -310,8 +310,12 @@ def employeeView(request):
         try:
             pk = request.POST.get('id')
             order = Order.objects.get(id=pk)
-            print(checkIngredientLevels(order))
-            #order.changeStatus(3)
+            enough_inventory = checkIngredientLevels(order)
+            print(enough_inventory[0])
+            if not enough_inventory[0]:
+                messages.error(request, 'Error: Not enough {}'.format(enough_inventory[1]))
+            else:
+                order.changeStatus(3)
 
             return render(request, 'coffee/employeeView.html', context)
         except: # If there is an empty post request, do nothing
@@ -320,10 +324,8 @@ def employeeView(request):
 
 
 def checkIngredientLevels(order):
-    print("Using ingredients!")
     menuItems = order.menu_item_set.all()
     allIngredients = list(Inventory_Item.objects.all())
-    #allIngrQuantities = [ingr.quantity for ingr in Inventory_Item.objects.all()]
     totalNeeded  = [0 for i in range(len(allIngredients))]
     enoughInventory = True
 
@@ -340,9 +342,9 @@ def checkIngredientLevels(order):
     for i in range(len(totalNeeded)):
         if totalNeeded[i] > allIngredients[i].quantity:
             enoughInventory = False
-            print(enoughInventory)
-            messages.info(request, 'Error')
-            print(i)
+
+            ### return boolean + inventory item name
+            return (enoughInventory, allIngredients[i].name)
 
 
     ### If there is enough, reduce that amount for each inventory item
@@ -350,7 +352,8 @@ def checkIngredientLevels(order):
         for i in range(len(totalNeeded)):
             allIngredients[i].useInventory(totalNeeded[i])
 
-    print(enoughInventory)
+        ### -1 is a placeholder for a null value - that value shouldn't be accessed if the store has enough inventory
+        return (enoughInventory, -1)
 
 
 @login_required(login_url='coffee:login')
