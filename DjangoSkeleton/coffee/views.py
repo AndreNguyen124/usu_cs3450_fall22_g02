@@ -189,9 +189,13 @@ def shoppingCartView(request):
         total =  Decimal(request.POST.get('checkout'))
 
         user = Profile.objects.get(id=request.user.id)
+        manager = Profile.objects.get(id=1)
 
         if user.account_balance >= total:
             user.decreaseBalance(total)
+            manager.increaseBalance(total)
+            
+
             # This should probably be handled in models eventually
             current_order.status=1
             current_order.save()
