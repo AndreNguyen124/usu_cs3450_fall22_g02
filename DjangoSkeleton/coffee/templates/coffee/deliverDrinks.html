@@ -4,12 +4,15 @@
 {% block page_heading %} Deliver Drinks {% endblock %}
 
 {% block content %}
+
+
 <nav>
-    <ul class="navbar-links">
-        <li><a class="btn" href="{% url "coffee:manageEmployees"%}">Search for Customer</a></li>
-        <li><a class="btn" href="{% url "coffee:employeeView"%}">Make Drinks</a></li>
+    <ul class="button-links">
+    <li><a class="btn marginSpace" href="{% url "coffee:manageEmployees"%}">Search for Customer</a></li>
+    <li><a class="btn marginSpace" href="{% url "coffee:employeeView"%}">Make Drinks</a></li>
     </ul>
 </nav>
+
 {% if order_list %}
 {% for order in order_list %}
 
