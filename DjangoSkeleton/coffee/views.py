@@ -198,6 +198,7 @@ def shoppingCartView(request):
                 manager.increaseBalance(total)
             
             current_order.changeStatus(1)
+            messages.info(request, 'Order placed successfully!')
 
             return redirect('coffee:login')
 
@@ -298,7 +299,7 @@ def customizeDrink(request, pk):
         customDrink.updatePrice(getMenuItemPrice(customDrink.id))
         print('new drink price: ', customDrink.price)
 
-        messages.info(request, 'Order placed successfully!')
+        messages.info(request, 'Successfully added to cart!')
 
         return redirect('coffee:userView')
 
