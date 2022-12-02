@@ -192,13 +192,13 @@ def shoppingCartView(request):
         manager = Profile.objects.get(id=1)
 
         if user.account_balance >= total:
-            user.decreaseBalance(total)
-            manager.increaseBalance(total)
+            ## Conflict is caused if the manager and user are the same, so Manager doesn't have to pay because this won't matter
+            if user != manager:
+                user.decreaseBalance(total)
+                manager.increaseBalance(total)
             
-
-            # This should probably be handled in models eventually
-            current_order.status=1
-            current_order.save()
+            current_order.changeStatus(1)
+            messages.info(request, 'Order placed successfully!')
 
             return redirect('coffee:login')
 
@@ -283,7 +283,6 @@ def customizeDrink(request, pk):
                 item_amt, created = Item_Amount.objects.get_or_create(menu_item=customDrink, inventory_item=inv_item)
                 item_amt.updateAmount(amt)
                 
-                
         ######### Handle adding the custom drink to the current order ##########
         whos_ordering = Profile.objects.get(id=request.user.id) #TODO make this adjustable for cashier creating customer order
         print('user ordering is ', whos_ordering)
@@ -295,8 +294,13 @@ def customizeDrink(request, pk):
             current_order = orders[0]
         customDrink.order = current_order
         customDrink.save()
-        new_price = getMenuItemPrice(customDrink.id)
-        customDrink.updatePrice(new_price)
+
+        print('old drink price: ', customDrink.price)
+        customDrink.updatePrice(getMenuItemPrice(customDrink.id))
+        print('new drink price: ', customDrink.price)
+
+        messages.info(request, 'Successfully added to cart!')
+
         return redirect('coffee:userView')
 
     context = { 'drink' : customDrink, 'drinkIngreds' : ingred_names, 'ingredAmounts' : ing_amt_dict}
@@ -703,12 +707,17 @@ def menu_update(request, pk):
 
 
 def getMenuItemPrice(itemId):
+    print("gettting price")
     menuItem = Menu_Item.objects.get(id=itemId)
     markupDecimal = (Price_Markup.objects.first().markup / 100) + 1
+    amts = Item_Amount.objects.filter(menu_item=menuItem)
 
     price = 2
-    for i in menuItem.Ingredients.all():
-        price += i.price
+    for i in amts:
+        print(i.inventory_item.name)
+        print(i.amount)
+        price += i.inventory_item.price * i.amount
+        print(price)
 
     price = price * Decimal(markupDecimal)
 
