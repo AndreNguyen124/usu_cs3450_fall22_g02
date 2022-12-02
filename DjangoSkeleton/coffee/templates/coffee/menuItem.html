@@ -4,15 +4,17 @@
 {% block page_heading %} Manage Menu Items {% endblock %}
 
 {% block content %}
-<div class="column-heading">
-    <div class="column-container">
-        <h3 class="card-heading">Price markup: {{ markup.markup }}%</h3>
-        <a class="btn" href="{% url 'coffee:update-markup' %}">Edit</a>
-    </div>
-    <div class="column-container">
-        <a class="btn" href="{% url 'coffee:menu_add' %}">Create Drink</a>
-    </div>
+
+<div class="col">
+    <h3 class="column-heading">Price markup: {{ markup.markup }}%</h3>
 </div>
+<nav>
+
+    <ul class="button-links">
+        <li><a class="btn" href="{% url 'coffee:update-markup' %}">Edit</a></li>
+        <li><a class="btn" href="{% url 'coffee:menu_add' %}">Create Drink</a></li>
+    </ul>
+</nav>
 
 {% if menu_list %}
 <table class="table" style="border-color:#ccb593;">
