@@ -343,6 +343,7 @@ input {
     display: flex;
     margin: 2em;
     width: fit-content;
+    max-width: 80vw;
     border-left: 5px solid #fc3a52;
     border-bottom: 5px solid #f9b248;
     border-top: 5px solid #0066b2;

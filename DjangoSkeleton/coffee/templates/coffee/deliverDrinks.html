@@ -16,7 +16,7 @@
 {% if order_list %}
 {% for order in order_list %}
 
-    <div class="order">
+    <div class="order column-container">
         <div class="column-container">
             {% for menuItem in order.menu_item_set.all %}
             <div class="newLine"></div>
@@ -31,7 +31,7 @@
             <form name="submitform" method="post">
                 {% csrf_token %}
                 <input type='hidden' name="id" value="{{order.pk}}">
-                <input type="submit" value="Submit"/>
+                <input class='btn' type="submit" value="Submit"/>
                 </div>        
             </form>
         </div>
