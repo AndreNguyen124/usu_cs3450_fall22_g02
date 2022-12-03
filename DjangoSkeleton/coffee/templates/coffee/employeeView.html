@@ -13,7 +13,7 @@
 {% if order_list %}
 {% for order in order_list %}
 
-    <div class="order">
+    <div class="order column-container">
         <div class="column-container">
             <div><h3>Order by: {{ order.profile.user }}</h3></div>
             <div><h3>Status: {{ order.status }}</h3></div>
@@ -30,7 +30,7 @@
             <form name="submitform" method="post">
                 {% csrf_token %}
                 <input type='hidden' name="id" value="{{order.pk}}">
-                <input type="submit" value="Submit"/>
+                <input class='btn' type="submit" value="Submit"/>
                 </div>        
             </form>
         </div>
