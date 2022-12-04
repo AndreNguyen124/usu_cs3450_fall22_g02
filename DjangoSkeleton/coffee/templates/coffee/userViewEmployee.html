@@ -1,0 +1,31 @@
+{% extends './partials/base.html' %}
+{% load static %}
+
+{% block title %} Welcome User {% endblock %}
+{% block page_heading %} Start New Order {% endblock %}
+
+{% block content %}
+
+
+{% for item in drink_list %}
+<div class="order">
+    <a class="order-link" href="{% url 'coffee:customizeDrinkEmployee' item.id%}">
+        <div class="image">
+            <img src="{% static 'coffee/media/aFrap.jpeg' %}">
+        </div>
+        <div class="order-description">
+            <h2>{{ item.name }}</h2>
+            <p>
+                {% for test in item.Ingredients.all %}
+                {{ test.name }},
+                {% endfor %}
+            </p>
+        </div>
+        <div class="price-of-order">
+            <h1>${{ item.price }}</h1>
+        </div>
+    </a>
+</div>
+{% endfor %}
+
+{% endblock %}

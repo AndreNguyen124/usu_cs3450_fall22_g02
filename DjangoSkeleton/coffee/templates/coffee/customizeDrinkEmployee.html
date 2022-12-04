@@ -1,0 +1,148 @@
+{% extends './partials/base.html' %}
+{% load static %}
+
+{% block title %} Welcome User {% endblock %}
+{% block page_heading %} Customize Your Drink {% endblock %}
+
+{% block content %}
+
+<div class="">
+    <div class="drinkOptionsConatiner boxShadow">
+        <h2 class="entry-heading">{{drink.name}}</h2>
+        <h3 class="card-heading">Base Price: {{drink.price}}</h3>
+
+        <form method="post" action="" class="">
+            {% csrf_token %}
+            <div class="row">
+            <div class="col remSpace">
+                <label for="quantity">Caramel Base :</label>
+                {% if 'Caramel Base' in drinkIngreds %}
+                    <input type="number" name="caramel" value={{ingredAmounts.Caramel}}>
+                {% else %}
+                    <input type="number" name="caramel" value="0">
+                {% endif %}
+
+                <label for="quantity">Chai Tea Base :</label>
+                {% if 'Chai Tea Base' in drinkIngreds %}
+                    <input type="number" name="chai" min="0" max="5" value={{ingredAmounts.Chai}}>
+                {% else %}
+                    <input type="number" name="chai" min="0" max="5" value="0">
+                {% endif %}
+
+
+                <label for="quantity">Chocolate Chips :</label>
+                {% if 'Chocolate Chips' in drinkIngreds %}
+                    <input type="number" name="chocolate" min="0" max="5" value={{ingredAmounts.Chocolate}}>
+                {% else %}
+                    <input type="number" name="chocolate" min="0" max="5" value="0">
+                {% endif %}
+
+
+                <label for="quantity">Cinnamon :</label>
+                {% if 'Cinnamon' in drinkIngreds %}
+                    <input type="number" name="cinnamon" min="0" max="5" value={{ingredAmounts.Cinnamon}}>
+                {% else %}
+                    <input type="number" name="cinnamon" min="0" max="5" value="0">
+                {% endif %}
+
+                <label for="quantity">Espresso Shot :</label>
+                {% if 'Espresso Shot' in drinkIngreds %}
+                    <input type="number" name="espresso" min="0" max="5" value={{ingredAmounts.Espresso}}>
+                {% else %}
+                    <input type="number" name="espresso" min="0" max="5" value="0">
+                {% endif %}
+
+                <label for="quantity">Half and Half :</label>
+                {% if '' in drinkIngreds %}
+                    <input type="number" name="half" min="0" max="5" value={{ingredAmounts.Half}}>
+                {% else %}
+                    <input type="number" name="half" min="0" max="5" value="0">
+                {% endif %}
+
+                <label for="quantity">Ice :</label>
+                {% if 'Ice' in drinkIngreds %}
+                    <input type="number" name="ice" min="0" max="5" value={{ingredAmounts.Ice}}>
+                {% else %}
+                    <input type="number" name="ice" min="0" max="5" value="0">
+                {% endif %}
+
+                <label for="quantity">Irish Cream Syrup :</label>
+                {% if 'Irish Cream Syrup' in drinkIngreds %}
+                    <input type="number" name="irish" min="0" max="5" value={{ingredAmounts.Irish}}>
+                {% else %}
+                    <input type="number" name="irish" min="0" max="5" value="0">
+                {% endif %}
+            </div>
+
+            <div class="col remSpace">
+                <label for="quantity">Matcha Powder :</label>
+                {% if 'Matcha Powder' in drinkIngreds %}
+                    <input type="number" name="matcha" min="0" max="5" value={{ingredAmounts.Matcha}}>
+                {% else %}
+                    <input type="number" name="matcha" min="0" max="5" value="0">
+                {% endif %}
+
+                <label for="quantity">Milk :</label>
+                {% if 'Milk' in drinkIngreds %}
+                    <input type="number" name="milk" min="0" max="5" value={{ingredAmounts.Milk}}>
+                {% else %}
+                    <input type="number" name="milk" min="0" max="5" value="0">
+                {% endif %}
+
+                <label for="quantity">Mocha Base :</label>
+                {% if 'Mocha Base' in drinkIngreds %}
+                    <input type="number" name="mocha" min="0" max="5" value={{ingredAmounts.Mocha}}>
+                {% else %}
+                    <input type="number" name="mocha" min="0" max="5" value="0">
+                {% endif %}
+
+                <label for="quantity">Peppermint :</label>
+                {% if 'Peppermint' in drinkIngreds %}
+                    <input type="number" name="peppermint" min="0" max="5" value={{ingredAmounts.Peppermint}}>
+                {% else %}
+                    <input type="number" name="peppermint" min="0" max="5" value="0">
+                {% endif %}
+
+                <label for="quantity">Pumpkin Spice Syrup :</label>
+                {% if 'Pumpkin Spice Syrup' in drinkIngreds %}
+                    <input type="number" name="pumpkin" min="0" max="5" value={{ingredAmounts.Pumpkin}}>
+                {% else %}
+                    <input type="number" name="pumpkin" min="0" max="5" value="0">
+                {% endif %}
+
+                <label for="quantity">Strawberry Puree :</label>
+                {% if 'Strawberry Puree' in drinkIngreds %}
+                    <input type="number" name="strawberry" min="0" max="5" value={{ingredAmounts.Strawberry}}>
+                {% else %}
+                    <input type="number" name="strawberry" min="0" max="5" value="0">
+                {% endif %}
+
+                <label for="quantity">Vanilla Base :</label>
+                {% if 'Vanilla Base' in drinkIngreds %}
+                    <input type="number" name="vanilla" min="0" max="5" value={{ingredAmounts.Vanilla}}>
+                {% else %}
+                    <input type="number" name="vanilla" min="0" max="5" value="0">
+                {% endif %}
+
+                <label for="quantity">Whipped Cream :</label>
+                {% if 'Whipped Cream' in drinkIngreds %}
+                    <input type="number" name="whipped" min="0" max="5" value={{ingredAmounts.Whipped}}>
+                {% else %}
+                    <input type="number" name="whipped" min="0" max="5" value="0">
+                {% endif %}
+            </div>
+            </div>
+
+            <div class="col remSpace autoMargin">
+                <input class="btn autoMargin" type="submit" value="Add to Order">
+            </div>
+        </form>
+
+            <div class="col">
+                <a class="btn btn-info remSpace autoMargin" href="{% url 'coffee:userViewEmployee' %}">Cancel</a> <!-- delete the drink if this is clicked -->
+            </div>
+
+    </div>
+</div>
+
+{% endblock %}

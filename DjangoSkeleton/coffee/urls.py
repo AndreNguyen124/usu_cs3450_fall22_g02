@@ -24,6 +24,10 @@ urlpatterns = [
 
     path('drink', views.drinkProduct, name="drink"),
     path('customizeDrink/<int:pk>/', views.customizeDrink, name='customizeDrink'),
+
+    path('userViewEmployee/', views.userViewEmployee, name='userViewEmployee'),
+    path('customizeDrinkEmployee/<int:pk>/', views.customizeDrinkEmployee, name='customizeDrinkEmployee'),
+
     path('drink/update-markup/', views.update_markup, name='update-markup'),
     path('drink/drink_delete/<int:pk>/', views.product_delete, name="drink_delete"),
     path('drink/drink_add/<int:pk>/', views.addDrinkProduct, name="drink_add"),
