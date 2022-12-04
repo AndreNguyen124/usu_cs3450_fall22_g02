@@ -26,18 +26,15 @@
     {% endfor %}  
 
 
-<div class="column-container checkout, boxShadow">
-    <div class="row-container">
-        <h3 class="heading">Order Total: {{ order_total }}</h3>
-    </div>
+<div class="checkout boxShadow">
+    <h3 class="heading">Order Total: {{ order_total }}</h3>
     <div class="col">
         <form method="POST">
             {% csrf_token %}
             <input type="hidden" id="checkout" name="checkout" value="{{ order_total }}">
-            <input class="btn autoMargin" type="submit" value="Checkout">
+            <input class="btn margin-left" type="submit" value="Checkout">
         </form>
     </div>
-
 </div>
 
 {% else %}
