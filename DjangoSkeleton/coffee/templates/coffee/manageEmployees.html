@@ -4,19 +4,20 @@
 {% block page_heading %} Search for user {% endblock %}
 
 {% block content %}
+<div class="switchColumn">
 <nav>
     <ul class="button-links">
         <li><a class="btn" href="{% url "coffee:employeeView"%}">Make Drinks</a></li>
         <li><a class="btn" href="{% url "coffee:deliverDrinks"%}">Deliver Drinks</a></li>
     </ul>
 </nav>
-    <div class="column-container">
-            <form>
+    <div class="col">
+            <form class="autoMargin">
                 <input name="q" type="search" class="search" placeholder="Enter customer name" aria-label="Search"/>  
                 <input class="inputStyling" type="submit"/>
             </form>
             {% if clearSearch %}
-            <a class="btn" href="{% url 'coffee:manageEmployees' %}">X clear search</a>
+            <a class="btn autoMargin" href="{% url 'coffee:manageEmployees' %}">X clear search</a>
             {% endif %}
     
         {% if users %}
@@ -37,3 +38,4 @@
     </div>
     
 {% endblock %}
+</div>

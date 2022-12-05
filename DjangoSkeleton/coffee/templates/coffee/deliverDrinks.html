@@ -4,38 +4,39 @@
 {% block page_heading %} Deliver Drinks {% endblock %}
 
 {% block content %}
-<nav>
-    <ul class="navbar-links">
-        <li><a class="btn" href="{% url 'coffee:manageEmployees'%}">Search for Customer</a></li>
-        <li><a class="btn" href="{% url 'coffee:employeeView'%}">Make Drinks</a></li>
-    </ul>
-</nav>
-{% if order_list %}
-{% for order in order_list %}
 
-    <div class="order">
-        <div class="column-container">
-            {% for menuItem in order.menu_item_set.all %}
-            <div class="newLine"></div>
-            <div><h3>{{ menuItem.name }}</h3></div>
-                {% for ingredient in menuItem.item_amounts.all %}
-                    <div>{{ ingredient.amount }} {{ ingredient.inventory_item.name }}</div>
-                {% endfor %}
+<div class="switchColumn">
+    <nav>
+        <ul class="button-links">
+            <li><a class="btn marginSpace" href="{% url "coffee:manageEmployees"%}">Search for Customer</a></li>
+            <li><a class="btn marginSpace" href="{% url "coffee:employeeView"%}">Make Drinks</a></li>
+        </ul>
+    </nav>
+
+<div class="column-container">
+    {% if order_list %}
+    {% for order in order_list %}
+    <div class="order col remSpace">
+        {% for menuItem in order.menu_item_set.all %}
+        <div class="newLine"></div>
+        <div><h3>{{ menuItem.name }}</h3></div>
+            {% for ingredient in menuItem.item_amounts.all %}
+                <div>{{ ingredient.amount }} {{ ingredient.inventory_item.name }}</div>
             {% endfor %}
-        </div>
+        {% endfor %}
 
         <div class="column-heading center-item-vertically">
             <form name="submitform" method="post">
                 {% csrf_token %}
                 <input type='hidden' name="id" value="{{order.pk}}">
-                <input type="submit" value="Submit"/>
-                </div>        
+                <input class='btn' type="submit" value="Submit"/>    
             </form>
         </div>
-
     </div>
+    {% endfor %}
+</div>
 
-{% endfor %}
+
 {% else %}
 <p class="boxShadow">No drinks to send out. Go take a break!</p>
 {% endif %}

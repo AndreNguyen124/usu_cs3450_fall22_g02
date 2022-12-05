@@ -7,8 +7,8 @@ tan: e8d5b7
 :root {
     --headerColor: #C19A6B;
     --secondaryColor: #c7b198;
-    --buttonColor: #e4d4c0;
-    --highlightColor: #f0ece2;
+    --buttonColor: #8e6d44;
+    --highlightColor: #f7efdb;
     --blueTextColor: white;
     --boxColor: #f1ddbd;
   }
@@ -33,10 +33,11 @@ h1 h2 {
 a {
     text-decoration: none;
     color: black;
+    font-size: 120%;
 }
 
-a:hover {
-    background-color: var(--highlightColor); 
+p {
+    font-size: 1.4rem;
 }
 
 
@@ -56,6 +57,10 @@ a:hover {
 
 .autoMargin {
     margin: auto;
+}
+
+.marginSpace {
+    margin: 2rem;
 }
 
 .newLine:after {
@@ -80,13 +85,15 @@ a:hover {
     padding: 1rem 5rem;
     border-radius: 5px;
     width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .column-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }  
 
 .column-container-reducedWidth {
@@ -103,6 +110,18 @@ a:hover {
     margin: auto;
 }
 
+.flex-max {
+    flex-grow: 1;
+}
+
+.checkout {
+    flex-basis: 100%;
+    justify-content: center;
+}
+
+.margin-left {
+    margin-left: 4rem;
+}
 /* -------------- Navbar Styling --------------*/
 .navbar {
     display: flex;
@@ -146,7 +165,12 @@ a:hover {
 }
 
 .navbar-links li a:hover {
-    color: black;
+    color: rgb(64, 29, 29);
+}
+
+a:hover {
+    background-color: var(--highlightColor); 
+    color: rgb(64, 29, 29);
 }
 
 #shoppingCartImage {
@@ -246,10 +270,12 @@ a:hover {
 
 .btn {
     background-color: var(--buttonColor);
-    color: black;
+    color: white;
     padding: 1.2rem;
     border-radius: 5px;
     width: fit-content;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    border: 1px solid rgb(127, 126, 126);
 }
 
 .btn:hover {
@@ -289,6 +315,12 @@ tr:nth-child(even) {
     justify-content: space-between;
 }
 
+.switchColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 /* -------------- Forum Styling -------------- */
 /*              login, register, etc           */
 .data-entry-form {
@@ -308,7 +340,7 @@ tr:nth-child(even) {
     margin: auto;
     margin-bottom: 2rem;
     min-width: fit-content;
-    border-bottom: 3px solid #fc3a52;
+    border-bottom: 2px solid #000000;
 }
 
 input {
@@ -331,6 +363,7 @@ input {
     display: flex;
     margin: 2em;
     width: fit-content;
+    max-width: 80vw;
     border-left: 5px solid #fc3a52;
     border-bottom: 5px solid #f9b248;
     border-top: 5px solid #0066b2;
@@ -351,16 +384,16 @@ input {
 
 .order-description {
     padding: 1rem;
-    max-width: 20em;
+    width: 25rem;
 }
 
 .order-description h2 {
-    border-bottom: 4px dashed #fc3a52;
+    border-bottom: 1px solid #717171;
     width: fit-content;
 }
 
 .price-of-order {
-    margin:auto;
+    margin: auto;
     padding: 2rem;
 }
 
@@ -392,7 +425,8 @@ input {
     width: max-content;
     margin: auto;
     margin-bottom: 1rem;
-    border-bottom: 4px dashed #fc3a52;
+    color: rgb(0, 0, 0);
+    border-bottom: 1px solid #6c6c6c;
 }
 
 .card-contents {

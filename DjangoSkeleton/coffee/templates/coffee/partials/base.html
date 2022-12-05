@@ -23,10 +23,10 @@
         {% include './header.html' %}
         {% endif %}
         <section class="main-section">
+            {% if request.user.is_authenticated %}
+            <h1 class="column-heading">{% block page_heading %}{% endblock %}</h1>
+            {% endif %}
             <div class="column-container">
-                {% if request.user.is_authenticated %}
-                <h1 class="column-heading">{% block page_heading %}{% endblock %}</h1>
-                {% endif %}
 
                 {% block content %}
                 {% endblock %}

@@ -4,17 +4,21 @@
 {% block page_heading %} Make Drinks {% endblock %}
 
 {% block content %}
-<nav>
-    <ul class="navbar-links">
-        <li><a class="btn" href="{% url 'coffee:manageEmployees'%}">Search for Customer</a></li>
-        <li><a class="btn" href="{% url 'coffee:deliverDrinks'%}">Deliver Drinks</a></li>
-    </ul>
-</nav>
-{% if order_list %}
-{% for order in order_list %}
 
-    <div class="order">
-        <div class="column-container">
+<div class="switchColumn">
+    <nav>
+        <ul class="button-links autoMargin">
+            <li><a class="btn" href="{% url "coffee:manageEmployees"%}">Search for Customer</a></li>
+            <li><a class="btn" href="{% url "coffee:deliverDrinks"%}">Deliver Drinks</a></li>
+        </ul>
+    </nav>
+
+
+<div class="column-container">
+    {% if order_list %}
+    {% for order in order_list %}
+    <div class="order col remSpace">
+        <div class="col">
             <div><h3>Order by: {{ order.profile.user }}</h3></div>
             {% for menuItem in order.menu_item_set.all %}
             <div class="newLine"></div>
@@ -23,17 +27,16 @@
                     <div>{{ ingredient.amount }} {{ ingredient.inventory_item.name }}</div>
                 {% endfor %}
             {% endfor %}
-        </div>
 
-        <div class="column-heading center-item-vertically">
-            <form name="submitform" method="post">
-                {% csrf_token %}
-                <input type='hidden' name="id" value="{{order.pk}}">
-                <input type="submit" value="Submit"/>
-                </div>        
-            </form>
-        </div>
+            <div class="column-heading center-item-vertically">
+                <form name="submitform" method="post">
+                    {% csrf_token %}
+                    <input type='hidden' name="id" value="{{order.pk}}">
+                    <input class='btn' type="submit" value="Submit"/>    
+                </form>
+            </div>
 
+        </div>
     </div>
 
 {% endfor %}

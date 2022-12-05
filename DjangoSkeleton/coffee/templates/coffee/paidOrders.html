@@ -8,7 +8,8 @@
 <div class="column-container">
     {% if paidOrderList %}
     {% for order in paidOrderList %}
-        <div class="order">
+        <div class="order col">
+        <div class="column-container">
         {% for menuItem in order.menu_item_set.all %}
                 <div class="order-description">
                     <h2>{{ menuItem.name }}</h2>
@@ -19,6 +20,7 @@
                     </p>
                 </div>
         {% endfor %}
+        </div>
                 <div class="price-of-order">
                     <form method="POST">
                         {% csrf_token %}

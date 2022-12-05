@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<div class="">
+<div class="autoMargin">
     <div class="drinkOptionsConatiner boxShadow">
         <h2 class="entry-heading">{{drink.name}}</h2>
         <h3 class="card-heading">Base Price: {{drink.price}}</h3>
@@ -68,7 +68,7 @@
 
                 <label for="quantity">Irish Cream Syrup :</label>
                 {% if 'Irish Cream Syrup' in drinkIngreds %}
-                    <input type="number" name="irish" min="0" max="5" value={{ingredAmounts.Irish}}> 
+                    <input type="number" name="irish" min="0" max="5" value={{ingredamounts.irish}}> 
                 {% else %}
                     <input type="number" name="irish" min="0" max="5" value="0">
                 {% endif %}
@@ -144,5 +144,19 @@
         
     </div>
 </div>
+
+<!--        Tried doing fancy auto updates.. This might work later
+<script>
+    function updateIngredient(event) {
+            const name = event.target.name
+            const value = event.target.value
+            
+            console.log(name)
+            console.log(value)
+
+            
+        }
+</script>
+-->
 
 {% endblock %}
