@@ -85,13 +85,15 @@ p {
     padding: 1rem 5rem;
     border-radius: 5px;
     width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .column-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }  
 
 .column-container-reducedWidth {
@@ -108,6 +110,18 @@ p {
     margin: auto;
 }
 
+.flex-max {
+    flex-grow: 1;
+}
+
+.checkout {
+    flex-basis: 100%;
+    justify-content: center;
+}
+
+.margin-left {
+    margin-left: 4rem;
+}
 /* -------------- Navbar Styling --------------*/
 .navbar {
     display: flex;
@@ -301,6 +315,12 @@ tr:nth-child(even) {
     justify-content: space-between;
 }
 
+.switchColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 /* -------------- Forum Styling -------------- */
 /*              login, register, etc           */
 .data-entry-form {
@@ -373,7 +393,7 @@ input {
 }
 
 .price-of-order {
-    margin:auto;
+    margin: auto;
     padding: 2rem;
 }
 
