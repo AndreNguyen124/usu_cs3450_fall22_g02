@@ -4,6 +4,7 @@
 {% block page_heading %} Make Drinks {% endblock %}
 
 {% block content %}
+
 <div class="switchColumn">
     <nav>
         <ul class="button-links autoMargin">
@@ -19,7 +20,6 @@
     <div class="order col remSpace">
         <div class="col">
             <div><h3>Order by: {{ order.profile.user }}</h3></div>
-            <div><h3>Status: {{ order.status }}</h3></div>
             {% for menuItem in order.menu_item_set.all %}
             <div class="newLine"></div>
             <div><h3>{{ menuItem.name }}</h3></div>

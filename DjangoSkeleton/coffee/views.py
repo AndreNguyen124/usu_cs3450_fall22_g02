@@ -174,8 +174,6 @@ def shoppingCartView(request):
     current_orderq = Order.objects.filter(profile__id=request.user.id, status=0)
     if current_orderq.exists():
         current_order = current_orderq.first()
-        print('current order:', current_order)
-        print('current order:', current_order.menu_item_set.all())
 
         order_total = calculateOrderTotal(current_order.id)
         context = {
@@ -230,13 +228,25 @@ def userView(request):
 
     return render(request, 'coffee/userView.html', context)
 
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Employee'])
+def userViewEmployee(request, pk):
+    customerProfile = Profile.objects.get(id=pk)  
+    drink_list = Menu_Item.objects.filter(custom=False)
+    # Menu_Item.objects.order_by('name')
+    print('customer', customerProfile)
+    context = {'drink_list': drink_list, 'customer' : customerProfile}
+
+    return render(request, 'coffee/userViewEmployee.html', context)
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def customizeDrink(request, pk):
+    whos_ordering = Profile.objects.get(id=request.user.id) 
+
     ####### Make copy of menuItem ########
     menuItem = Menu_Item.objects.get(id=pk)
-    drinkName = 'Custom ' + menuItem.name
+    drinkName = whos_ordering.user.username + "'s " + menuItem.name
     customDrink = Menu_Item(name = drinkName, price = menuItem.price, custom=True)
     customDrink.save()
     for ingr in menuItem.item_amounts.all():    
@@ -284,7 +294,7 @@ def customizeDrink(request, pk):
                 item_amt.updateAmount(amt)
                 
         ######### Handle adding the custom drink to the current order ##########
-        whos_ordering = Profile.objects.get(id=request.user.id) #TODO make this adjustable for cashier creating customer order
+        
         print('user ordering is ', whos_ordering)
         orders = Order.objects.filter(profile=whos_ordering, status=0)  
         print('current order is: ', orders)
@@ -307,6 +317,116 @@ def customizeDrink(request, pk):
     return render(request, 'coffee/customizeDrink.html', context)
 
 
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Employee'])
+def customizeDrinkEmployee(request, pk, user):
+    customer = Profile.objects.get(id=user)
+
+    ####### Make copy of menuItem ########
+    menuItem = Menu_Item.objects.get(id=pk)
+    drinkName = customer.user.username + "'s " + menuItem.name
+    customDrink = Menu_Item(name=drinkName, price=menuItem.price, custom=True)
+    customDrink.save()
+    for ingr in menuItem.item_amounts.all():
+        Item_Amount.objects.create(menu_item=customDrink, inventory_item=ingr.inventory_item, amount=ingr.amount)
+
+    ######## Make various lists for the template context #######
+    ingred_amounts = customDrink.item_amounts.all()
+    ingred_names = [dr.name for dr in customDrink.Ingredients.all()]
+
+    ing_amt_dict = {}
+    for ingamt in ingred_amounts:
+        ing_amt_dict[ingamt.inventory_item.name.split(' ', 1)[0]] = ingamt.amount
+
+    ######## Handle POST request and etc ############
+    if request.method == 'POST':
+        print('submitted!')
+
+        custom_ingreds = {
+            'caramel': request.POST.get('caramel'),
+            'chai': request.POST.get('chai'),
+            'chocolate': request.POST.get('chocolate'),
+            'cinnamon': request.POST.get('cinnamon'),
+            'espresso': request.POST.get('espresso'),
+            'half': request.POST.get('half'),
+            'ice': request.POST.get('ice'),
+            'irish': request.POST.get('irish'),
+            'matcha': request.POST.get('matcha'),
+            'milk': request.POST.get('milk'),
+            'mocha': request.POST.get('mocha'),
+            'peppermint': request.POST.get('peppermint'),
+            'pumpkin': request.POST.get('pumpkin'),
+            'strawberry': request.POST.get('strawberry'),
+            'vanilla': request.POST.get('vanilla'),
+            'whipped': request.POST.get('whipped'),
+        }
+
+        ########## Customize the drink based on form specifications ##########
+        for ing in custom_ingreds:
+            amt = int(custom_ingreds[ing])
+            if amt > 0:
+                inv_item = Inventory_Item.objects.get(name__startswith=ing)
+                item_amt, created = Item_Amount.objects.get_or_create(menu_item=customDrink, inventory_item=inv_item)
+                item_amt.updateAmount(amt)
+
+        ######### Handle adding the custom drink to the current order ##########
+        whos_ordering = customer
+        print('user ordering is ', whos_ordering)
+        orders = Order.objects.filter(profile=whos_ordering, status=0)
+        print('current order is: ', orders)
+        if not orders.exists():
+            current_order = Order.objects.create(profile=whos_ordering)
+        else:
+            current_order = orders[0]
+        customDrink.order = current_order
+        customDrink.save()
+        new_price = getMenuItemPrice(customDrink.id)
+        customDrink.updatePrice(new_price)
+        urlString = '/userViewEmployee/' + str(customer.user.id)
+        return redirect(urlString)
+
+    context = {'drink': customDrink, 'drinkIngreds': ingred_names, 'ingredAmounts': ing_amt_dict, 'customer': customer}
+    return render(request, 'coffee/customizeDrinkEmployee.html', context)
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Employee'])
+def customerCart(request, pk):
+    customer = Profile.objects.get(id=pk)
+    current_orderq = Order.objects.filter(profile__id=customer.user.id, status=0)
+    if current_orderq.exists():
+        current_order = current_orderq.first()
+
+        order_total = calculateOrderTotal(current_order.id)
+        context = {
+                'current_order': current_order,
+                'order_total': order_total
+                }
+    else:
+        context = {'current_order': ''}
+
+    if request.method == 'POST':
+        total =  Decimal(request.POST.get('checkout'))
+
+        user = customer
+        manager = Profile.objects.get(id=1)
+
+        if user.account_balance >= total:
+            ## Conflict is caused if the manager and user are the same, so Manager doesn't have to pay because this won't matter
+            if user != manager:
+                user.decreaseBalance(total)
+                manager.increaseBalance(total)
+
+            current_order.changeStatus(2)
+            messages.info(request, 'Order submitted!')
+
+            return redirect('coffee:manageEmployees')
+
+        else:
+            messages.info(request, 'Error: Insufficient funds')
+
+        print(total)
+
+    return render(request, 'coffee/customerCart.html', context)
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Employee'])

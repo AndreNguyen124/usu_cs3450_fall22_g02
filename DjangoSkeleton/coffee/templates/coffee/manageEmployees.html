@@ -27,7 +27,7 @@
                 <h3>{{ user.user.username }}</h3>
             </div>
             <div class='card-contents'>
-                <a class='btn' href='#'>New Order</a>
+                <a class='btn' href="{% url 'coffee:userViewEmployee' user.user.id %}">New Order</a>
                 {% if user.hasPaidOrders %}
                     <a class='btn' href="{% url 'coffee:paidOrders' user.user.id %}">View Orders</a>
                 {% endif %}

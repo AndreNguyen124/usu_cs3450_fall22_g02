@@ -4,6 +4,7 @@
 {% block page_heading %} Deliver Drinks {% endblock %}
 
 {% block content %}
+
 <div class="switchColumn">
     <nav>
         <ul class="button-links">
@@ -11,7 +12,6 @@
             <li><a class="btn marginSpace" href="{% url "coffee:employeeView"%}">Make Drinks</a></li>
         </ul>
     </nav>
-
 
 <div class="column-container">
     {% if order_list %}
