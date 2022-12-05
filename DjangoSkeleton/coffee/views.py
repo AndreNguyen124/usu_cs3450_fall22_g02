@@ -408,12 +408,16 @@ def customerCart(request, pk):
         total =  Decimal(request.POST.get('checkout'))
 
         user = customer
+        manager = Profile.objects.get(id=1)
 
         if user.account_balance >= total:
-            user.decreaseBalance(total)
-            # This should probably be handled in models eventually
-            current_order.status=2
-            current_order.save()
+            ## Conflict is caused if the manager and user are the same, so Manager doesn't have to pay because this won't matter
+            if user != manager:
+                user.decreaseBalance(total)
+                manager.increaseBalance(total)
+
+            current_order.changeStatus(2)
+            messages.info(request, 'Order submitted!')
 
             return redirect('coffee:manageEmployees')
 
