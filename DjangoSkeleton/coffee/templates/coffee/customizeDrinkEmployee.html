@@ -139,7 +139,7 @@
         </form>
 
             <div class="col">
-                <a class="btn btn-info remSpace autoMargin" href="{% url 'coffee:userViewEmployee' %}">Cancel</a> <!-- delete the drink if this is clicked -->
+                <a class="btn btn-info remSpace autoMargin" href="{% url 'coffee:userViewEmployee' customer.user.id %}">Cancel</a> <!-- delete the drink if this is clicked -->
             </div>
 
     </div>

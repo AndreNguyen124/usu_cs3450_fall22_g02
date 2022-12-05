@@ -2,20 +2,23 @@
 {% load static %}
 
 {% block title %} Welcome User {% endblock %}
-{% block page_heading %} Start New Order {% endblock %}
+{% block page_heading %} Start New Order  
+<a class="boxShadow" href="{% url 'coffee:customerCart' customer.user.id %}">Cart</a> 
+{% endblock %}
 
 {% block content %}
 
 
 {% for item in drink_list %}
 <div class="order">
-    <a class="order-link" href="{% url 'coffee:customizeDrinkEmployee' item.id%}">
+    <a class="order-link" href="{% url 'coffee:customizeDrinkEmployee' item.id customer.user.id %}">
         <div class="image">
             <img src="{% static 'coffee/media/aFrap.jpeg' %}">
         </div>
         <div class="order-description">
             <h2>{{ item.name }}</h2>
             <p>
+                {{customer}}
                 {% for test in item.Ingredients.all %}
                 {{ test.name }},
                 {% endfor %}

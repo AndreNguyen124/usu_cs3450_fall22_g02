@@ -174,8 +174,6 @@ def shoppingCartView(request):
     current_orderq = Order.objects.filter(profile__id=request.user.id, status=0)
     if current_orderq.exists():
         current_order = current_orderq.first()
-        print('current order:', current_order)
-        print('current order:', current_order.menu_item_set.all())
 
         order_total = calculateOrderTotal(current_order.id)
         context = {
@@ -227,21 +225,24 @@ def userView(request):
     return render(request, 'coffee/userView.html', context)
 
 @login_required(login_url='coffee:login')
-@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
-# TODO: Need to refactor 'drink_list'
-def userViewEmployee(request):
+@allowed_users(allowed_roles=['Manager', 'Employee'])
+def userViewEmployee(request, pk):
+    customerProfile = Profile.objects.get(id=pk)  
     drink_list = Menu_Item.objects.filter(custom=False)
     # Menu_Item.objects.order_by('name')
-    context = {'drink_list': drink_list}
+    print('customer', customerProfile)
+    context = {'drink_list': drink_list, 'customer' : customerProfile}
 
     return render(request, 'coffee/userViewEmployee.html', context)
 
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
 def customizeDrink(request, pk):
+    whos_ordering = Profile.objects.get(id=request.user.id) 
+
     ####### Make copy of menuItem ########
     menuItem = Menu_Item.objects.get(id=pk)
-    drinkName = 'Custom ' + menuItem.name
+    drinkName = whos_ordering.user.username + "'s " + menuItem.name
     customDrink = Menu_Item(name = drinkName, price = menuItem.price, custom=True)
     customDrink.save()
     for ingr in menuItem.item_amounts.all():    
@@ -290,7 +291,7 @@ def customizeDrink(request, pk):
                 
                 
         ######### Handle adding the custom drink to the current order ##########
-        whos_ordering = Profile.objects.get(id=request.user.id) #TODO make this adjustable for cashier creating customer order
+        
         print('user ordering is ', whos_ordering)
         orders = Order.objects.filter(profile=whos_ordering, status=0)  
         print('current order is: ', orders)
@@ -309,11 +310,13 @@ def customizeDrink(request, pk):
 
 
 @login_required(login_url='coffee:login')
-@allowed_users(allowed_roles=['Manager', 'Customer', 'Employee'])
-def customizeDrinkEmployee(request, pk):
+@allowed_users(allowed_roles=['Manager', 'Employee'])
+def customizeDrinkEmployee(request, pk, user):
+    customer = Profile.objects.get(id=user)
+
     ####### Make copy of menuItem ########
     menuItem = Menu_Item.objects.get(id=pk)
-    drinkName = 'Custom ' + menuItem.name
+    drinkName = customer.user.username + "'s " + menuItem.name
     customDrink = Menu_Item(name=drinkName, price=menuItem.price, custom=True)
     customDrink.save()
     for ingr in menuItem.item_amounts.all():
@@ -359,8 +362,7 @@ def customizeDrinkEmployee(request, pk):
                 item_amt.updateAmount(amt)
 
         ######### Handle adding the custom drink to the current order ##########
-        whos_ordering = Profile.objects.get(
-            id=request.user.id)  # TODO make this adjustable for cashier creating customer order
+        whos_ordering = customer
         print('user ordering is ', whos_ordering)
         orders = Order.objects.filter(profile=whos_ordering, status=0)
         print('current order is: ', orders)
@@ -372,10 +374,48 @@ def customizeDrinkEmployee(request, pk):
         customDrink.save()
         new_price = getMenuItemPrice(customDrink.id)
         customDrink.updatePrice(new_price)
-        return redirect('coffee:userView')
+        urlString = '/userViewEmployee/' + str(customer.user.id)
+        return redirect(urlString)
 
-    context = {'drink': customDrink, 'drinkIngreds': ingred_names, 'ingredAmounts': ing_amt_dict}
+    context = {'drink': customDrink, 'drinkIngreds': ingred_names, 'ingredAmounts': ing_amt_dict, 'customer': customer}
     return render(request, 'coffee/customizeDrinkEmployee.html', context)
+
+@login_required(login_url='coffee:login')
+@allowed_users(allowed_roles=['Manager', 'Employee'])
+def customerCart(request, pk):
+    customer = Profile.objects.get(id=pk)
+    current_orderq = Order.objects.filter(profile__id=customer.user.id, status=0)
+    if current_orderq.exists():
+        current_order = current_orderq.first()
+
+        order_total = calculateOrderTotal(current_order.id)
+        context = {
+                'current_order': current_order,
+                'order_total': order_total
+                }
+    else:
+        context = {'current_order': ''}
+
+    if request.method == 'POST':
+        total =  Decimal(request.POST.get('checkout'))
+
+        user = customer
+
+        if user.account_balance >= total:
+            user.decreaseBalance(total)
+            # This should probably be handled in models eventually
+            current_order.status=2
+            current_order.save()
+
+            return redirect('coffee:manageEmployees')
+
+        else:
+            messages.info(request, 'Error: Insufficient funds')
+
+        print(total)
+
+    return render(request, 'coffee/customerCart.html', context)
+
 @login_required(login_url='coffee:login')
 @allowed_users(allowed_roles=['Manager', 'Employee'])
 def employeeView(request):

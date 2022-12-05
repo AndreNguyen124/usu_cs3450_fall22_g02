@@ -6,8 +6,8 @@
 {% block content %}
 <nav>
     <ul class="navbar-links">
-        <li><a class="btn" href="{% url "coffee:manageEmployees"%}">Search for Customer</a></li>
-        <li><a class="btn" href="{% url "coffee:employeeView"%}">Make Drinks</a></li>
+        <li><a class="btn" href="{% url 'coffee:manageEmployees'%}">Search for Customer</a></li>
+        <li><a class="btn" href="{% url 'coffee:employeeView'%}">Make Drinks</a></li>
     </ul>
 </nav>
 {% if order_list %}
