@@ -18,7 +18,6 @@
         <div class="order-description">
             <h2>{{ item.name }}</h2>
             <p>
-                {{customer}}
                 {% for test in item.Ingredients.all %}
                 {{ test.name }},
                 {% endfor %}
