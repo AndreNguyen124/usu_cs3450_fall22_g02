@@ -245,48 +245,7 @@ def populate_db(apps, schema):
     Order = apps.get_model('coffee', 'Order')
     Order.objects.all().delete()
 
-    Profile = apps.get_model('coffee', 'Profile')
-    mprofile = Profile.objects.get(id=manager.id)
 
-    anOrder = Order(profile=mprofile, status = 0)
-    anOrder.save()
-    cm5.order = anOrder
-    cm5.save()
-    cm4.order = anOrder
-    cm4.save()
-
-    cm8 = Menu_Item(name='Chai Lee Latte', price=7.50)
-    cm8.save()
-    Item_Amount.objects.create(menu_item=cm8, inventory_item=i16)
-    Item_Amount.objects.create(menu_item=cm8, inventory_item=i1)
-    Item_Amount.objects.create(menu_item=cm8, inventory_item=i17)
-    Item_Amount.objects.create(menu_item=cm8, inventory_item=i14)
-    Item_Amount.objects.create(menu_item=cm8, inventory_item=i8)
-    Item_Amount.objects.create(menu_item=cm8, inventory_item=i10)
-    cm8.price = getMenuItemPrice(cm8.id)
-    cm8.custom = True
-    cm8.save()
-    
-    anOrder2 = Order(profile=mprofile, status = 1)
-    anOrder2.save()
-    cm8.order = anOrder2
-    cm8.save()
-    # cm4.order = anOrder2
-    # cm4.save()
-
-    # anOrder3 = Order(profile=mprofile, status = 2)
-    # anOrder3.save()
-    # cm5.order = anOrder3
-    # cm5.save()
-    # cm4.order = anOrder3
-    # cm4.save()
-
-    # anOrder4 = Order(profile=mprofile, status = 3)
-    # anOrder4.save()
-    # cm5.order = anOrder4
-    # cm5.save()
-    # cm4.order = anOrder4
-    # cm4.save()
 
 class Migration(migrations.Migration):
 
