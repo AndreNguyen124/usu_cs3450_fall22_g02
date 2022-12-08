@@ -53,7 +53,7 @@
                 {% endif %}
 
                 <label for="quantity">Half and Half :</label>
-                {% if '' in drinkIngreds %}
+                {% if 'Half and Half' in drinkIngreds %}
                     <input type="number" name="half" min="0" max="5" value={{ingredAmounts.Half}}> 
                 {% else %}
                     <input type="number" name="half" min="0" max="5" value="0">

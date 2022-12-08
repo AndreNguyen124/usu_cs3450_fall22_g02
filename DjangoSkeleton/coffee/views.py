@@ -261,6 +261,7 @@ def customizeDrink(request, pk):
     for ingamt in ingred_amounts:
         ing_amt_dict[ingamt.inventory_item.name.split(' ', 1)[0]] = ingamt.amount
     
+    print(ing_amt_dict)
 
     ######## Handle POST request and etc ############
     if request.method == 'POST':
