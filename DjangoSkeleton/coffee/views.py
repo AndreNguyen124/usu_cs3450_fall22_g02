@@ -27,7 +27,7 @@ def loginPage(request):
                 if group == 'Customer':
                     return redirect('coffee:userView')
                 elif group == 'Employee':
-                    return redirect('coffee:employeeView')
+                    return redirect('coffee:manageEmployees')
                 else:
                     return redirect('coffee:managerView')
         else:
@@ -246,7 +246,7 @@ def customizeDrink(request, pk):
 
     ####### Make copy of menuItem ########
     menuItem = Menu_Item.objects.get(id=pk)
-    drinkName = whos_ordering.user.username + "'s " + menuItem.name
+    drinkName = menuItem.name
     customDrink = Menu_Item(name = drinkName, price = menuItem.price, custom=True)
     customDrink.save()
     for ingr in menuItem.item_amounts.all():    
@@ -325,7 +325,7 @@ def customizeDrinkEmployee(request, pk, user):
 
     ####### Make copy of menuItem ########
     menuItem = Menu_Item.objects.get(id=pk)
-    drinkName = customer.user.username + "'s " + menuItem.name
+    drinkName = menuItem.name
     customDrink = Menu_Item(name=drinkName, price=menuItem.price, custom=True)
     customDrink.save()
     for ingr in menuItem.item_amounts.all():

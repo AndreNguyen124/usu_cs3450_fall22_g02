@@ -17,6 +17,7 @@
     {% if order_list %}
     {% for order in order_list %}
     <div class="order col remSpace">
+        <div><h3>Order by: {{ order.profile.user }}</h3></div>
         {% for menuItem in order.menu_item_set.all %}
         <div class="newLine"></div>
         <div><h3>{{ menuItem.name }}</h3></div>

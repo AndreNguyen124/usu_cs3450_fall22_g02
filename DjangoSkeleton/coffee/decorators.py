@@ -8,7 +8,7 @@ def unauthenticated_user(view_func):
                 if group == 'Customer':
                     return redirect('coffee:userView')
                 elif group == 'Employee':
-                    return redirect('coffee:employeeView')
+                    return redirect('coffee:manageEmployees')
                 else:
                     return redirect('coffee:managerView')
             #return redirect('coffee:userView') #this might cause a problem logically later, test to see
